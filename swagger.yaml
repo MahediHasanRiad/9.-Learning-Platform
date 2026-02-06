@@ -1,0 +1,3160 @@
+openapi: 3.0.0
+info: 
+  version: '1.0.0'
+  title: Learning Platform
+  description: this is a kind of self show case platform, there teacher can showcase there teaching style, experience, qualification and also student can evaluate and choice there comfort and prefered.
+  contact: 
+    name: 'Mahedi Hasan Riad'
+    url: https://riad.com
+    email: contact.mahedihasan@gmail.com 
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/self-eef/learning-platform/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: http://localhost:3000/api/v1
+tags: 
+  - name: User
+    description: User endpoint
+  - name: Teacher 
+    description: Teacher endpoint 
+  - name: Student 
+    description: Student endpoint 
+  - name: CoachingCenterProfile
+    description: Coaching center profile endpoint 
+  - name: CoachingCenterMember 
+    description: Coaching Center Member endpoint 
+  - name: Batch
+    description: Coaching center Bath related endpoint 
+  - name: DemoClass
+    description: teacher/coaching demo class related endpoint 
+  - name: Enrollment
+    description: Student Enrollment related endpoint 
+  - name: Review
+    description: student review about batch or class 
+  - name: Schedule
+    description: class Schedule related endpoint 
+  - name: Notification
+    description: class related notification endpoint 
+  - name: Auth
+    description: Authentication related endpoint 
+paths: 
+  '/users?query=params':
+    get: 
+      security: 
+        - bearerAuth: []
+      description: List of all user based on query
+      tags: [User]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+      responses: 
+        '200':
+          description: All user List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32 
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  userData:
+                    type: array
+                    items: 
+                      allOf: 
+                      - $ref: '#/components/schemas/userDTO'
+                      - type: object
+                        properties: 
+                          status:
+                            type: string
+                            enum: [Pending, Approved, Blocked, Delete]
+                            example: Pending
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/user':
+    post:  
+      security:
+        - bearerAuth: []
+      tags: [User]
+      description: Create a new User 
+      requestBody: 
+        description: provide a valid information 
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Riad
+                email:
+                  type: string
+                  format: email
+                  example: riad@gmail.com
+                password:
+                  type: string
+                  example: riad123
+                mobile: 
+                  type: number
+                  format: int32
+                  example: 01518949131
+                avatar:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/adiokd24e6s2d6
+                coverImage:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/adiokd24e6s2d6
+                role:
+                  type: string
+                  enum: [Admin, teacher, coaching-admin, coaching-manager, couching-teacher, student]
+                  example: student
+              required: [name, email, password, mobile, avatar, coverImage, role ]
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  userData:
+                    $ref: '#/components/schemas/userDTO'     
+                  link:
+                    type: string
+                    format: url
+                    example: https://www.abc.com/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'    
+  '/users/{id}':
+    get: 
+      security:
+      - bearerAuth: []
+      tags: [User]
+      description: Find a single User
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  userData:
+                    $ref: '#/components/schemas/userDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put: 
+      security:
+        - bearerAuth: []
+      tags: [User]
+      description: Update or Create a user
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Riad
+                email:
+                  type: string
+                  format: email
+                  example: riad@gmail.com
+                password:
+                  type: string
+                  example: riad123 
+                mobile: 
+                  type: number
+                  format: int32
+                  example: 01518949131
+                avatar:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/adiokd24e6s2d6
+                cover-image:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/adiokd24e6s2d6
+                role:
+                  type: string
+                  enum: [Admin, teacher, coaching-admin, coaching-manager, couching-teacher, student]
+                  example: student
+              required: [name, email, password, mobile, avatar, role]
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  info:
+                    $ref: '#/components/schemas/userDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+    patch: 
+      security: 
+        - bearerAuth: []
+      tags: [User]
+      description: Update a user 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              $ref: '#/components/schemas/userDTO'
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  userDate:
+                    $ref: '#/components/schemas/userDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'       
+    post: 
+      security:
+        - bearerAuth: []
+      tags: [User]
+      description: update/change password
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide currect old password to change 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                oldPass: 
+                  type: string
+                  example: riad123 
+                newPass:
+                  type: string
+                  example: riad@@@
+              required: [oldPass, newPass]
+      responses: 
+        '200':
+          description: successfully updated password 
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message: 
+                    type: string
+                    example: successfully updated password
+                  user:
+                    type: object
+                    properties: 
+                      name: 
+                        type: string
+                        example: Riad
+                      password:
+                        type: string
+                        example: riad@@@
+                      link:
+                        type: string
+                        format: url
+                        example: user/1  
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete: 
+      security:
+        - bearerAuth: []
+      tags: [User]
+      description: Delete a User
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: riad
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'        
+  '/teacher/profile':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [Teacher]
+      description: create a teacher profile
+      requestBody: 
+        description: provide a valid profile info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                userID:
+                  type: number
+                  format: int32
+                  example: 1
+                bio:
+                  type: string
+                  example: Expert in English
+                education:
+                  type: string
+                  example: BSc in Computer
+                certificate:
+                  type: string
+                  example: ['communication']
+                experienceYears:
+                  type: number
+                  format: int32
+                  example: 5  
+              required: [userID, bio, education, certificate, experienceYears]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  profile:
+                    $ref: '#/components/schemas/teacherDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: /teacher/profile
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+  '/teachers/{id}':
+    get: 
+      security:
+      - bearerAuth: []
+      tags: [Teacher]
+      description: Find a single Teacher
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  userData:
+                    $ref: '#/components/schemas/teacherDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/teacher/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'    
+    put: 
+      security:
+        - bearerAuth: []
+      tags: [Teacher]
+      description: Update or Create a Teacher Profile
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                userID:
+                  type: number
+                  format: int32
+                  example: 1
+                bio:
+                  type: string
+                  example: Expert in English
+                education:
+                  type: string
+                  example: BSc in Computer
+                certificate:
+                  type: string
+                  example: ['communication']
+                experienceYears:
+                  type: number
+                  format: int32
+                  example: 5
+              required: [userID, bio, education, certificate, experienceYears]
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  info:
+                    $ref: '#/components/schemas/teacherDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [Teacher]
+      description: Update a Teacher profile  
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              $ref: '#/components/schemas/teacherDTO'
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  userDate:
+                    $ref: '#/components/schemas/teacherDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500' 
+    delete:
+      security:
+        - bearerAuth: []
+      tags: [Teacher]
+      description: Delete a Teacher
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: riad
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'     
+  '/teachers?query=params':
+    get: 
+      security: 
+        - bearerAuth: []
+      description: List of all teacher based on query
+      tags: [Teacher]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+      responses: 
+        '200':
+          description: All user List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32 
+                    example: 200
+                  message:
+                    type: string
+                    example: success 
+                  userData:
+                    type: array
+                    items: 
+                      type: object
+                      properties: 
+                        name:
+                          type: string
+                          example: riad 
+                        education:
+                          type: string
+                          example: [BSc in Computer]
+                        certificate:
+                          type: string
+                          example: ['communication']
+                        experienceYears:
+                          type: number
+                          format: int32
+                          example: 5
+                        rating:
+                          type: number
+                          format: int32
+                          example: 4
+                        link:
+                          type: string
+                          format: url
+                          example: /teacher/1
+                    
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/teachers/{id}/rating':
+    get:
+      security:
+        - bearerAuth: []
+      tags: [Teacher]
+      description: Sort by Rating
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+
+      responses: 
+        '200':
+          description: success 
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items: 
+                      type: object
+                      properties: 
+                        name:
+                          type: string
+                          example: riad
+                        education:
+                          type: string
+                          example: [BSc]
+                        rating:
+                          type: number
+                          format: int32
+                          example: 4.5
+                        link:
+                          type: string
+                          format: url
+                          example: /teacher/5
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'      
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/student':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [Student]
+      description: create a student profile
+      requestBody: 
+        description: provide a valid profile info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                userID:
+                  type: number
+                  format: int32
+                  example: 1
+                classLevel:
+                  type: string
+                  example: class 10
+                subjectOfInterest:
+                  type: string
+                  example: [English, Math]
+              required: [userID, classLevel, subjectOfInterest]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  profile:
+                    type: object
+                    properties: 
+                      userID:
+                        type: number
+                        format: int32
+                        example: 1
+                      name:
+                        type: string
+                        example: riad 
+                      classLevel:
+                        type: string
+                        example: class 10
+                      subjectOfInterest:
+                        type: string
+                        example: [English, Math]
+                  link:
+                    type: string
+                    format: url
+                    example: /teacher/profile
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'   
+  '/students/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags: [Student]
+      description: Find a single Student
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  studentData:
+                    type: object
+                    properties: 
+                      userID:
+                        type: number
+                        format: int32
+                        example: 1
+                      name:
+                        type: string
+                        example: riad 
+                      classLevel:
+                        type: string
+                        example: class 10
+                      subjectOfInterest:
+                        type: string
+                        example: [English, Math]
+                      
+                  link:
+                    type: string
+                    format: url
+                    example: users/students/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'    
+    put: 
+      security:
+        - bearerAuth: []
+      tags: [Student]
+      description: Update or Create a Student Profile
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                properties: 
+                userID:
+                  type: number
+                  format: int32
+                  example: 1
+                classLevel:
+                  type: string
+                  example: class 10
+                subjectOfInterest:
+                  type: string
+                  example: [English, Math]
+              required: [userID, classLevel, subjectOfInterest]   
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  studentData:
+                    type: object
+                    properties:
+                      userID:
+                        type: number
+                        format: int32
+                        example: 1
+                      name:
+                        type: string
+                        example: riad
+                      classLevel:
+                        type: string
+                        example: class 10
+                      subjectOfInterest:
+                        type: string
+                        example: [English, Math] 
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+    patch: 
+      security: 
+        - bearerAuth: []
+      tags: [Student]
+      description: Update a student profile  
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                classLevel:
+                  type: string
+                  example: class 10
+                subjectOfInterest:
+                  type: string
+                  example: [English, Math]
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  studentDate:
+                    type: object
+                    properties: 
+                      name:
+                        type: string
+                        example: riad
+                      classLevel:
+                        type: string
+                        example: class 10
+                      subjectOfInterest:
+                        type: string
+                        example: [English, Math]
+                  link:
+                    type: string
+                    format: url
+                    example: user/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500' 
+    delete: 
+      security:
+        - bearerAuth: []
+      tags: [Student]
+      description: Delete a Student
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: riad
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'  
+  '/students?query=params':
+    get: 
+      security: 
+        - bearerAuth: []
+      description: List of all students based on query
+      tags: [Student]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All user List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  studentDate:
+                    type: array
+                    items: 
+                      type: object
+                      properties: 
+                        name:
+                          type: string
+                          example: riad
+                        classLevel:
+                          type: string
+                          example: class 10
+                        subjectOfInterest:
+                          type: string
+                          example: [English, Math]
+                        link:
+                          type: string
+                          format: url
+                          example: user/1
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+
+  '/coachingCenterProfile':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [CoachingCenterProfile]
+      description: create a coaching center profile
+      requestBody: 
+        description: provide a valid profile info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Aim Coaching center
+                street:
+                  type: string
+                  example: south azompur, 151/B
+                city:
+                  type: string
+                  example: Uttora
+                country:
+                  type: string
+                  example: Bangladesh
+                website:
+                  type: string
+                  format: url
+                  example: https://www.aircenter.center 
+                subjects:
+                  type: string
+                  example: [English, Math, Science]
+                teachersID:
+                  type: number
+                  format: int32
+                  example: [2]
+                status:
+                  type: string
+                  enum: [Pending, Approved, Suspended]
+                  example: Pending
+              required: [name, street, city, country, website, subjects, teachersID, status]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  profile:
+                    $ref: '#/components/schemas/coachingCenterProfileDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: /teacher/profile
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500' 
+  '/coaching/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags: [CoachingCenterProfile]
+      description: Find a single Coaching Center
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  coachingCenter:
+                    $ref: '#/components/schemas/coachingCenterProfileDTO'
+                      
+                  link:
+                    type: string
+                    format: url
+                    example: users/students/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [CoachingCenterProfile]
+      description: Update a Coaching Center profile  
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              $ref: '#/components/schemas/coachingCenterProfileDTO'
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  coachingCenterProfile:
+                    $ref: '#/components/schemas/coachingCenterProfileDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500' 
+    put:
+      security:
+        - bearerAuth: []
+      tags: [CoachingCenterProfile]
+      description: Update or Create a Coaching Center Profile
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                properties: 
+                name:
+                  type: string
+                  example: Aim Coaching center
+                street:
+                  type: string
+                  example: south azompur, 151/B
+                city:
+                  type: string
+                  example: Uttora
+                country:
+                  type: string
+                  example: Bangladesh
+                website:
+                  type: string
+                  format: url
+                  example: https://www.aircenter.center 
+                subjects:
+                  type: string
+                  example: [English, Math, Science]
+                teachersID:
+                  type: number
+                  format: int32
+                  example: [245, 663]
+                status:
+                  type: string
+                  enum: [Pending, Approved, Suspended]
+                  example: Pending
+              required: [name, street, city, country, website, subjects, teachersID, status]   
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  studentData:
+                    type: object
+                    properties:
+                      userID:
+                        type: number
+                        format: int32
+                        example: 1
+                      name:
+                        type: string
+                        example: riad
+                      classLevel:
+                        type: string
+                        example: class 10
+                      subjectOfInterest:
+                        type: string
+                        example: [English, Math] 
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+    delete:
+      security:
+        - bearerAuth: []
+      tags: [CoachingCenterProfile]
+      description: Delete a Coaching Center Profile 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: Aim Coaching Center
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'   
+  '/coachingCenter?query=params':
+    get: 
+      security: 
+        - bearerAuth: []
+      description: List of all Coaching Centers based on query
+      tags: [CoachingCenterProfile]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Coaching Center List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  CoachingCenters:
+                    type: array
+                    items: 
+                      allOf: 
+                        - $ref: '#/components/schemas/coachingCenterProfileDTO'
+                        - type: object
+                          properties: 
+                            link:
+                              type: string
+                              format: url
+                              example: https://aimcenter.com 
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/coaching/member':
+   post:
+      security:
+        - bearerAuth: []  
+      tags: [CoachingCenterMember]
+      description: create a coaching center Member profile
+      requestBody: 
+        description: provide a valid profile info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                userID:
+                  type: number
+                  format: int32
+                  example: 1
+                teacherID:
+                  type: number
+                  format: int32
+                  example: 1
+                coachingCenterID:
+                  type: number
+                  format: int32 
+                  example: 1
+                role:
+                  type: string 
+                  enum: [ADMIN, MANAGER, TEACHER]
+                  example: TEACHER
+                status:
+                  type: string
+                  enum: [PENDING, APPROVED, SUSPENDED]
+                  example: PENDING 
+                subjects: 
+                  type: string
+                  example: [English, Math]
+              required: [userID, coachingCenterID, role]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  staff:
+                    $ref: '#/components/schemas/CoachingCenterMemberDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: /teacher/profile
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/coaching/members/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags: [CoachingCenterMember]
+      description: Find a single Coaching Center Staff 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  coachingCenter:
+                    $ref: '#/components/schemas/CoachingCenterMemberDTO'
+                      
+                  link:
+                    type: string
+                    format: url
+                    example: users/students/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put: 
+      security:
+        - bearerAuth: []
+      tags: [CoachingCenterMember]
+      description: Update or Create a Coaching Center Staff Profile
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                userID:
+                  type: number
+                  format: int32
+                  example: 1
+                teacherID:
+                  type: number
+                  format: int32
+                  example: 1
+                coachingCenterID:
+                  type: number
+                  format: int32 
+                  example: 1
+                role:
+                  type: string 
+                  enum: [ADMIN, MANAGER, TEACHER]
+                  example: TEACHER
+                status:
+                  type: string
+                  enum: [PENDING, APPROVED, SUSPENDED]
+                  example: PENDING 
+                subjects: 
+                  type: string
+                  example: [English, Math]
+              required: [userID, coachingCenterID, role] 
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  studentData:
+                    $ref: '#/components/schemas/CoachingCenterMemberDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [CoachingCenterMember]
+      description: Update a Coaching Center Staff profile  
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              $ref: '#/components/schemas/CoachingCenterMemberDTO'
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  coachingCenterMember:
+                    $ref: '#/components/schemas/CoachingCenterMemberDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500' 
+    delete: 
+      security:
+        - bearerAuth: []
+      tags: [CoachingCenterMember]
+      description: Delete a Coaching Center Staff Profile 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: Riad
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500' 
+  '/coachingCenter/members?query=params':
+    get: 
+      security: 
+        - bearerAuth: []
+      description: List of all Coaching Center Staffs based on query
+      tags: [CoachingCenterMember]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Staff List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  CoachingCenters:
+                    type: array
+                    items: 
+                      allOf: 
+                        - $ref: '#/components/schemas/CoachingCenterMemberDTO'
+                        - type: object
+                          properties: 
+                            link:
+                              type: string
+                              format: url
+                              example: https://aimcenter.com 
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/batch':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [Batch]
+      description: create a Batch
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Class 12 (morning)
+                subjects:
+                  type: string
+                  example: [Bangla, English, Math]
+                scheduleID:
+                  type: number
+                  format: int32
+                  example: 143
+                capacity:
+                  type: number
+                  format: int32
+                  example: 100
+                price:
+                  type: number
+                  format: int32
+                  example: 6500/-
+                assignedTeachers:
+                  type: string
+                  example: [teacherID]
+                recurringRule:
+                  type: string
+                  enum: [SaturDay, SunDay, Monday, Twesday, WednesDay, Thursday, Friday]
+                  example: [SaturDay, Monday, WednesDay]
+              required: [name, subjects, scheduleID, capacity, price, recurringRule, assignedTeachers]           
+      responses: 
+        '200':
+          description: successfully created Batch
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  staff:
+                    $ref: '#/components/schemas/BatchDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: /batch/12
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/batch/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags: [Batch]
+      description: Find a Batch
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Batch:
+                    $ref: '#/components/schemas/BatchDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: batch/12
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put: 
+      security:
+        - bearerAuth: []
+      tags: [Batch]
+      description: Update or Create a Batch
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Class 12 (morning)
+                subjects:
+                  type: string
+                  example: [Bangla, English, Math]
+                scheduleID:
+                  type: number
+                  format: int32
+                  example: 143
+                capacity:
+                  type: number
+                  format: int32
+                  example: 100
+                price:
+                  type: number
+                  format: int32
+                  example: 6500/-
+                assignedTeachers:
+                  type: string
+                  example: [teacherID]
+                recurringRule:
+                  type: string
+                  enum: [SaturDay, SunDay, Monday, Twesday, WednesDay, Thursday, Friday]
+                  example: [SaturDay, Monday, WednesDay]
+              required: [name, subjects, scheduleID, capacity, price, assignedTeachers, recurringRule ]          
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  studentData:
+                    $ref: '#/components/schemas/BatchDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [Batch]
+      description: Update a Batch
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: Class 12 (morning)
+                subjects:
+                  type: string
+                  example: [Bangla, English, Math]
+                scheduleID:
+                  type: number
+                  format: int32
+                  example: 143
+                capacity:
+                  type: number
+                  format: int32
+                  example: 100
+                price:
+                  type: number
+                  format: int32
+                  example: 6500/-
+                assignedTeachers:
+                  type: string
+                  example: [teacherID]
+                recurringRule:
+                  type: string
+                  enum: [SaturDay, SunDay, Monday, Twesday, WednesDay, Thursday, Friday]
+                  example: [SaturDay, Monday, WednesDay]
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  coachingCenterMember:
+                    $ref: '#/components/schemas/BatchDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: user/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'  
+    delete: 
+      security:
+        - bearerAuth: []
+      tags: [Batch]
+      description: Delete a Batch 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: Class 12 ()
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'    
+  '/batch?query=params':
+    get:
+      security: 
+        - bearerAuth: []
+      description: List of all batch 
+      tags: [Batch]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Batch List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Batchs:
+                    type: array
+                    items: 
+                      allOf: 
+                        - $ref: '#/components/schemas/BatchDTO'
+                        - type: object
+                          properties: 
+                            link:
+                              type: string
+                              format: url
+                              example: /batch/12
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/demoClass':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [DemoClass]
+      description: create/upload a Demo-Class
+      requestBody: 
+        description: provide a valid profile info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Chapter 1
+                videoURL:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/asdijowie16565
+                subjectID:
+                  type: number
+                  format: int32
+                  example: 1
+                batchID:
+                  type: number
+                  format: int32
+                  example: 1
+                teacherID:
+                  type: number
+                  format: int32
+                  example: 32
+                status:
+                  type: string
+                  enum: [Draft, Published]
+                  example: Draft 
+              required: [title, videoURL, subjectID, batchID, teacherID]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  DemoClass:
+                    $ref: '#/components/schemas/DemoClassDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: /batch/12
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/demoClass/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags: [DemoClass]
+      description: Find a DemoClass
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  coachingCenter:
+                    $ref: '#/components/schemas/DemoClassDTO'
+                      
+                  link:
+                    type: string
+                    format: url
+                    example: users/students/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put: 
+      security:
+        - bearerAuth: []
+      tags: [DemoClass]
+      description: Update or Create a Demo Class
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                title:
+                  type: string
+                  example: Chapter 1
+                videoURL:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/asdijowie16565
+                subjectID:
+                  type: number
+                  format: int32
+                  example: 1
+                batchID:
+                  type: number
+                  format: int32
+                  example: 1
+                teacherID:
+                  type: number
+                  format: int32
+                  example: 32
+                status:
+                  type: string
+                  enum: [Draft, Published]
+                  example: Draft 
+              required: [title, videoURL, subjectID, batchID, teacherID] 
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  DemoClass:
+                    $ref: '#/components/schemas/DemoClassDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: demoClass/13
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [DemoClass]
+      description: Update a Demo Class
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              $ref: '#/components/schemas/DemoClassDTO'
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  DemoClass:
+                    $ref: '#/components/schemas/DemoClassDTO'
+                  link:
+                    type: string
+                    format: url
+                    example: demoClass/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      security:
+        - bearerAuth: []
+      tags: [DemoClass]
+      description: Delete a Demo Class 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: Chapter 1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'    
+  '/demoClass/{id}?query=params':
+    get: 
+      security: 
+        - bearerAuth: []
+      description: List of all DemoClass  
+      tags: [DemoClass]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Demo Class List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  DemoClasses:
+                    type: array
+                    items: 
+                      allOf: 
+                        - $ref: '#/components/schemas/DemoClassDTO'
+                        - type: object
+                          properties: 
+                            link:
+                              type: string
+                              format: url
+                              example: /demoClasses/12
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/enrollment':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [Enrollment]
+      description: create a Enrollment
+      requestBody: 
+        description: provide a valid profile info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties:
+                studentID:
+                  type: number
+                  format: int32
+                  example: 1
+                batchID:
+                  type: number
+                  format: int32
+                  example: 1
+                status:
+                  type: string
+                  enum: [Pending, completed, canceled]
+                  example: Pending 
+              required: [studentID, batchID]          
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Enrollment:
+                    type: object
+                    properties: 
+                      studentID:
+                        type: number
+                        format: int32
+                        example: 1
+                      batchID:
+                        type: number
+                        format: int32
+                        example: 1
+                      enrollAt:
+                        type: string
+                        format: date-time
+                        example: '2026-02-06T14:02:04.614Z'
+                      status:
+                        type: string
+                        enum: [Pending, completed, canceled]
+                        example: Pending 
+                  link:
+                    type: string
+                    format: url
+                    example: /batch/12
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/enrollments?query=params':
+    get:
+      security: 
+        - bearerAuth: []
+      description: List of all batch 
+      tags: [Enrollment]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Enrolled Student List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Enrolled:
+                    type: array
+                    items: 
+                      allOf: 
+                        - type: object
+                          properties:
+                            studentID:
+                              type: number
+                              format: int32
+                              example: 1
+                            batchID:
+                              type: number
+                              format: int32
+                              example: 1
+                            enrollAt:
+                              type: string
+                              format: date-time
+                              example: '2026-02-06T14:02:04.614Z'
+                            status:
+                              type: string
+                              enum: [Pending, completed, canceled]
+                              example: Pending 
+                            link:
+                              type: string
+                              format: url
+                              example: /students/12
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/schedule':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [Schedule]
+      description: create a Schedule 
+      requestBody: 
+        description: provide a valid time for Schedule 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties:
+                startTime:
+                  type: string
+                  format: date-time
+                  example: 2026-02-06T14:33:29.231Z
+                endTime:
+                  type: string
+                  format: date-time
+                  example: 2026-02-06T14:39:39.231Z
+              required: [ startTime, endTime ]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Schedule:
+                    type: object
+                    properties: 
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:33:29.231Z
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:39:39.231Z
+                  link:
+                    type: string
+                    format: url
+                    example: /batch/12
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/schedules/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags: [Schedule]
+      description: Find a Schedule
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Schedule:
+                    type: object
+                    properties:
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:33:29.231Z
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:39:39.231Z
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      security:
+        - bearerAuth: []
+      tags: [DemoClass]
+      description: Update or Create a Demo Class
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                startTime:
+                  type: string
+                  format: date-time
+                  example: 2026-02-06T14:33:29.231Z
+                endTime:
+                  type: string
+                  format: date-time
+                  example: 2026-02-06T14:39:39.231Z
+              required: [ startTime, endTime ]         
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  schedule:
+                    type: object
+                    properties: 
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:33:29.231Z
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:39:39.231Z
+                    required: [ startTime, endTime ]         
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [Schedule]
+      description: Update a Schedule
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                startTime:
+                  type: string
+                  format: date-time
+                  example: 2026-02-06T14:33:29.231Z
+                endTime:
+                  type: string
+                  format: date-time
+                  example: 2026-02-06T14:39:39.231Z
+                
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  DemoClass:
+                    type: object
+                    properties: 
+                      startTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:33:29.231Z
+                      endTime:
+                        type: string
+                        format: date-time
+                        example: 2026-02-06T14:39:39.231Z  
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete: 
+      security:
+        - bearerAuth: []
+      tags: [Schedule]
+      description: Delete a Schedule
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  startTime:
+                    type: string
+                    format: date-time
+                    example: 2026-02-06T14:33:29.231Z
+                  endTime:
+                    type: string
+                    format: date-time
+                    example: 2026-02-06T14:39:39.231Z
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'  
+  '/schedules?query=params':
+    get:
+      security: 
+        - bearerAuth: []
+      description: List of all Schedules 
+      tags: [Schedule]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Schedules List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Enrolled:
+                    type: array
+                    items: 
+                      allOf: 
+                        - type: object
+                          properties:
+                            startTime:
+                              type: string
+                              format: date-time
+                              example: 2026-02-06T14:33:29.231Z
+                            endTime:
+                              type: string
+                              format: date-time
+                              example: 2026-02-06T14:39:39.231Z
+                            link:
+                              type: string
+                              format: url
+                              example: /schedules/12
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/notifications?query=params':
+    get:
+      security: 
+        - bearerAuth: []
+      description: List of all Schedules 
+      tags: [Notification]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Notification List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Notifications:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        userID:
+                          type: number
+                          format: int32 
+                          example: 1
+                        type:
+                          type: string 
+                          example: Class Info
+                        message:
+                          type: string
+                          example: next class will be next friday !!!
+                        links:
+                          type: object
+                          properties: 
+                            self:
+                              type: string
+                              format: url
+                              example: /notifications/12
+                            sender:
+                              type: string
+                              format: url
+                              example: /user/15
+                            
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/signIn':
+    post:
+      security: 
+        - bearerAuth: []
+      tags: [Auth]
+      description: Sign-In 
+      requestBody:
+        description: provide valid email and password
+        content:
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                email:
+                  type: string
+                  format: email
+                  example: riad@gmail.com
+                password:
+                  type: string
+                  format: password
+                  example: riad123
+      responses: 
+        '200':
+          description: successfully log-In
+          content:
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully logedIn
+                  userInfo:
+                    type: object
+                    properties: 
+                      name: 
+                        type: string
+                        example: Riad
+                      email:
+                        type: string
+                        format: email
+                        example: riad@gmail.com
+                      link:
+                        type: string
+                        format: url
+                        example: user/12
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'                       
+      
+      
+
+
+
+components: 
+  securitySchemes: 
+    bearerAuth:
+      type: http
+      scheme: bearer 
+      bearerFormat: JWT
+  schemas: 
+    pagination:
+      type: object
+      properties: 
+        page:
+          type: number
+          format: int32
+          example: 1
+        limit:
+          type: number
+          format: int32
+          example: 10
+        next:
+          type: string
+          example: article/3
+        prev:
+          type: string
+          example: article/1
+        total-page:
+          type: number
+          format: int32
+          example: 50
+        total-content:
+          type: number
+          format: int32
+          example: 112
+    links:
+      type: object
+      properties: 
+        self:
+          type: string
+          format: url
+          example: https://www.abc.com/2
+        next:
+          type: string
+          format: url
+          example: https://www.abc.com/3
+        prev:
+          type: string
+          format: url
+          example: https://www.abc.com/1
+    userDTO:
+      type: object
+      properties: 
+        name:
+          type: string
+          example: Riad
+        email:
+          type: string
+          format: email
+          example: riad@gmail.com
+        mobile: 
+          type: number
+          format: int32
+          example: 01518949131
+        avatar:
+          type: string
+          format: url
+          example: https://cloudinary.com/adiokd24e6s2d6
+        cover-image:
+          type: string
+          format: url
+          example: https://cloudinary.com/adiokd24e6s2d6
+        role:
+          type: string
+          enum: [Admin, teacher, coaching-admin, coaching-manager, couching-teacher, student]
+          example: student
+    teacherDTO:
+      type: object
+      properties: 
+        userID:
+          type: number
+          format: int32
+          example: 1
+        bio:
+          type: string
+          example: Expert in English
+        education:
+          type: string
+          example: BSc in Computer
+        certificate:
+          type: string
+          example: ['communication']
+        experienceYears:
+          type: number
+          format: int32
+          example: 5
+    coachingCenterProfileDTO:
+      type: object
+      properties: 
+        name:
+          type: string
+          example: Aim Coaching center
+        address:
+          type: object
+          properties: 
+            street:
+              type: string
+              example: south azompur, 151/B
+            city:
+              type: string
+              example: Uttora
+            country:
+              type: string
+              example: Bangladesh
+        website:
+          type: string
+          format: url
+          example: https://www.aircenter.center 
+        subjects:
+          type: string
+          example: [English, Math, Science]
+        teachersID:
+          type: number
+          format: int32
+          example: [245, 663]
+        status:
+          type: string
+          enum: [Pending, Approved, Suspended]
+          example: Pending
+    CoachingCenterMemberDTO:
+      type: object
+      properties: 
+        userID:
+          type: number
+          format: int32
+          example: 1
+        teacherID:
+          type: number
+          format: int32
+          example: 1
+        coachingCenterID:
+          type: number
+          format: int32 
+          example: 1
+        role:
+          type: string 
+          enum: [ADMIN, MANAGER, TEACHER]
+          example: TEACHER
+        status:
+          type: string
+          enum: [PENDING, APPROVED, SUSPENDED]
+          example: PENDING 
+        subjects: 
+          type: string
+          example: [English, Math]
+    BatchDTO:
+      type: object
+      properties: 
+        name:
+          type: string
+          example: Class 12 (morning)
+        subjects:
+          type: string
+          example: [Bangla, English, Math]
+        scheduleID:
+          type: number
+          format: int32
+          example: 143
+        capacity:
+          type: number
+          format: int32
+          example: 100
+        price:
+          type: number
+          format: int32
+          example: 6500/-
+        assignedTeachers:
+          type: string
+          example: [teacherID]
+        recurringRule:
+          type: string
+          enum: [SaturDay, SunDay, Monday, Twesday, WednesDay, Thursday, Friday]
+          example: [SaturDay, Monday, WednesDay]
+        rating:
+          type: number
+          format: int32
+          example: 4.5
+    DemoClassDTO:
+      type: object
+      properties: 
+        title:
+          type: string
+          example: Chapter 1
+        videoURL:
+          type: string
+          format: url
+          example: https://cloudinary.com/asdijowie16565
+        subjectID:
+          type: number
+          format: int32
+          example: 1
+        batchID:
+          type: number
+          format: int32
+          example: 1
+        teacherID:
+          type: number
+          format: int32
+          example: 32
+        status:
+          type: string
+          enum: [Draft, Published]
+          example: Draft 
+
+
+
+  responses: 
+    '204':
+       description: empty content
+       content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code: 
+                type: number
+                format: int32
+                example: 401
+              message:
+                type: string
+                example: empty content
+    '400':
+      description: Bad Request
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code:
+                type: number
+                format: int32
+                example: 400
+              message:
+                type: string
+                example: Bad Request
+              data:
+                type: object
+                properties: 
+                  message:
+                    type: string
+                    example: error
+                  field:
+                    type: string
+                    example: field name
+                  in:
+                    type: string
+                    enum: [Query, Body]
+                    example: Query 
+    '401':
+      description: unauthorized
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code: 
+                type: number
+                format: int32
+                example: 401
+              message:
+                type: string
+                example: unauthorized
+    '404':
+      description: not found
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code:
+                type: number
+                format: int32
+                example: 404
+              message:
+                type: string
+                example: Content Not found
+    '500':
+      description: Server Error 
+      content: 
+        'application/json':
+          schema: 
+            type: object
+            properties: 
+              code: 
+                type: number
+                format: int32
+                example: 500
+              message:
+                type: string
+                example: Server Error
+  parameters: 
+    'idPathParams':
+      in: path
+      name: id 
+      description: user / article id 
+      required: true
+      schema: 
+        type: number
+        format: int32
+        example: 1
+    'pageParams':
+      in: query
+      name: page 
+      description: current page number 
+      schema: 
+        type: number
+        format: int32
+        example: 1
+    limitParams:
+      in: query
+      name: limit 
+      description: how many content will show in a page 
+      schema: 
+        type: number
+        format: int32
+        example: 10
+    sortTypeParams:
+      in: query
+      name: sort-type 
+      description: sort-type asc or dec 
+      schema:
+        type: string
+        enum: [asc, dec]
+        example: asc 
+    sortByParams:
+      in: query
+      name: sort-by-updatedAt
+      description: the sort property will use to sort, it could be either updateAt or title
+      schema:
+        type: string
+        example: updatedAt 
+    searchParams:
+      in: query
+      name: search 
+      description: search by title / name 
+      schema:
+        type: string
+        example: 'riad'
