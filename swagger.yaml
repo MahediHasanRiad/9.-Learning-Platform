@@ -10,9 +10,7 @@ info:
 servers:
   # Added by API Auto Mocking Plugin
   # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/self-eef/learning-platform/1.0.0
-  - description: SwaggerHub API Auto Mocking
+  - description: Local host server 
     url: http://localhost:3000/api/v1
 tags: 
   - name: User
@@ -21,6 +19,8 @@ tags:
     description: Teacher endpoint 
   - name: Student 
     description: Student endpoint 
+  - name: Subject 
+    description: Class Subject 
   - name: CoachingCenterProfile
     description: Coaching center profile endpoint 
   - name: CoachingCenterMember 
@@ -1652,6 +1652,292 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+  '/subject':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [Subject]
+      description: create a subject 
+      requestBody: 
+        description: provide a valid subject info 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                name:
+                 type: string
+                 example: English
+                class: 
+                 type: string 
+                 example: class 10
+              required: [name, class]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  subject:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: English
+                      class: 
+                        type: string 
+                        example: class 10
+                  self:
+                    type: string
+                    format: url
+                    example: /subject/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'  
+  '/subject/{id}': 
+    get:
+      security:
+      - bearerAuth: []
+      tags: [Subject]
+      description: Find a single subject 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Subject:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: English
+                      class: 
+                        type: string 
+                        example: class 10
+                  link:
+                    type: string
+                    format: url
+                    example: subject/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      security:
+        - bearerAuth: []
+      tags: [Subject]
+      description: Update or Create a Subject 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                name:
+                  type: string
+                  example: English
+                class: 
+                  type: string 
+                  example: class 10
+              required: [name, class] 
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  subject:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: English
+                      class: 
+                        type: string 
+                        example: class 10
+                  link:
+                    type: string
+                    format: url
+                    example: user/1
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [Subject]
+      description: Update a subject
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              $ref: '#/components/schemas/CoachingCenterMemberDTO'
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  coachingCenterMember:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: English
+                      class: 
+                        type: string 
+                        example: class 10
+                  link:
+                    type: string
+                    format: url
+                    example: subject/1    
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500' 
+    delete: 
+      security:
+        - bearerAuth: []
+      tags: [Subject]
+      description: Delete a Subject 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  name:
+                    type: string
+                    example: English 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+  '/subjects?query=params':
+    get:
+      security: 
+        - bearerAuth: []
+      description: List of all Subjects
+      tags: [Subject]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Subject List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Subjects:
+                    type: array
+                    items: 
+                      allOf: 
+                        - type: object
+                          properties:
+                            name:
+                              type: string
+                              example: English
+                            class: 
+                              type: string 
+                              example: class 10
+                        - type: object
+                          properties: 
+                            link:
+                              type: string
+                              format: url
+                              example: subject/2
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
   '/batch':
     post:
       security:
@@ -2689,6 +2975,221 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+  '/notification':
+    post:
+      security:
+        - bearerAuth: []  
+      tags: [Notification]
+      description: create a notification  
+      requestBody: 
+        description: provide a valid time for Schedule 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties:
+                text:
+                  type: string 
+                  example: New Batch Start From 13-March
+              required: [ text ]           
+      responses: 
+        '200':
+          description: successfully created teacher profile 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  notification:
+                    type: object
+                    properties: 
+                      text:
+                        type: string 
+                        example: New Batch Start From 13-March 
+                  link:
+                    type: string
+                    format: url
+                    example: /notification
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+  '/notification/{id}':
+    get:
+      security:
+      - bearerAuth: []
+      tags: [Notification]
+      description: Find a Notification
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '200':
+          description: success
+          content: 
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  Notification:
+                    type: object
+                    properties:
+                      text:
+                        type: string
+                        example: Next 
+                      link:
+                        type: string 
+                        example: /notification/12 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      security:
+        - bearerAuth: []
+      tags: [Notification]
+      description: Update or Create a Notification 
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide a valid info 
+        content: 
+          'application/json':
+            schema:
+              type: object
+              properties: 
+                text:
+                  type: string 
+                  example: New Batch Start form 13 march 
+              required: [ text ]         
+      responses: 
+        '200':
+          description: successfully updated
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code:
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: successfully updated or create 
+                  notification:
+                    type: object
+                    properties: 
+                      text:
+                        type: string 
+                        example: New Batch Start form 13 march 
+                      link:
+                        type: string 
+                        example: /notification/12
+                      
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
+    patch:
+      security: 
+        - bearerAuth: []
+      tags: [Notification]
+      description: Update a Notification
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      requestBody: 
+        description: provide content which one want to update 
+        content: 
+          'application/json':
+            schema: 
+              type: object
+              properties: 
+                text:
+                  type: string 
+                  example: new Batch Start From 13 March 
+                link:
+                  type: string 
+                  example: /notification/12
+                
+      responses: 
+        '200':
+          description: success
+          content:
+            'application/json':
+              schema:
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  DemoClass:
+                    type: object
+                    properties: 
+                      text:
+                        type: string 
+                        example: new Batch Start From 13 March 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      security:
+        - bearerAuth: []
+      tags: [Notification]
+      description: Delete a Notification
+      parameters: 
+        - $ref: '#/components/parameters/idPathParams'
+      
+      responses: 
+        '204':
+          description: success 
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  text:
+                    type: string 
+                    example: new Batch start from 13 march 
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'  
   '/notifications?query=params':
     get:
       security: 
@@ -2756,8 +3257,6 @@ paths:
           $ref: '#/components/responses/500'
   '/signIn':
     post:
-      security: 
-        - bearerAuth: []
       tags: [Auth]
       description: Sign-In 
       requestBody:
@@ -3145,7 +3644,7 @@ components:
         enum: [asc, dec]
         example: asc 
     sortByParams:
-      in: query
+      in: query 
       name: sort-by-updatedAt
       description: the sort property will use to sort, it could be either updateAt or title
       schema:
