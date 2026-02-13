@@ -1,20 +1,38 @@
 import express from "express";
+import mongoose from "mongoose";
 import Yaml from "yamljs";
 import swaggerUiExpress from "swagger-ui-express";
+import dotenv from "dotenv";
+import { userRouter } from "./src/router/user.router.js";
 
-const app = express()
-const swaggerDocs = Yaml.load('./swagger.yaml')
+const app = express();
+const swaggerDocs = Yaml.load("./swagger.yaml");
+dotenv.config({ path: "./.env" });
+
 
 // middleware
-app.use(express.json())
-app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/docs", swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs));
 
 
 // routers
-app.get('/', (req, res) => {
-    res.send('this is home')
-})
+app.use('/api/v1/user', userRouter)
+app.get("/health", (req, res) => {
+  res.send("this is health route !!!");
+});
 
-app.listen(3000, () => {
-    console.log('server in on...')
-})
+
+// database connection
+mongoose
+  .connect(`${process.env.DB_URL}/${DB_NAME}`)
+  .then(() => {
+    console.log("Database connected !");
+
+    app.listen(3000, () => {
+      console.log("server in on...");
+    });
+  })
+  .catch((e) => {
+    console.log(e);
+  });
