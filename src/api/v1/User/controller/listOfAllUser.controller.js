@@ -1,6 +1,8 @@
 import { User } from "../../../../model/user.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import { Links } from "../../../../utils/links.js";
+import { Pagination } from "../../../../utils/pagination.js";
 
 const listOfAllUserController = asyncHandler(async (req, res) => {
   /**
@@ -41,37 +43,10 @@ const listOfAllUserController = asyncHandler(async (req, res) => {
 
   // count
   const totalUser = await User.countDocuments(filterUser);
-  const totalPage = Math.ceil(totalUser / limit);
-
   // pagination
-  const pagination = {
-    page: page,
-    limit: limit,
-    totalPage,
-    totalUser: totalUser,
-  };
-
-  if (page > 1) {
-    pagination.prev = `/users/${page - 1}`;
-  }
-  if (page < totalPage) {
-    pagination.next = `/users/${page + 1}`;
-  }
-
+  const pagination = await Pagination(page, limit, totalUser, 'users')
   // links
-  const links = {
-    self: `${req.path}`,
-  };
-
-  if (pagination.prev) {
-    const query = new URLSearchParams(req.query).toString();
-    links.prev = `/users?${page - 1}${query}`;
-  }
-
-  if (pagination.next) {
-    const query = new URLSearchParams(req.query).toString();
-    links.next = `/users?${page + 1}${query}`;
-  }
+  const links = await Links(req, pagination, 'users/all')
 
   res
     .status(200)

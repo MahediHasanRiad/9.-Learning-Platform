@@ -2,14 +2,15 @@ import { User } from "../../../../model/user.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
+import { LocalFilePath } from "../utils/image_local_File_Path.js";
 
 const updateImageController = asyncHandler(async (req, res) => {
 
-    const avatarLocalPath = req.files?.avatar?.[0]?.path 
-    const coverImageLocalPath = req.files?.coverImage?.[0]?.path 
+    const avatarLocalPath = LocalFilePath(req, 'avatar')
+    const coverImageLocalPath = LocalFilePath(req, 'coverImage', true)
 
     const avatar = avatarLocalPath ? await cloudinaryFileUpload(avatarLocalPath) : ''
-    const coverImage = coverImageLocalPath ? await coverImageLocalPath(cloudinaryFileUpload) : ''
+    const coverImage = coverImageLocalPath ? await cloudinaryFileUpload(coverImageLocalPath) : ''
 
     const user = await User.findById(req.user._id)
     

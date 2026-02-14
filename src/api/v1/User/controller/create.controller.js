@@ -3,6 +3,7 @@ import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { User } from "../../../../model/user.model.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
+import { LocalFilePath } from "../utils/image_local_File_Path.js";
 
 export const createUserController = asyncHandler(async (req, res) => {
   /**
@@ -24,10 +25,10 @@ export const createUserController = asyncHandler(async (req, res) => {
   const existUser = await User.findOne({ email });
   if (existUser) throw new apiError(400, "Exist User !!!");
 
-  const avaterLocalPath = req.files?.avatar?.[0]?.path;
-  const coverImageLocalPath = req.files?.coverImage?.[0]?.path;
+  const avaterLocalPath = LocalFilePath(req, 'avatar', true)
+  const coverImageLocalPath = LocalFilePath(req, 'coverImage')
 
-  if (!avaterLocalPath) throw new apiError(400, "avatar not found !!!");
+
 
   const avatar = await cloudinaryFileUpload(avaterLocalPath);
   const coverImage = coverImageLocalPath ? await cloudinaryFileUpload(coverImageLocalPath) : ''
