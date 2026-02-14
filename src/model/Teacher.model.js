@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const teacherSchema = new Schema({
     userID: {
-        type: Schema.objectId,
+        type: Schema.Types.ObjectId,
         ref: 'User'
     },
     bio: {
@@ -14,12 +14,11 @@ const teacherSchema = new Schema({
         required: true
     },
     certificate: {
-        type: [string]
+        type: [String]
     },
     experienceOfYears: {
         type: Number,
-        default: 0,
-        required: true
+        default: 0
     }
 }, {timeStamp: true})
 

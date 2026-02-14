@@ -3,7 +3,7 @@ import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { User } from "../../../../model/user.model.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
-import { LocalFilePath } from "../utils/image_local_File_Path.js";
+import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 
 export const createUserController = asyncHandler(async (req, res) => {
   /**

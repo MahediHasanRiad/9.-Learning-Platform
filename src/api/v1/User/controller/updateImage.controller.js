@@ -2,7 +2,7 @@ import { User } from "../../../../model/user.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
-import { LocalFilePath } from "../utils/image_local_File_Path.js";
+import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 
 const updateImageController = asyncHandler(async (req, res) => {
 

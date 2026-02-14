@@ -5,6 +5,7 @@ import swaggerUiExpress from "swagger-ui-express";
 import dotenv from "dotenv";
 import { userRouter } from "./src/router/user.router.js";
 import cookieParser from "cookie-parser";
+import { teacherRouter } from "./src/router/teacher.router.js";
 
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
@@ -19,7 +20,8 @@ app.use(cookieParser())
 
 // routers
 app.use('/api/v1', userRouter)
-app.get("/health", (req, res) => {
+app.use('/api/v1', teacherRouter);
+app.get("/health", (_req, res) => {
   res.send("this is health route !!!");
 });
 

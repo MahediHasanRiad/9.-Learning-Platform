@@ -6,14 +6,16 @@ import { updateOrCreateController } from "../api/v1/User/controller/updateOrCrea
 import { updateUserController } from "../api/v1/User/controller/update.controller.js";
 import { deleteUserController } from "../api/v1/User/controller/delete.controller.js";
 import { logInController } from "../api/v1/Auth/controller/login.controller.js";
-import { changePasswordController } from "../api/v1/User/controller/changePassword.js";
+import { changePasswordController } from "../api/v1/User/controller/changePassword.controller.js";
 import { authVerify } from "../middleware/auth.middleware.js";
-import { updateImageController } from "../api/v1/User/controller/updateImage.js";
+import { updateImageController } from "../api/v1/User/controller/updateImage.controller.js";
 import { listOfAllUserController } from "../api/v1/User/controller/listOfAllUser.controller.js";
 
 const userRouter = Router();
 
 
+userRouter.post("/login", logInController);
+userRouter.post("/changePassword", authVerify, changePasswordController);
 userRouter.get('/users/all', authVerify, listOfAllUserController)
 userRouter.post("/user",
   upload.fields([
@@ -34,8 +36,7 @@ userRouter
     ]),
     updateOrCreateController,
   );
-userRouter.post("/login", logInController);
-userRouter.post("/changePassword", authVerify, changePasswordController);
+
 userRouter.post(
   "/profileImage",
   authVerify,
