@@ -4,6 +4,7 @@ import Yaml from "yamljs";
 import swaggerUiExpress from "swagger-ui-express";
 import dotenv from "dotenv";
 import { userRouter } from "./src/router/user.router.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
@@ -11,13 +12,13 @@ dotenv.config({ path: "./.env" });
 
 
 // middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use("/docs", swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs));
-
+app.use(cookieParser())
 
 // routers
-app.use('/api/v1/user', userRouter)
+app.use('/api/v1', userRouter)
 app.get("/health", (req, res) => {
   res.send("this is health route !!!");
 });
@@ -25,7 +26,7 @@ app.get("/health", (req, res) => {
 
 // database connection
 mongoose
-  .connect(`${process.env.DB_URL}/${DB_NAME}`)
+  .connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
   .then(() => {
     console.log("Database connected !");
 
