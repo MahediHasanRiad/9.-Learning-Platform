@@ -1,14 +1,14 @@
-import { Teacher } from "../../../../model/Teacher.model.js";
-import { User } from "../../../../model/user.model.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { generateToken } from "../../../../utils/generateAccessToken.js";
 import { Responses } from "../utils/response.js";
 import { verifyTeacher } from "../utils/teacher.js";
 import { verifyUser } from "../utils/user.js";
+import { verifyCoachingCenter } from "../utils/verifyCoachingCenter.js";
+
+
 
 const logInController = asyncHandler(async (req, res) => {
+  
   const { email, password } = req.body;
   const { as = "student" } = req.query;
 
@@ -23,9 +23,10 @@ const logInController = asyncHandler(async (req, res) => {
     const {teacher, accessToken} = await verifyTeacher(email, password)
     Responses(res, teacher, accessToken)
   }
-  // if (as === "coaching") {
-  //   TODO:
-  // }
+  if (as === "coaching") {
+    const {coachingCenter, accessToken} = await verifyCoachingCenter(email, password)
+    Responses(res, coachingCenter, accessToken)
+  }
 });
 
 export { logInController };

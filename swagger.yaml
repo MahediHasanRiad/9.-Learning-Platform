@@ -1125,7 +1125,22 @@ paths:
                 name:
                   type: string
                   example: Aim Coaching center
-                street:
+                email:
+                  type: string
+                  example: riad@couchingcom
+                contact: 
+                  type: number
+                  format: int32 
+                  example: 8801518949131
+                avatar:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/ablajdfoijsd46s5d
+                coverImage: 
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/ablajdfoijsd46s5d
+                address:
                   type: string
                   example: south azompur, 151/B
                 city:
@@ -1272,11 +1287,25 @@ paths:
             schema:
               type: object
               properties: 
-                properties: 
                 name:
                   type: string
                   example: Aim Coaching center
-                street:
+                email:
+                  type: string
+                  example: riad@couchingcom
+                contact: 
+                  type: number
+                  format: int32 
+                  example: 8801518949131
+                avatar:
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/ablajdfoijsd46s5d
+                coverImage: 
+                  type: string
+                  format: url
+                  example: https://cloudinary.com/ablajdfoijsd46s5d
+                address:
                   type: string
                   example: south azompur, 151/B
                 city:
@@ -1300,7 +1329,7 @@ paths:
                   type: string
                   enum: [Pending, Approved, Suspended]
                   example: Pending
-              required: [name, street, city, country, website, subjects, teachersID, status]   
+              required: [name, email, contact, avatar, address, city, country, website, subjects, teachersID, status]   
       responses: 
         '200':
           description: successfully updated
@@ -1435,10 +1464,10 @@ paths:
                   type: number
                   format: int32
                   example: 1
-                teacherID:
-                  type: number
-                  format: int32
-                  example: 1
+                # teacherID:
+                #   type: number
+                #   format: int32
+                #   example: 1
                 coachingCenterID:
                   type: number
                   format: int32 
@@ -1539,10 +1568,10 @@ paths:
                   type: number
                   format: int32
                   example: 1
-                teacherID:
-                  type: number
-                  format: int32
-                  example: 1
+                # teacherID:
+                #   type: number
+                #   format: int32
+                #   example: 1
                 coachingCenterID:
                   type: number
                   format: int32 
@@ -3489,18 +3518,30 @@ components:
         name:
           type: string
           example: Aim Coaching center
+        email:
+          type: string
+          example: riad@couchingcom
+        contact: 
+          type: number
+          format: int32 
+          example: 8801518949131
+        avatar:
+          type: string
+          format: url
+          example: https://cloudinary.com/ablajdfoijsd46s5d
+        coverImage: 
+          type: string
+          format: url
+          example: https://cloudinary.com/ablajdfoijsd46s5d
         address:
-          type: object
-          properties: 
-            street:
-              type: string
-              example: south azompur, 151/B
-            city:
-              type: string
-              example: Uttora
-            country:
-              type: string
-              example: Bangladesh
+          type: string
+          example: south azompur, 151/B
+        city:
+          type: string
+          example: Uttora
+        country:
+          type: string
+          example: Bangladesh
         website:
           type: string
           format: url
@@ -3516,6 +3557,10 @@ components:
           type: string
           enum: [Pending, Approved, Suspended]
           example: Pending
+        role:
+          type: string
+          enum: ['Admin', 'Manager']
+          example: "Admin"
     CoachingCenterMemberDTO:
       type: object
       properties: 
@@ -3523,10 +3568,10 @@ components:
           type: number
           format: int32
           example: 1
-        teacherID:
-          type: number
-          format: int32
-          example: 1
+        # teacherID:
+        #   type: number
+        #   format: int32
+        #   example: 1
         coachingCenterID:
           type: number
           format: int32 
