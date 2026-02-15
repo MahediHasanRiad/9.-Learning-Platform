@@ -10,11 +10,15 @@ import { changePasswordController } from "../api/v1/User/controller/changePasswo
 import { authVerify } from "../middleware/auth.middleware.js";
 import { updateImageController } from "../api/v1/User/controller/updateImage.controller.js";
 import { listOfAllUserController } from "../api/v1/User/controller/listOfAllUser.controller.js";
+import { logOutController } from "../api/v1/Auth/controller/logOut.controller.js";
 
 const userRouter = Router();
 
 
 userRouter.post("/login", logInController);
+userRouter.get("/logout", logOutController);
+
+
 userRouter.post("/changePassword", authVerify, changePasswordController);
 userRouter.get('/users/all', authVerify, listOfAllUserController)
 userRouter.post("/user",

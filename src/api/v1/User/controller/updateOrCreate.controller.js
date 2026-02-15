@@ -17,10 +17,10 @@ const updateOrCreateController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { name, email, password, mobile, role } = req.body;
+  const { name, email, password, mobile, role, classLevel, subjectOfInterest } = req.body;
   const { id } = req.params;
 
-  if ([name, email, password, mobile, role].some((item) => item === ""))
+  if ([name, email, password, mobile, role, classLevel].some((item) => item === ""))
     throw new apiError(400, "all field are required");
 
   const avatarFilePath = req.files?.avatar[0]?.path;
@@ -43,6 +43,8 @@ const updateOrCreateController = asyncHandler(async (req, res) => {
       avatar: avatar.url || '',
       coverImage: coverImage.url || '',
       role,
+      classLevel,
+      subjectOfInterest
     });
 
     res.status(200).json(new apiResponse(201, user, "new user created !"));

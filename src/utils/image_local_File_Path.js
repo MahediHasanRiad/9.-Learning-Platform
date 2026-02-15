@@ -1,3 +1,5 @@
+import { apiError } from "./apiError.js";
+
 const LocalFilePath = (req, fileName = '', required = false) => {
 
   const LocalfilePath = req.files?.[fileName]?.[0]?.path;

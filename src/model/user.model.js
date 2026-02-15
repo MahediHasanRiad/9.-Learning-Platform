@@ -47,6 +47,14 @@ const userSchema = new Schema({
         enum: ['ADMIN', 'TEACHER', 'COACHING-ADMIN', 'COACHING-MANAGER', 'COACHING-TEACHER', 'STUDENT'],
         default: 'STUDENT',
         required: true
+    },
+    classLevel: {
+        type: String,
+        enum: ['Class 10', 'Class 9', 'Class 8'],
+        required: true
+    },
+    subjectOfInterest : {
+        type: [String]
     }
 }, {timestamps: true})
 

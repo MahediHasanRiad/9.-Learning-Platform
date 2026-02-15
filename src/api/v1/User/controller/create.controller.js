@@ -16,9 +16,9 @@ export const createUserController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { name, email, password, mobile, role } = req.body;
+  const { name, email, password, mobile, role, classLevel, subjectOfInterest } = req.body;
 
-  if ([name, email, password, mobile, role].some((item) => item === "")) {
+  if ([name, email, password, mobile, role, classLevel].some((item) => item === "")) {
     throw new apiError(400, "all field are required !!!");
   }
 
@@ -41,6 +41,8 @@ export const createUserController = asyncHandler(async (req, res) => {
     avatar: avatar.url || "",
     coverImage: coverImage.url || "",
     role,
+    classLevel,
+    subjectOfInterest
   });
 
   const rmUser = await User.findById(user.id).select("-password");

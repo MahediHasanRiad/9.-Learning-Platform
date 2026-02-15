@@ -1,4 +1,3 @@
-import { User } from "../../../../model/user.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
@@ -8,37 +7,61 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 
 const createTeacherController = asyncHandler(async (req, res) => {
   /**
-   * get {bio, education, certificate, experienceOfYears} = req.body
-   * get userId = req.cookies
+   * get {name, email, password, mobile, education, certificate, experienceOfYears} = req.body
+   * if(empty) return error
+   * if(!avatar) return error
    * if(!education) return error
-   * upload certificate as a image
-   * if(existTeacher) return error
+   * upload image
    * create
    * res
    */
 
-  const { bio = "", education, experienceOfYears = 0 } = req.body;
+  const {
+    name,
+    email,
+    mobile,
+    password,
+    bio = "",
+    education,
+    experienceOfYears = 0,
+  } = req.body;
 
-  if (!education) throw new apiError(400, "Education data required !!!");
+  if (
+    [name, email, mobile, password, bio, education].some(
+      (item) => item.trim() === "",
+    )
+  )
+    throw new apiError(400, "Education data required !!!");
 
-  const user = await User.findById(req.user._id);
-  if (!user) throw new apiError(400, "invelid token !!!");
-
-  // upload certificate
+  // image upload
+  const avatarLocalFilePath = LocalFilePath(req, "avatar", true);
+  const coverImageLocalFilePath = LocalFilePath(req, "coverImage");
   const certificateFilePath = LocalFilePath(req, "certificate");
+
+  // upload in cloudinary
+  const avatar = await cloudinaryFileUpload(avatarLocalFilePath);
+  const coverImage = coverImageLocalFilePath
+    ? await cloudinaryFileUpload(coverImageLocalFilePath)
+    : "";
   const certificate = certificateFilePath
     ? await cloudinaryFileUpload(certificateFilePath)
     : "";
 
-  // exist teacher or not
-  const existTeacher = await Teacher.findOne({ userID: req.user._id });
-  if (existTeacher) throw new apiError(400, "Teacher already exist !!!");
+  // exist teacher
+  const existTeacher = await Teacher.findOne({ email });
+
+  if (existTeacher) throw new apiError(400, "teacher already exist !!!");
 
   // create teacher profile
   const teacher = await Teacher.create({
-    userID: req.user._id,
+    name,
+    email,
+    mobile,
+    password,
     bio,
     education,
+    avatar: avatar.url,
+    coverImage: coverImage.url || "",
     certificate: certificate.url || "",
     experienceOfYears,
   });

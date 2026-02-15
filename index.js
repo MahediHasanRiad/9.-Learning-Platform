@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { userRouter } from "./src/router/user.router.js";
 import cookieParser from "cookie-parser";
 import { teacherRouter } from "./src/router/teacher.router.js";
+import { subjectRouter } from "./src/router/subject.router.js";
 
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
@@ -21,6 +22,7 @@ app.use(cookieParser())
 // routers
 app.use('/api/v1', userRouter)
 app.use('/api/v1', teacherRouter);
+app.use('/api/v1', subjectRouter)
 app.get("/health", (_req, res) => {
   res.send("this is health route !!!");
 });
@@ -29,6 +31,7 @@ app.get("/health", (_req, res) => {
 // database connection
 mongoose
   .connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
+  // .connect(`${process.env.DB_URL_LOCALHOST}/${process.env.DB_NAME}`)
   .then(() => {
     console.log("Database connected !");
 

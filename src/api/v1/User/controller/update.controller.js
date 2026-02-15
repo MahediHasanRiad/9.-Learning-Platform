@@ -4,7 +4,7 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { apiError } from "../../../../utils/apiError.js";
 
 const updateUserController = asyncHandler(async (req, res) => {
-  const { name, email, password, mobile, role } = req.body;
+  const { name, email, password, mobile, role, classLevel, subjectOfInterest } = req.body;
   const { id } = req.params;
 
   const existUser = await User.findById(id);
@@ -16,6 +16,8 @@ const updateUserController = asyncHandler(async (req, res) => {
     mobile: mobile || existUser.mobile,
     password: password || existUser.password,
     role: role || existUser.role,
+    classLevel: classLevel || existUser.classLevel,
+    subjectOfInterest: subjectOfInterest || existUser.subjectOfInterest
   });
 
   res.status(200).json(new apiResponse(200, user, "successfully updated !!!"));
