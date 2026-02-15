@@ -16,22 +16,22 @@ export const updateOrCreateSubjectController = asyncHandler(async(req, res) => {
     if(!name) throw new apiError(400, 'subject name required !!!')
     if(!className) throw new apiError(400, 'className required !!!')
     
-    const subject = await Subject.findOne({$and: [name, className]})
+    const existSubject = await Subject.findOne({name, className})
 
     // create
-    if(!subject){
+    if(!existSubject){
         const subject = await Subject.create({
-            subject,
+            name,
             className
         })
 
         res.status(201).json(new apiResponse(201, subject, 'new subject created !'))
     }else{
         // update
-        subject.name = name || subject.name,
-        subject.className = className || subject.className
-        subject.save()
+        existSubject.name = name || existSubject.name,
+        existSubject.className = className || existSubject.className
+        existSubject.save()
 
-        res.status(200).json(new apiResponse(200, subject, 'subject updated !'))
+        res.status(200).json(new apiResponse(200, existSubject, 'subject updated !'))
     }
 })
