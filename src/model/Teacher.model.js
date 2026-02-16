@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 
 const teacherSchema = new Schema({
-    name:{
+    teacherName:{
         type: String,
         required: true
     },

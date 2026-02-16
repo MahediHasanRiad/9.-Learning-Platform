@@ -1460,7 +1460,7 @@ paths:
             schema: 
               type: object
               properties: 
-                userID:
+                teacherName:
                   type: number
                   format: int32
                   example: 1
@@ -1468,7 +1468,7 @@ paths:
                 #   type: number
                 #   format: int32
                 #   example: 1
-                coachingCenterID:
+                CcName:
                   type: number
                   format: int32 
                   example: 1
@@ -1564,7 +1564,7 @@ paths:
             schema:
               type: object
               properties: 
-                userID:
+                teacherName:
                   type: number
                   format: int32
                   example: 1
@@ -1572,7 +1572,7 @@ paths:
                 #   type: number
                 #   format: int32
                 #   example: 1
-                coachingCenterID:
+                CcName:
                   type: number
                   format: int32 
                   example: 1
@@ -3564,7 +3564,7 @@ components:
     CoachingCenterMemberDTO:
       type: object
       properties: 
-        userID:
+        teacherName:
           type: number
           format: int32
           example: 1
@@ -3572,7 +3572,7 @@ components:
         #   type: number
         #   format: int32
         #   example: 1
-        coachingCenterID:
+        CcName:
           type: number
           format: int32 
           example: 1

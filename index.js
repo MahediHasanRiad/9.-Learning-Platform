@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import { teacherRouter } from "./src/router/teacher.router.js";
 import { subjectRouter } from "./src/router/subject.router.js";
 import { coachingCenterRouter } from "./src/router/coaching_center.router.js";
+import { coachingStaffRouter } from "./src/router/coaching_staff.router.js";
 
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
@@ -25,6 +26,7 @@ app.use('/api/v1', userRouter )
 app.use('/api/v1', teacherRouter )
 app.use('/api/v1', subjectRouter )
 app.use('/api/v1', coachingCenterRouter )
+app.use('/api/v1', coachingStaffRouter )
 app.get("/health", (_req, res) => {
   res.send("this is health route !!!");
 });

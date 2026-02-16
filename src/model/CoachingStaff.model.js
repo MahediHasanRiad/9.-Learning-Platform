@@ -1,29 +1,31 @@
 import { Schema, model } from "mongoose";
 
 const staffSchema = new Schema({
-    userId: {
-        type: Schema.objectId,
-        ref: 'User',
+    // userId: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'User',
+    //     required: true
+    // },
+    teacherName: {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher',
         required: true
     },
-    teacherId: {
-        type: Schema.objectId,
-        ref: 'Teacher'
-    },
-    coachingCenter: {
-        type: Schema.objectId,
+    CcName: {
+        type: Schema.Types.ObjectId,
         ref: 'CoachingCenter',
         required: true
     },
     role: {
         type: String,
-        enum: [ADMIN, MANAGER, TEACHER],
+        enum: ['ADMIN', 'MANAGER', 'TEACHER'],
         required: true
     },
-    subjects: {
-        type: [String],
+    subjects: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Subject',
         required: true
-    }
+    }]
 }, {timeStamp: true})
 
 export const CoachingStaff = model('CoachingStaff', staffSchema)
