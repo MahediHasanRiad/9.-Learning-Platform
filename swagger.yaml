@@ -778,6 +778,55 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
+  '/demoClass/{id}?query=params':
+    get: 
+      security: 
+        - bearerAuth: []
+      description: List of all DemoClass  
+      tags: [Teacher]
+      parameters: 
+        - $ref: '#/components/parameters/pageParams'
+        - $ref: '#/components/parameters/limitParams'
+        - $ref: '#/components/parameters/sortTypeParams'
+        - $ref: '#/components/parameters/sortByParams'
+        - $ref: '#/components/parameters/searchParams'
+        
+      responses: 
+        '200':
+          description: All Demo Class List
+          content: 
+            'application/json':
+              schema: 
+                type: object
+                properties: 
+                  code: 
+                    type: number
+                    format: int32
+                    example: 200
+                  message:
+                    type: string
+                    example: success
+                  DemoClasses:
+                    type: array
+                    items: 
+                      allOf: 
+                        - $ref: '#/components/schemas/DemoClassDTO'
+                        - type: object
+                          properties: 
+                            link:
+                              type: string
+                              format: url
+                              example: /demoClasses/12
+                  pagination:
+                    $ref: '#/components/schemas/pagination'
+                  links:
+                    $ref: '#/components/schemas/links'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '500':
+          $ref: '#/components/responses/500'
   '/coachingCenterProfile':
     post:
       security:
@@ -2252,55 +2301,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'    
-  '/demoClass/{id}?query=params':
-    get: 
-      security: 
-        - bearerAuth: []
-      description: List of all DemoClass  
-      tags: [DemoClass]
-      parameters: 
-        - $ref: '#/components/parameters/pageParams'
-        - $ref: '#/components/parameters/limitParams'
-        - $ref: '#/components/parameters/sortTypeParams'
-        - $ref: '#/components/parameters/sortByParams'
-        - $ref: '#/components/parameters/searchParams'
-        
-      responses: 
-        '200':
-          description: All Demo Class List
-          content: 
-            'application/json':
-              schema: 
-                type: object
-                properties: 
-                  code: 
-                    type: number
-                    format: int32
-                    example: 200
-                  message:
-                    type: string
-                    example: success
-                  DemoClasses:
-                    type: array
-                    items: 
-                      allOf: 
-                        - $ref: '#/components/schemas/DemoClassDTO'
-                        - type: object
-                          properties: 
-                            link:
-                              type: string
-                              format: url
-                              example: /demoClasses/12
-                  pagination:
-                    $ref: '#/components/schemas/pagination'
-                  links:
-                    $ref: '#/components/schemas/links'
-        '400':
-          $ref: '#/components/responses/400'
-        '401':
-          $ref: '#/components/responses/401'
-        '500':
-          $ref: '#/components/responses/500'
+  
   '/enrollment':
     post:
       security:

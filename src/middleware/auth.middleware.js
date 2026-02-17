@@ -11,6 +11,7 @@ const authVerify = asyncHandler(async (req, _res, next) => {
     req.cookies?.accessToken ||
     req.header("Authorization")?.replace("Bearer ", "");
   if (!token) throw new apiError(400, "Invalid Token !!!");
+  
 
   const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
 

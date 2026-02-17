@@ -13,7 +13,7 @@ export const verifyCoachingCenter = async (email, password) => {
 
     const rmPass = await CoachingCenter.findOne(coachingCenter._id).select("-password")
 
-    const { accessToken } = await generateCoachingAccessToken(coachingCenter._id);
+    const accessToken = await coachingCenter.generateAccessToken();
 
     return {
       rmPass,

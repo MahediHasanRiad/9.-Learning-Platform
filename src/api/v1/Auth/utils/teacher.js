@@ -1,6 +1,5 @@
 import { Teacher } from "../../../../model/Teacher.model.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { generateTeacherAccessToken } from "../utils/teacher_access_token.js";
 
 export const verifyTeacher = async (email, password) => {
   const teacher = await Teacher.findOne({ email });
@@ -11,7 +10,7 @@ export const verifyTeacher = async (email, password) => {
 
   const rmPass = await Teacher.findById(teacher._id).select("-password")
 
-  const accessToken = await teacher.generateTeacherAccessToken(teacher._id);
+  const accessToken = await teacher.generateAccessToken();
 
   return {
     rmPass,

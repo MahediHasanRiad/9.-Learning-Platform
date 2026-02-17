@@ -1,96 +1,102 @@
 import { Schema, model } from "mongoose";
-import bcrypt from 'bcrypt'
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const userSchema = new Schema({
-    userName:{
-        type: String,
-        required: true
+const userSchema = new Schema(
+  {
+    userName: {
+      type: String,
+      required: true,
     },
-    email:{
-        type: String,
-        unique: true,
-        required: [true, 'Email Required !!!'],
-        validate: {
-            validator: function(v) {
-                return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
-            },
-             message: (props) => `${props.value} is not a valid Email !`
-        }
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email Required !!!"],
+      validate: {
+        validator: function (v) {
+          return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid Email !`,
+      },
     },
     mobile: {
-        type: Number,
-        min: [11, 'Not Valid'],
-        required: [true, 'Mobile number required !!!'],
-        unique: true,
-        validate:{
-            validator: function(v){
-                return /^(?:\+88|88)?(01[3-9]\d{8})$/.test(v);
-            },
-            message: (props) => `${props.value} in not valid Number !!!`
-        }
+      type: Number,
+      min: [11, "Not Valid"],
+      required: [true, "Mobile number required !!!"],
+      unique: true,
+      validate: {
+        validator: function (v) {
+          return /^(?:\+88|88)?(01[3-9]\d{8})$/.test(v);
+        },
+        message: (props) => `${props.value} in not valid Number !!!`,
+      },
     },
     password: {
-        type: String,
-        minLength: [6, 'Minimum 6 character'],
-        required: [true, 'Password Required !!!']
+      type: String,
+      minLength: [6, "Minimum 6 character"],
+      required: [true, "Password Required !!!"],
     },
     avatar: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     coverImage: {
-        type: String
+      type: String,
     },
     role: {
-        type: String,
-        enum: ['ADMIN', 'TEACHER', 'COACHING-ADMIN', 'COACHING-MANAGER', 'COACHING-TEACHER', 'STUDENT'],
-        default: 'STUDENT',
-        required: true
+      type: String,
+      enum: [
+        "ADMIN",
+        "TEACHER",
+        "COACHING-ADMIN",
+        "COACHING-MANAGER",
+        "COACHING-TEACHER",
+        "STUDENT",
+      ],
+      default: "STUDENT",
+      required: true,
     },
     classLevel: {
-        type: String,
-        enum: ['Class 10', 'Class 9', 'Class 8'],
-        required: true
+      type: String,
+      enum: ["Class 10", "Class 9", "Class 8"],
+      required: true,
     },
-    subjectOfInterest : {
-        type: [String]
-    }
-}, {timestamps: true})
-
-
+    subjectOfInterest: {
+      type: [String],
+    },
+  },
+  { timestamps: true },
+);
 
 // hash password
 userSchema.pre("save", async function (next) {
-   try {
-     if(!this.isModified("password")) return
- 
-     this.password = await bcrypt.hash(this.password, 10)
-     return next()
-   }
-    catch (error) {
-    console.log(error)
-   }
-})
+  try {
+    if (!this.isModified("password")) return;
+
+    this.password = await bcrypt.hash(this.password, 10);
+    return next();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // compare password
 userSchema.methods.isPasswordCorrect = async function (password) {
-    return await bcrypt.compare(password, this.password)
-}  
-
+  return await bcrypt.compare(password, this.password);
+};
 
 // generate access token
 userSchema.methods.generateAccessToken = function () {
-    return jwt.sign(
-        {
-            _id: this._id,
-            name: this.name,
-            email: this.email,
-            role: this.role
-        },
-        process.env.ACCESS_TOKEN_SECRET_KEY,
-        {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE}
-    )
-}
+  return jwt.sign(
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+      role: this.role,
+    },
+    process.env.ACCESS_TOKEN_SECRET_KEY,
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE },
+  );
+};
 
-export const User = model('User', userSchema)
+export const User = model("User", userSchema);

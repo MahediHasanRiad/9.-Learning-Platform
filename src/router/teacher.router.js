@@ -6,10 +6,12 @@ import { updateTeacherController } from "../api/v1/Teacher/controller/update.con
 import { upload } from "../middleware/multer.middleware.js";
 import { deleteTeacherController } from "../api/v1/Teacher/controller/delete.controller.js";
 import { allTeachersController } from "../api/v1/Teacher/controller/allTeachers.controller.js";
+import { allDemoClassController } from "../api/v1/Teacher/controller/All_demoClass.controller.js";
 
 const teacherRouter = Router();
 
 teacherRouter.get("/teachers", authVerify, allTeachersController);
+teacherRouter.get("/teacher/demoClasses", authVerify, allDemoClassController);
 teacherRouter.post(
   "/teacher",
   upload.fields([
