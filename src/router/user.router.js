@@ -11,6 +11,7 @@ import { authVerify } from "../middleware/auth.middleware.js";
 import { updateImageController } from "../api/v1/User/controller/updateImage.controller.js";
 import { listOfAllUserController } from "../api/v1/User/controller/listOfAllUser.controller.js";
 import { logOutController } from "../api/v1/Auth/controller/logOut.controller.js";
+import { allEnrollmentController } from "../api/v1/User/controller/all_enrollment.controller.js";
 
 const userRouter = Router();
 
@@ -18,7 +19,7 @@ const userRouter = Router();
 userRouter.post("/login", logInController);
 userRouter.get("/logout", logOutController);
 
-
+userRouter.get('/user/enrollments', authVerify, allEnrollmentController)
 userRouter.post("/changePassword", authVerify, changePasswordController);
 userRouter.get('/users/all', authVerify, listOfAllUserController)
 userRouter.post("/user",

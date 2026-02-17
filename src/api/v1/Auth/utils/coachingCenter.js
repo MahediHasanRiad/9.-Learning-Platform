@@ -1,6 +1,5 @@
 import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { generateCoachingAccessToken } from "./coaching_access_token.js";
 
 
 export const verifyCoachingCenter = async (email, password) => {

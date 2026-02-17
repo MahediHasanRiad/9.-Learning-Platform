@@ -2,12 +2,12 @@ import { Schema, model } from "mongoose";
 
 const enrollmentSchema = new Schema({
     studentId: {
-        type: Schema.objectId,
-        ref: 'Student',
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true 
     },
     batchId: {
-        type: Schema.objectId,
+        type: Schema.Types.ObjectId,
         ref: 'Batch',
         required: true
     },
