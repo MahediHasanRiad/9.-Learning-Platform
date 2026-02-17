@@ -9,11 +9,13 @@ export const verifyUser = async (email, password) => {
   const isValidPassword = await user.isPasswordCorrect(password);
   if (!isValidPassword) throw new apiError(400, "Invalid Password !!!");
 
+  const rmPass = await User.findById(user._id).select("-password")
+
   const { accessToken } = await generateToken(user._id);
 
 
   return {
-    user,
+    rmPass,
     accessToken
   }
 };

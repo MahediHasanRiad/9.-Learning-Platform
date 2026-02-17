@@ -6,13 +6,18 @@ const batchSchema = new Schema({
         required: true
     },
     subjects: {
-        type: [String],
+        type: [Schema.Types.ObjectId],
+        ref: 'Subject',
+        validate: [arr => arr.length > 0, 'At least one subject required'],
         required: true
     },
-    scheduleId: {
-        type: Schema.objectId,
-        ref: 'Schedule',
-        required: [true, 'Schedule time required']
+    start_date: {
+        type: String,
+        required: true
+    },
+    end_date: {
+        type: String,
+        required: true
     },
     capacity: {
         type: Number,
@@ -22,14 +27,21 @@ const batchSchema = new Schema({
         type: Number,
         required: true
     },
-    assignedTeachersId: {
-        type: [String],
+    assignedTeachers: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Teacher',
+        validate: [arr => arr.length > 0, 'At least one Teacher required'],
         required: true
     },
     recurringRule: {
         type: [String],
         required: true
+    },
+    CcName: {
+        type: Schema.Types.ObjectId,
+        ref: 'CoachingCenter',
+        required: true
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 export const Batch = model('Batch', batchSchema)

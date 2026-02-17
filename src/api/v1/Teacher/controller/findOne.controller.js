@@ -8,7 +8,7 @@ const findSingleTeacherController = asyncHandler(async (req, res) => {
     const {id} = req.params 
     if(!id) throw new apiError(400, 'teacher id required !!!')
     
-    const teacher = await Teacher.findById(id).populate("userID", "-password")
+    const teacher = await Teacher.findById(id).select("-password")
     if(!teacher) throw new apiError(404, 'teacher not found !!!')
     
     res.status(200).json(new apiResponse(200, teacher))

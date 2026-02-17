@@ -17,8 +17,6 @@ tags:
     description: User endpoint
   - name: Teacher 
     description: Teacher endpoint 
-  # - name: Student 
-  #   description: Student endpoint 
   - name: Subject 
     description: Class Subject 
   - name: CoachingCenterProfile
@@ -780,335 +778,6 @@ paths:
           $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
-
-  # '/student':
-  #   post:
-  #     security:
-  #       - bearerAuth: []  
-  #     tags: [Student]
-  #     description: create a student profile
-  #     requestBody: 
-  #       description: provide a valid profile info 
-  #       content: 
-  #         'application/json':
-  #           schema: 
-  #             type: object
-  #             properties: 
-  #               userID:
-  #                 type: number
-  #                 format: int32
-  #                 example: 1
-  #               classLevel:
-  #                 type: string
-  #                 example: class 10
-  #               subjectOfInterest:
-  #                 type: string
-  #                 example: [English, Math]
-  #             required: [userID, classLevel, subjectOfInterest]           
-  #     responses: 
-  #       '200':
-  #         description: successfully created teacher profile 
-  #         content: 
-  #           'application/json':
-  #             schema: 
-  #               type: object
-  #               properties: 
-  #                 code: 
-  #                   type: number
-  #                   format: int32
-  #                   example: 200
-  #                 message:
-  #                   type: string
-  #                   example: success
-  #                 profile:
-  #                   type: object
-  #                   properties: 
-  #                     userID:
-  #                       type: number
-  #                       format: int32
-  #                       example: 1
-  #                     name:
-  #                       type: string
-  #                       example: riad 
-  #                     classLevel:
-  #                       type: string
-  #                       example: class 10
-  #                     subjectOfInterest:
-  #                       type: string
-  #                       example: [English, Math]
-  #                 link:
-  #                   type: string
-  #                   format: url
-  #                   example: /teacher/profile
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '500':
-  #         $ref: '#/components/responses/500'   
-  # '/students/{id}':
-  #   get:
-  #     security:
-  #     - bearerAuth: []
-  #     tags: [Student]
-  #     description: Find a single Student
-  #     parameters: 
-  #       - $ref: '#/components/parameters/idPathParams'
-      
-  #     responses: 
-  #       '200':
-  #         description: success
-  #         content: 
-  #           'application/json':
-  #             schema:
-  #               type: object
-  #               properties: 
-  #                 code:
-  #                   type: number
-  #                   format: int32
-  #                   example: 200
-  #                 message:
-  #                   type: string
-  #                   example: success
-  #                 studentData:
-  #                   type: object
-  #                   properties: 
-  #                     userID:
-  #                       type: number
-  #                       format: int32
-  #                       example: 1
-  #                     name:
-  #                       type: string
-  #                       example: riad 
-  #                     classLevel:
-  #                       type: string
-  #                       example: class 10
-  #                     subjectOfInterest:
-  #                       type: string
-  #                       example: [English, Math]
-                      
-  #                 link:
-  #                   type: string
-  #                   format: url
-  #                   example: users/students/1
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '404':
-  #         $ref: '#/components/responses/404'
-  #       '500':
-  #         $ref: '#/components/responses/500'    
-  #   put: 
-  #     security:
-  #       - bearerAuth: []
-  #     tags: [Student]
-  #     description: Update or Create a Student Profile
-  #     parameters: 
-  #       - $ref: '#/components/parameters/idPathParams'
-  #     requestBody: 
-  #       description: provide a valid info 
-  #       content: 
-  #         'application/json':
-  #           schema:
-  #             type: object
-  #             properties: 
-  #               properties: 
-  #               userID:
-  #                 type: number
-  #                 format: int32
-  #                 example: 1
-  #               classLevel:
-  #                 type: string
-  #                 example: class 10
-  #               subjectOfInterest:
-  #                 type: string
-  #                 example: [English, Math]
-  #             required: [userID, classLevel, subjectOfInterest]   
-  #     responses: 
-  #       '200':
-  #         description: successfully updated
-  #         content: 
-  #           'application/json':
-  #             schema: 
-  #               type: object
-  #               properties: 
-  #                 code:
-  #                   type: number
-  #                   format: int32
-  #                   example: 200
-  #                 message:
-  #                   type: string
-  #                   example: successfully updated or create 
-  #                 studentData:
-  #                   type: object
-  #                   properties:
-  #                     userID:
-  #                       type: number
-  #                       format: int32
-  #                       example: 1
-  #                     name:
-  #                       type: string
-  #                       example: riad
-  #                     classLevel:
-  #                       type: string
-  #                       example: class 10
-  #                     subjectOfInterest:
-  #                       type: string
-  #                       example: [English, Math] 
-  #                 link:
-  #                   type: string
-  #                   format: url
-  #                   example: user/1
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '500':
-  #         $ref: '#/components/responses/500'  
-  #   patch: 
-  #     security: 
-  #       - bearerAuth: []
-  #     tags: [Student]
-  #     description: Update a student profile  
-  #     parameters: 
-  #       - $ref: '#/components/parameters/idPathParams'
-  #     requestBody: 
-  #       description: provide content which one want to update 
-  #       content: 
-  #         'application/json':
-  #           schema: 
-  #             type: object
-  #             properties: 
-  #               classLevel:
-  #                 type: string
-  #                 example: class 10
-  #               subjectOfInterest:
-  #                 type: string
-  #                 example: [English, Math]
-  #     responses: 
-  #       '200':
-  #         description: success
-  #         content:
-  #           'application/json':
-  #             schema:
-  #               type: object
-  #               properties: 
-  #                 code: 
-  #                   type: number
-  #                   format: int32
-  #                   example: 200
-  #                 message:
-  #                   type: string
-  #                   example: success
-  #                 studentDate:
-  #                   type: object
-  #                   properties: 
-  #                     name:
-  #                       type: string
-  #                       example: riad
-  #                     classLevel:
-  #                       type: string
-  #                       example: class 10
-  #                     subjectOfInterest:
-  #                       type: string
-  #                       example: [English, Math]
-  #                 link:
-  #                   type: string
-  #                   format: url
-  #                   example: user/1    
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '404':
-  #         $ref: '#/components/responses/404'
-  #       '500':
-  #         $ref: '#/components/responses/500' 
-  #   delete: 
-  #     security:
-  #       - bearerAuth: []
-  #     tags: [Student]
-  #     description: Delete a Student
-  #     parameters: 
-  #       - $ref: '#/components/parameters/idPathParams'
-      
-  #     responses: 
-  #       '204':
-  #         description: success 
-  #         content: 
-  #           'application/json':
-  #             schema: 
-  #               type: object
-  #               properties: 
-  #                 name:
-  #                   type: string
-  #                   example: riad
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '404':
-  #         $ref: '#/components/responses/404'
-  #       '500':
-  #         $ref: '#/components/responses/500'  
-  # '/students?query=params':
-  #   get: 
-  #     security: 
-  #       - bearerAuth: []
-  #     description: List of all students based on query
-  #     tags: [Student]
-  #     parameters: 
-  #       - $ref: '#/components/parameters/pageParams'
-  #       - $ref: '#/components/parameters/limitParams'
-  #       - $ref: '#/components/parameters/sortTypeParams'
-  #       - $ref: '#/components/parameters/sortByParams'
-  #       - $ref: '#/components/parameters/searchParams'
-        
-  #     responses: 
-  #       '200':
-  #         description: All user List
-  #         content: 
-  #           'application/json':
-  #             schema: 
-  #               type: object
-  #               properties: 
-  #                 code: 
-  #                   type: number
-  #                   format: int32
-  #                   example: 200
-  #                 message:
-  #                   type: string
-  #                   example: success
-  #                 studentDate:
-  #                   type: array
-  #                   items: 
-  #                     type: object
-  #                     properties: 
-  #                       name:
-  #                         type: string
-  #                         example: riad
-  #                       classLevel:
-  #                         type: string
-  #                         example: class 10
-  #                       subjectOfInterest:
-  #                         type: string
-  #                         example: [English, Math]
-  #                       link:
-  #                         type: string
-  #                         format: url
-  #                         example: user/1
-  #                 pagination:
-  #                   $ref: '#/components/schemas/pagination'
-  #                 links:
-  #                   $ref: '#/components/schemas/links'
-  #       '400':
-  #         $ref: '#/components/responses/400'
-  #       '401':
-  #         $ref: '#/components/responses/401'
-  #       '500':
-  #         $ref: '#/components/responses/500'
-
   '/coachingCenterProfile':
     post:
       security:
@@ -2038,10 +1707,14 @@ paths:
                 subjects:
                   type: string
                   example: [Bangla, English, Math]
-                scheduleID:
+                start_date:
                   type: number
                   format: int32
-                  example: 143
+                  example: 16 jun 2026
+                end_date:
+                  type: number
+                  format: int32
+                  example: 16 Num 2026
                 capacity:
                   type: number
                   format: int32
@@ -2143,10 +1816,14 @@ paths:
                 subjects:
                   type: string
                   example: [Bangla, English, Math]
-                scheduleID:
+                start_date:
                   type: number
                   format: int32
-                  example: 143
+                  example: 16 jun 2026
+                end_date:
+                  type: number
+                  format: int32
+                  example: 16 Num 2026
                 capacity:
                   type: number
                   format: int32
@@ -2162,7 +1839,7 @@ paths:
                   type: string
                   enum: [SaturDay, SunDay, Monday, Twesday, WednesDay, Thursday, Friday]
                   example: [SaturDay, Monday, WednesDay]
-              required: [name, subjects, scheduleID, capacity, price, assignedTeachers, recurringRule ]          
+              required: [name, subjects, start_date, end_date, capacity, price, assignedTeachers, recurringRule ]          
       responses: 
         '200':
           description: successfully updated
@@ -2210,10 +1887,14 @@ paths:
                 subjects:
                   type: string
                   example: [Bangla, English, Math]
-                scheduleID:
+                start_date:
                   type: number
                   format: int32
-                  example: 143
+                  example: 16 jun 2026
+                end_date:
+                  type: number
+                  format: int32
+                  example: 16 Num 2026
                 capacity:
                   type: number
                   format: int32
@@ -3596,10 +3277,14 @@ components:
         subjects:
           type: string
           example: [Bangla, English, Math]
-        scheduleID:
+        start_date:
           type: number
           format: int32
-          example: 143
+          example: 16 jun 2026
+        end_date:
+          type: number
+          format: int32
+          example: 16 Num 2026
         capacity:
           type: number
           format: int32

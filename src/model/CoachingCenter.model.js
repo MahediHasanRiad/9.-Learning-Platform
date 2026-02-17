@@ -71,6 +71,10 @@ const coachingCenterSchema = new Schema({
         type: String,
         enum: ['Pending', 'Approved', 'Suspended '],
         default: 'Pending'
+    },
+    role: {
+        type: String,
+        default: 'COACHING'
     }
 }, {timeStamp: true})
 
@@ -99,8 +103,9 @@ coachingCenterSchema.methods.generateAccessToken = function () {
     return jwt.sign(
         {
             _id: this._id,
-            name: this.name,
-            email: this.email
+            name: this.CcName,
+            email: this.email,
+            role: this.role
         },
         process.env.ACCESS_TOKEN_SECRET_KEY,
         {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE}

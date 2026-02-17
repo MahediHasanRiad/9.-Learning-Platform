@@ -28,7 +28,7 @@ const createTeacherController = asyncHandler(async (req, res) => {
 
   if (
     [name, email, mobile, password, bio, education].some(
-      (item) => item.trim() === "",
+      (item) => item === "",
     )
   )
     throw new apiError(400, "Education data required !!!");
