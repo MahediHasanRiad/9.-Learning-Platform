@@ -9,6 +9,6 @@ const subjectSchema = new Schema({
         type: String,
         required: true
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 export const Subject = model('Subject', subjectSchema)

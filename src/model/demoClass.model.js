@@ -10,24 +10,25 @@ const demoClassSchema = new Schema({
         required: true
     },
     subjectId: {
-        type: Schema.objectId,
+        type: Schema.Types.ObjectId,
         ref: 'Subject',
         required: true
     },
     batchId: {
-        type: Schema.objectId,
+        type: Schema.Types.ObjectId,
         ref: 'Batch'
     },
     teacherId: {
-        type: Schema.objectId,
+        type: Schema.Types.ObjectId,
         ref: 'Teacher',
         required: true
     },
     status: {
         type: String,
-        enum: ['Draft', 'Published']
+        enum: ['Draft', 'Published'],
+        default: 'Draft'
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 export const DemoClass = model('DemoClass', demoClassSchema)
 

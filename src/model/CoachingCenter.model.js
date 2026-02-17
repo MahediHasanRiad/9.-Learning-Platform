@@ -76,7 +76,7 @@ const coachingCenterSchema = new Schema({
         type: String,
         default: 'COACHING'
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 
 // hash password

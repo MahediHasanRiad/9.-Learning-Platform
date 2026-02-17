@@ -16,6 +16,6 @@ const enrollmentSchema = new Schema({
         enum: ['Pending', 'Completed', 'Canceled'],
         default: 'Pending'
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 export const Enrollment = model('Enrollment', enrollmentSchema)

@@ -9,6 +9,6 @@ const scheduleSchema = new Schema({
         type: String,
         required: true
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 export const Schedule = model('Schedule', scheduleSchema)

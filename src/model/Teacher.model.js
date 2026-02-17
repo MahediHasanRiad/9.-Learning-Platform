@@ -68,7 +68,7 @@ const teacherSchema = new Schema({
         type: Number,
         default: 0
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 
 // hash password

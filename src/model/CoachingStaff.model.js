@@ -26,6 +26,6 @@ const staffSchema = new Schema({
         ref: 'Subject',
         required: true
     }]
-}, {timeStamp: true})
+}, {timestamps: true})
 
 export const CoachingStaff = model('CoachingStaff', staffSchema)

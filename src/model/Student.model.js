@@ -13,6 +13,6 @@ const studentSchema = new Schema({
         type: [String],
         required: true
     }
-}, {timeStamp: true})
+}, {timestamps: true})
 
 export const Student = model('Student', studentSchema)

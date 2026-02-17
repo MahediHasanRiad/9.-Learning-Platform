@@ -10,6 +10,7 @@ import { subjectRouter } from "./src/router/subject.router.js";
 import { coachingCenterRouter } from "./src/router/coaching_center.router.js";
 import { coachingStaffRouter } from "./src/router/coaching_staff.router.js";
 import { batchRouter } from "./src/router/batch.router.js";
+import { demoClassRouter } from "./src/router/demoClass.router.js";
 
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
@@ -29,6 +30,8 @@ app.use('/api/v1', subjectRouter )
 app.use('/api/v1', coachingCenterRouter )
 app.use('/api/v1', coachingStaffRouter )
 app.use('/api/v1', batchRouter)
+app.use('/api/v1', demoClassRouter)
+
 app.get("/health", (_req, res) => {
   res.send("this is health route !!!");
 });
