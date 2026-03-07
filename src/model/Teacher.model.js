@@ -66,9 +66,9 @@ const teacherSchema = new Schema(
     certificate: {
       type: [String],
     },
-    experienceOfYears: {
-      type: Number,
-      default: 0,
+    experience: {
+      type: String,
+      default: '5 years of experience in IT engineer'
     },
     rating: {
       type: Number,

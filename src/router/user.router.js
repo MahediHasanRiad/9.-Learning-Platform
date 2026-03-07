@@ -12,23 +12,24 @@ import { updateImageController } from "../api/v1/User/controller/updateImage.con
 import { listOfAllUserController } from "../api/v1/User/controller/listOfAllUser.controller.js";
 import { logOutController } from "../api/v1/Auth/controller/logOut.controller.js";
 import { allEnrollmentController } from "../api/v1/User/controller/all_enrollment.controller.js";
+import { meController } from "../api/v1/User/controller/me.controller.js";
 
 const userRouter = Router();
 
-
 userRouter.post("/login", logInController);
+userRouter.get('/me', authVerify, meController)
 userRouter.get("/logout", logOutController);
-
-userRouter.get('/user/enrollments', authVerify, allEnrollmentController)
-userRouter.post("/changePassword", authVerify, changePasswordController);
-userRouter.get('/users/all', authVerify, listOfAllUserController)
-userRouter.post("/user",
+userRouter.post("/register",
   upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "coverImage", maxCount: 1 },
   ]),
   createUserController,
 );
+
+userRouter.get('/user/enrollments', authVerify, allEnrollmentController)
+userRouter.post("/changePassword", authVerify, changePasswordController);
+userRouter.get('/users/all', authVerify, listOfAllUserController)
 userRouter
   .route("/users/:id")
   .get(findUserController)

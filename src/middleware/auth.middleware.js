@@ -15,17 +15,15 @@ const authVerify = asyncHandler(async (req, _res, next) => {
 
   const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_KEY);
 
-  let user;
-
-  if (decoded.role === "STUDENT") {
-    user = await User.findById(decoded._id);
-  } 
-  else if (decoded.role === "TEACHER") {
-    user = await Teacher.findById(decoded._id);
-  } 
-  else if (decoded.role === "COACHING") {
-    user = await CoachingCenter.findById(decoded._id);
-  }
+  let user = await User.findById(decoded._id);
+  // if (decoded.role === "Student") {
+  // } 
+  // else if (decoded.role === "Teacher") {
+  //   user = await Teacher.findById(decoded._id);
+  // } 
+  // else if (decoded.role === "Coaching") {
+  //   user = await CoachingCenter.findById(decoded._id);
+  // }
 
   req.user = user;
   next();

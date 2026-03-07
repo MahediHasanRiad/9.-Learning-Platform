@@ -12,6 +12,8 @@ import { coachingStaffRouter } from "./src/router/coaching_staff.router.js";
 import { batchRouter } from "./src/router/batch.router.js";
 import { demoClassRouter } from "./src/router/demoClass.router.js";
 import { enrollmentRouter } from "./src/router/enrollment.router.js";
+import cors from 'cors'
+
 
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
@@ -19,10 +21,12 @@ dotenv.config({ path: "./.env" });
 
 
 // middleware
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use("/docs", swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs));
 app.use(cookieParser())
+
 
 // routers
 app.use('/api/v1', userRouter )

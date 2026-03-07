@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new Schema(
   {
-    userName: {
+    name: {
       type: String,
       required: true,
     },
@@ -20,13 +20,13 @@ const userSchema = new Schema(
       },
     },
     mobile: {
-      type: Number,
+      type: String,
       min: [11, "Not Valid"],
       required: [true, "Mobile number required !!!"],
       unique: true,
       validate: {
         validator: function (v) {
-          return /^(?:\+88|88)?(01[3-9]\d{8})$/.test(v);
+          return /^01[3-9]\d{8}$/.test(v);
         },
         message: (props) => `${props.value} in not valid Number !!!`,
       },
@@ -43,27 +43,11 @@ const userSchema = new Schema(
     coverImage: {
       type: String,
     },
-    role: {
-      type: String,
-      enum: [
-        "ADMIN",
-        "TEACHER",
-        "COACHING-ADMIN",
-        "COACHING-MANAGER",
-        "COACHING-TEACHER",
-        "STUDENT",
-      ],
-      default: "STUDENT",
-      required: true,
-    },
-    classLevel: {
-      type: String,
-      enum: ["Class 10", "Class 9", "Class 8"],
-      required: true,
-    },
-    subjectOfInterest: {
+    rule: {
       type: [String],
-    },
+      enum: ['User', 'Teacher'],
+      default: 'User'
+    }
   },
   { timestamps: true },
 );

@@ -16,9 +16,9 @@ export const createUserController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { name, email, password, mobile, role, classLevel, subjectOfInterest } = req.body;
+  const { name, email, password, mobile, role} = req.body;
 
-  if ([name, email, password, mobile, role, classLevel].some((item) => item === "")) {
+  if ([name, email, password, mobile].some((item) => item === "")) {
     throw new apiError(400, "all field are required !!!");
   }
 
@@ -27,8 +27,6 @@ export const createUserController = asyncHandler(async (req, res) => {
 
   const avaterLocalPath = LocalFilePath(req, 'avatar', true)
   const coverImageLocalPath = LocalFilePath(req, 'coverImage')
-
-
 
   const avatar = await cloudinaryFileUpload(avaterLocalPath);
   const coverImage = coverImageLocalPath ? await cloudinaryFileUpload(coverImageLocalPath) : ''
@@ -41,11 +39,9 @@ export const createUserController = asyncHandler(async (req, res) => {
     avatar: avatar.url || "",
     coverImage: coverImage.url || "",
     role,
-    classLevel,
-    subjectOfInterest
   });
 
-  const rmUser = await User.findById(user.id).select("-password");
+  const getUser = await User.findById(user.id).select("-password");
 
   if (!user) throw new apiError(500, "server error during create user !!!");
 
@@ -56,5 +52,5 @@ export const createUserController = asyncHandler(async (req, res) => {
 
   res
     .status(201)
-    .json(new apiResponse(201, { rmUser, link }, "successfully created !"));
+    .json(new apiResponse(201, { rmUser: getUser, link }, "successfully created !"));
 });
