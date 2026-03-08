@@ -4,60 +4,9 @@ import jwt from "jsonwebtoken";
 
 const teacherSchema = new Schema(
   {
-    teacherName: {
-      type: String,
-      required: true,
-    },
-    bio: {
-      type: String,
-    },
-    email: {
-      type: String,
-      unique: true,
-      required: [true, "Email Required !!!"],
-      validate: {
-        validator: function (v) {
-          return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
-        },
-        message: (props) => `${props.value} is not a valid Email !`,
-      },
-    },
-    mobile: {
-      type: Number,
-      min: [11, "Not Valid"],
-      required: [true, "Mobile number required !!!"],
-      unique: true,
-      validate: {
-        validator: function (v) {
-          return /^(?:\+88|88)?(01[3-9]\d{8})$/.test(v);
-        },
-        message: (props) => `${props.value} in not valid Number !!!`,
-      },
-    },
-    password: {
-      type: String,
-      minLength: [6, "Minimum 6 character"],
-      required: [true, "Password Required !!!"],
-    },
-    avatar: {
-      type: String,
-      required: true,
-    },
-    coverImage: {
-      type: String,
-    },
-    role: {
-      type: String,
-      enum: [
-        "ADMIN",
-        "TEACHER",
-        "COACHING-ADMIN",
-        "COACHING-MANAGER",
-        "COACHING-TEACHER",
-        "STUDENT",
-      ],
-      default: "TEACHER",
-      required: true,
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     education: {
       type: [String],
@@ -68,7 +17,13 @@ const teacherSchema = new Schema(
     },
     experience: {
       type: String,
-      default: '5 years of experience in IT engineer'
+      default: "5 years of experience in IT engineer",
+    },
+    availableDay: {
+      type: String,
+    },
+    availableTime: {
+      type: String,
     },
     rating: {
       type: Number,

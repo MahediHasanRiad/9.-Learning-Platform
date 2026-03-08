@@ -36,6 +36,10 @@ const userSchema = new Schema(
       minLength: [6, "Minimum 6 character"],
       required: [true, "Password Required !!!"],
     },
+    address: {
+      type: String,
+      default: ''
+    },
     avatar: {
       type: String,
       required: true,
@@ -43,8 +47,11 @@ const userSchema = new Schema(
     coverImage: {
       type: String,
     },
-    rule: {
-      type: [String],
+    bio: {
+      type: String,
+    },
+    role: {
+      type: String,
       enum: ['User', 'Teacher'],
       default: 'User'
     }

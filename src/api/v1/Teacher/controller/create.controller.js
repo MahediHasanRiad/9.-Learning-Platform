@@ -4,10 +4,11 @@ import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { Teacher } from "../../../../model/Teacher.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { User } from "../../../../model/user.model.js";
 
 const createTeacherController = asyncHandler(async (req, res) => {
   /**
-   * get {name, email, password, mobile, education, certificate, experienceOfYears} = req.body
+   * get {education, certificate, experienceOfYears} = req.body
    * if(empty) return error
    * if(!avatar) return error
    * if(!education) return error
@@ -16,55 +17,32 @@ const createTeacherController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const {
-    name,
-    email,
-    mobile,
-    password,
-    bio = "",
-    education,
-    experienceOfYears = 0,
-  } = req.body;
+  const { education, experienceOfYears = 0 } = req.body;
 
-  if (
-    [name, email, mobile, password, bio, education].some(
-      (item) => item === "",
-    )
-  )
+  if ([education].some((item) => item === ""))
     throw new apiError(400, "Education data required !!!");
 
   // image upload
-  const avatarLocalFilePath = LocalFilePath(req, "avatar", true);
-  const coverImageLocalFilePath = LocalFilePath(req, "coverImage");
   const certificateFilePath = LocalFilePath(req, "certificate");
 
   // upload in cloudinary
-  const avatar = await cloudinaryFileUpload(avatarLocalFilePath);
-  const coverImage = coverImageLocalFilePath
-    ? await cloudinaryFileUpload(coverImageLocalFilePath)
-    : "";
   const certificate = certificateFilePath
     ? await cloudinaryFileUpload(certificateFilePath)
     : "";
 
-  // exist teacher
-  const existTeacher = await Teacher.findOne({ email });
-
-  if (existTeacher) throw new apiError(400, "teacher already exist !!!");
 
   // create teacher profile
   const teacher = await Teacher.create({
-    name,
-    email,
-    mobile,
-    password,
-    bio,
+    userId: req.user._id,
     education,
-    avatar: avatar.url,
-    coverImage: coverImage.url || "",
     certificate: certificate.url || "",
     experienceOfYears,
   });
+
+  // update user role
+  await User.findByIdAndUpdate(req.user._id, {
+    role: 'Teacher'
+  })
 
   // link
   const link = {

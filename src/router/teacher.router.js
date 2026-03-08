@@ -14,10 +14,9 @@ teacherRouter.get("/teachers", authVerify, allTeachersController);
 teacherRouter.get("/teacher/demoClasses", authVerify, allDemoClassController);
 teacherRouter.post(
   "/teacher",
+  authVerify,
   upload.fields([
-    { name: "avatar", maxCount: 1 },
-    { name: "coverImage", maxCount: 1 },
-    { name: "certificate", maxCount: 10 },
+    { name: "certificates", maxCount: 10 },
   ]),
   createTeacherController,
 );

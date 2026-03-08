@@ -16,8 +16,8 @@ import { meController } from "../api/v1/User/controller/me.controller.js";
 
 const userRouter = Router();
 
-userRouter.post("/login", logInController);
 userRouter.get('/me', authVerify, meController)
+userRouter.post("/login", logInController);
 userRouter.get("/logout", logOutController);
 userRouter.post("/register",
   upload.fields([
