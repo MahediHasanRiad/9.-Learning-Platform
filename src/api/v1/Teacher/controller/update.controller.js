@@ -60,21 +60,16 @@ const updateTeacherController = asyncHandler(async (req, res) => {
     ? await cloudinaryFileUpload(coverImageLocalFilePath)
     : "";
 
-  const userUpdated = {
-    name,
-    mobile,
-    address,
-    bio,
-    linkedIn,
-    facebook,
-  };
-  if (avatar?.url) {
-    userUpdated.avatar = avatar.url;
-  }
+  const userUpdated = {};
 
-  if (coverImage?.url) {
-    userUpdated.coverImage = coverImage.url;
-  }
+  if (name) userUpdated.name = name;
+  if (mobile) userUpdated.mobile = mobile;
+  if (address) userUpdated.address = address;
+  if (bio) userUpdated.bio = bio;
+  if (linkedIn) userUpdated.linkedIn = linkedIn;
+  if (facebook) userUpdated.facebook = facebook;
+  if (avatar?.url) userUpdated.avatar = avatar.url;
+  if (coverImage?.url) userUpdated.coverImage = coverImage.url;
 
   const user = await User.findByIdAndUpdate(
     req.user._id,

@@ -8,10 +8,10 @@ import { deleteDemoClassController } from "../api/v1/Demo/controller/delete.cont
 
 const demoClassRouter = Router();
 
-demoClassRouter.post("/demoClass", authVerify, createDemoClassController);
+demoClassRouter.post("/demo-class", authVerify, createDemoClassController);
 
 demoClassRouter
-  .route("/demoClasses/:id")
+  .route("/demo-classes/:id")
   .get(authVerify, findSingleDemoClassController)
   .patch(authVerify, updateDemoClassController)
   .delete(authVerify, deleteDemoClassController)

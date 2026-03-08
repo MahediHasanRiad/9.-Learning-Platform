@@ -16,9 +16,10 @@ const demoClassSchema = new Schema({
     },
     batchId: {
         type: Schema.Types.ObjectId,
-        ref: 'Batch'
+        ref: 'Batch',
+        default: null
     },
-    teacherId: {
+    userId: {
         type: Schema.Types.ObjectId,
         ref: 'Teacher',
         required: true

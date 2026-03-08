@@ -1,13 +1,10 @@
-import { Batch } from "../../../../model/batch.model.js";
 import { DemoClass } from "../../../../model/demoClass.model.js";
-import { Subject } from "../../../../model/subject.model.js";
-import { Teacher } from "../../../../model/Teacher.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { existBatch } from "../utils/exist_Batch.js";
 import { existSubject } from "../utils/exist_Subject.js";
-import { existTeacher } from "../utils/exist_Teacher.js";
+import { existTeacher, existUser } from "../utils/exist_Teacher.js";
 
 
 
@@ -22,12 +19,12 @@ export const createDemoClassController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { title, videoURL, subjectId, batchId, teacherId } = req.body;
+  const { title, videoURL, subjectId, batchId} = req.body;
 
-  if (!title || !subjectId || !teacherId)
+  if (!title || !subjectId)
     throw new apiError(
       400,
-      "title, videoURL, subject, teacher --- field are required !!!",
+      "title, videoURL, subject --- field are required !!!",
     );
 
   //  TODO: working latter on videoURL
@@ -35,7 +32,8 @@ export const createDemoClassController = asyncHandler(async (req, res) => {
   // check exist subject, batch, teacher
   await existSubject(subjectId)
   await existBatch(batchId)
-  await existTeacher(teacherId)
+  await existUser(req.user._id)
+  // await existTeacher(id)
 
   //create
   const demoClass = await DemoClass.create({
@@ -43,7 +41,7 @@ export const createDemoClassController = asyncHandler(async (req, res) => {
     videoURL,
     subjectId,
     batchId,
-    teacherId,
+    userId: req.user._id,
   });
 
   res.status(201).json(new apiResponse(201, demoClass));
