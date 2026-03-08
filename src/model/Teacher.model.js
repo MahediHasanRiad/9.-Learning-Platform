@@ -9,7 +9,7 @@ const teacherSchema = new Schema(
       ref: "User",
     },
     education: {
-      type: [String],
+      type: String,
       required: true,
     },
     certificate: {
@@ -17,13 +17,15 @@ const teacherSchema = new Schema(
     },
     experience: {
       type: String,
-      default: "5 years of experience in IT engineer",
+      default: "",
     },
     availableDay: {
       type: String,
+      default: ''
     },
     availableTime: {
       type: String,
+      default: ''
     },
     rating: {
       type: Number,

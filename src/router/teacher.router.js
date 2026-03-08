@@ -15,15 +15,17 @@ teacherRouter.get("/teacher/demoClasses", authVerify, allDemoClassController);
 teacherRouter.post(
   "/teacher",
   authVerify,
-  upload.fields([
-    { name: "certificates", maxCount: 10 },
-  ]),
+  upload.fields([{ name: "certificates", maxCount: 10 }]),
   createTeacherController,
 );
 teacherRouter
   .route("/teachers/:id")
   .get(authVerify, findSingleTeacherController)
-  .patch(authVerify, updateTeacherController)
+  .patch(
+    authVerify,
+    upload.fields([{ name: "certificate", maxCount: 10 }]),
+    updateTeacherController,
+  )
   .delete(authVerify, deleteTeacherController);
 
 export { teacherRouter };

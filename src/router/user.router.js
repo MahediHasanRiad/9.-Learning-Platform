@@ -16,10 +16,11 @@ import { meController } from "../api/v1/User/controller/me.controller.js";
 
 const userRouter = Router();
 
-userRouter.get('/me', authVerify, meController)
+userRouter.get("/me", authVerify, meController);
 userRouter.post("/login", logInController);
 userRouter.get("/logout", logOutController);
-userRouter.post("/register",
+userRouter.post(
+  "/register",
   upload.fields([
     { name: "avatar", maxCount: 1 },
     { name: "coverImage", maxCount: 1 },
@@ -27,13 +28,20 @@ userRouter.post("/register",
   createUserController,
 );
 
-userRouter.get('/user/enrollments', authVerify, allEnrollmentController)
+userRouter.get("/user/enrollments", authVerify, allEnrollmentController);
 userRouter.post("/changePassword", authVerify, changePasswordController);
-userRouter.get('/users/all', authVerify, listOfAllUserController)
+userRouter.get("/users/all", authVerify, listOfAllUserController);
 userRouter
   .route("/users/:id")
   .get(findUserController)
-  .patch(updateUserController)
+  .patch(
+    authVerify,
+    upload.fields([
+      { name: "avatar", maxCount: 1 },
+      { name: "coverImage", maxCount: 1 },
+    ]),
+    updateUserController,
+  )
   .delete(deleteUserController)
   .put(
     upload.fields([
@@ -43,17 +51,14 @@ userRouter
     updateOrCreateController,
   );
 
-userRouter.post(
-  "/profileImage",
-  authVerify,
-  upload.fields([
-    { name: "avatar", maxCount: 1 },
-    { name: "coverImage", maxCount: 1 },
-  ]),
-  updateImageController
-);
-
-
-
+// userRouter.post(
+//   "/profileImage",
+//   authVerify,
+//   upload.fields([
+//     { name: "avatar", maxCount: 1 },
+//     { name: "coverImage", maxCount: 1 },
+//   ]),
+//   updateImageController,
+// );
 
 export { userRouter };

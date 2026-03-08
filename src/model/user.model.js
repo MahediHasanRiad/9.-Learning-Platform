@@ -50,6 +50,12 @@ const userSchema = new Schema(
     bio: {
       type: String,
     },
+    facebook: {
+      type: String
+    },
+    linkedIn: {
+      type: String
+    },
     role: {
       type: String,
       enum: ['User', 'Teacher'],
