@@ -21,12 +21,18 @@ const teacherSchema = new Schema(
     },
     availableDay: {
       type: String,
-      default: ''
+      default: "",
     },
     availableTime: {
       type: String,
-      default: ''
+      default: "",
     },
+    subjects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Subject",
+      },
+    ],
     rating: {
       type: Number,
       default: 0,

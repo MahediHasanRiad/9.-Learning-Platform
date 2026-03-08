@@ -30,7 +30,7 @@ const allTeachersController = asyncHandler(async (req, res) => {
 
   const filterSearch = await Teacher.find({
     name: { $regex: search, $options: "i" },
-  })
+  }).populate("userId subjects")
     .sort(sortKey)
     .skip((page - 1) * limit)
     .limit(limit);

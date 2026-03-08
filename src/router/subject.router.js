@@ -6,12 +6,14 @@ import { updateOrCreateSubjectController } from "../api/v1/Subjects/controller/u
 import { updateSubjectController } from "../api/v1/Subjects/controller/update.controller.js";
 import { deleteSubjectController } from "../api/v1/Subjects/controller/delete.controller.js";
 import { listOfAllSubjectsByClassController } from "../api/v1/Subjects/controller/List_All_Subject_By_Class.controller.js";
+import { subjectListByTeacherController } from "../api/v1/Subjects/controller/subjectListByTeacher.js";
 
 const subjectRouter = Router();
 
 
 subjectRouter.post("/subject", authVerify, createSubjectController);
 subjectRouter.get('/subjects', authVerify, listOfAllSubjectsByClassController)
+subjectRouter.get('/subjects/:id', authVerify, subjectListByTeacherController)
 subjectRouter
   .route("/subjects/:id")
   .get(authVerify, findSingleSubjectController)

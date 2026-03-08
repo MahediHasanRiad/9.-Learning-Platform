@@ -22,14 +22,14 @@ const updateTeacherController = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   // update teacher
-  const teacher = await Teacher.findById(id);
-  if (!teacher) throw new apiError(404, "teacher not found");
+  const findTeacher = await Teacher.findById(id);
+  if (!findTeacher) throw new apiError(404, "teacher not found");
 
-  if (teacher.userId.toString() !== req.user._id.toString()) {
+  if (findTeacher.userId.toString() !== req.user._id.toString()) {
     throw new apiError(403, "unauthorized");
   }
 
-  const updateTeacher = { education, availableDay, availableTime, experience };
+  const updatedTeacher = { education, availableDay, availableTime, experience };
 
   const certificateLocalPaths = LocalFilePath(req, "certificate");
 
@@ -40,14 +40,14 @@ const updateTeacherController = asyncHandler(async (req, res) => {
       uploads.push(file.url);
     }
 
-    updateTeacher.certificate = uploads;
+    updatedTeacher.certificate = uploads;
   }
 
-  const updatedTeacher = await Teacher.findByIdAndUpdate(
+  const teacher = await Teacher.findByIdAndUpdate(
     id,
-    { $set: updateTeacher },
+    { $set: updatedTeacher },
     { new: true },
-  );
+  ).populate("userId subjects");
 
   // update user
   const avatarLocalFilePath = LocalFilePath(req, "avatar");
@@ -76,13 +76,13 @@ const updateTeacherController = asyncHandler(async (req, res) => {
     userUpdated.coverImage = coverImage.url;
   }
 
-  const updateUser = await User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     req.user._id,
     { $set: userUpdated },
     { new: true },
   );
 
-  res.status(200).json(new apiResponse(200, { updateUser, updatedTeacher }));
+  res.status(200).json(new apiResponse(200, { user, teacher }));
 });
 
 export { updateTeacherController };

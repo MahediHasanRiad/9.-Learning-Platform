@@ -21,7 +21,8 @@ export const createSubjectController = asyncHandler(async(req, res) => {
     
     const subject = await Subject.create({
         name,
-        className
+        className,
+        userId: req.user._id,
     })
 
     res.status(201).json(new apiResponse(201, subject, 'successfully subject created'))

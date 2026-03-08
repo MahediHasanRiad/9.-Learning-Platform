@@ -8,6 +8,10 @@ const subjectSchema = new Schema({
     className: {
         type: String,
         required: true
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 }, {timestamps: true})
 
