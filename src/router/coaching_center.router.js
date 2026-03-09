@@ -8,7 +8,7 @@ import { deleteCoachingCenterController } from "../api/v1/Coaching-center/contro
 import { listOfAllCoachingCenterController } from "../api/v1/Coaching-center/controller/allCoachingCenter.controller.js";
 import { coachingFindByUserController } from "../api/v1/Coaching-center/controller/CoachingfindByUser.controller.js";
 import { coachingAllSubjectsController } from "../api/v1/Coaching-center/controller/coaching-subjects.controller.js";
-import { coachingAllStaffController } from "../api/v1/Coaching-center/controller/coaching-all-teachers.controller.js";
+import { coachingAllStaffController } from "../api/v1/Coaching-center/controller/coaching-all-staffs.controller.js";
 
 const coachingCenterRouter = Router();
 
