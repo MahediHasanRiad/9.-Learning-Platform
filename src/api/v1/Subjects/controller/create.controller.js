@@ -18,7 +18,7 @@ export const createSubjectController = asyncHandler(async(req, res) => {
     if(!name) throw new apiError(400, 'subject name required !!!')
     if(!className) throw new apiError(400, 'class name required !!!')
     
-    const subjectExist = await Subject.findOne({name, className, id})
+    const subjectExist = await Subject.findOne({name, className, userId: id})
     if(subjectExist) throw new apiError(400, 'already exist')
     
     const subject = await Subject.create({
