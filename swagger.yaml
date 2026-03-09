@@ -904,49 +904,14 @@ paths:
             schema: 
               type: object
               properties: 
-                name:
+                CcName:
                   type: string
                   example: Aim Coaching center
-                email:
-                  type: string
-                  example: riad@couchingcom
-                contact: 
-                  type: number
-                  format: int32 
-                  example: 8801518949131
-                avatar:
-                  type: string
-                  format: url
-                  example: https://cloudinary.com/ablajdfoijsd46s5d
-                coverImage: 
-                  type: string
-                  format: url
-                  example: https://cloudinary.com/ablajdfoijsd46s5d
                 address:
                   type: string
                   example: south azompur, 151/B
-                city:
-                  type: string
-                  example: Uttora
-                country:
-                  type: string
-                  example: Bangladesh
-                website:
-                  type: string
-                  format: url
-                  example: https://www.aircenter.center 
-                subjects:
-                  type: string
-                  example: [English, Math, Science]
-                teachersID:
-                  type: number
-                  format: int32
-                  example: [2]
-                status:
-                  type: string
-                  enum: [Pending, Approved, Suspended]
-                  example: Pending
-              required: [name, street, city, country, website, subjects, teachersID, status]           
+
+              required: [CcName, address]           
       responses: 
         '200':
           description: successfully created teacher profile 

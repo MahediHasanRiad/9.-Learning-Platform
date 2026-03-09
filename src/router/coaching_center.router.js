@@ -21,10 +21,6 @@ coachingCenterRouter
 coachingCenterRouter.post(
   "/coaching",
   authVerify,
-  upload.fields([
-    { name: "avatar", maxCount: 1 },
-    { name: "coverImage", maxCount: 1 },
-  ]),
   createCoachingCenterController,
 );
 

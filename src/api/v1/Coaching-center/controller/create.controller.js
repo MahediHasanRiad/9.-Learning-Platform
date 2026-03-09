@@ -9,74 +9,26 @@ import { Teacher } from "../../../../model/Teacher.model.js";
 
 export const createCoachingCenterController = asyncHandler(async (req, res) => {
   /**
-   * get {name, address, website, subjects, teacherID} = req.body
+   * get {name, address} = req.body
    * if(empty) return error
    * if(exist = coaching) return error
-   * if(!avatar) retrun error
-   * upload avatar and coverImage in cloudinary
    * create a profile
    * res
    */
 
-  const {
-    name,
-    email,
-    password,
-    contact,
-    address,
-    city,
-    country = "Bangladesh",
-    website = "",
-    subjectID = "",
-    teacherID = "",
-    role = "Admin",
-  } = req.body;
+  const { CcName, address } = req.body;
 
-  if (
-    [name, email, password, contact, address, city].some(
-      (item) => item.trim() === "",
-    )
-  )
-    throw new apiError(
-      400,
-      "all field are required !!!",
-    );
+  if ([CcName, address].some((item) => item?.trim?.() === ""))
+    throw new apiError(400, "all field are required !!!");
 
   // exist coaching profile ?
-  const existCoachingProfile = await CoachingCenter.findOne({ name });
+  const existCoachingProfile = await CoachingCenter.findOne({ CcName });
   if (existCoachingProfile) throw new apiError(400, "Profile already exist");
 
-  // check subjectID and TeacherId
-  const subject = await Subject.findById(subjectID);
-  if (!subject) throw new apiError(400, "Subject not found !!!");
-
-  const teacher = await Teacher.findById(teacherID);
-  if (!teacher) throw new apiError(400, "Teacher not found !!!");
-
-  // image local path
-  const avatarLocalFilePath = LocalFilePath(req, "avatar", true);
-  const coverImageLocalFilePath = LocalFilePath(req, "coverImage");
-
-  // upload image
-  const avatar = await cloudinaryFileUpload(avatarLocalFilePath);
-  const coverImage = coverImageLocalFilePath
-    ? await cloudinaryFileUpload(coverImageLocalFilePath)
-    : "";
-
   const coachingCenter = await CoachingCenter.create({
-    name,
-    email,
-    password,
-    contact,
+    CcName,
     address,
-    city,
-    country,
-    website,
-    avatar: avatar.url,
-    coverImage: coverImage.url || "",
-    subjectID: subject._id || "",
-    teacherID: teacher._id || "",
-    role,
+    userId: req.user._id,
   });
 
   res

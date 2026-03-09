@@ -9,8 +9,8 @@ const coachingCenterSchema = new Schema({
     },
     email:{
         type: String,
-        unique: true,
-        required: [true, 'Email Required !!!'],
+        unique: [true, 'Email Must be Unique !!!'],
+        // required: [true, 'Email Required !!!'],
         validate: {
             validator: function(v) {
                 return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
@@ -18,28 +18,23 @@ const coachingCenterSchema = new Schema({
              message: (props) => `${props.value} is not a valid Email !`
         }
     },
-    password: {
-        type: String,
-        minLength: [6, 'Minimum 6 character'],
-        required: [true, 'Password Required !!!']
-    },
     address: {
         type: String,
-        required: true
+
     },
     city: {
         type: String,
         enum: ['Mirpur', 'Uttora'],
-        required: true
+
     },
     country: {
         type: String,
-        required: true
+
     },
     contact: {
         type: Number,
         min: [11, 'Not Valid'],
-        required: [true, 'Mobile number required !!!'],
+        
         unique: true,
         validate:{
             validator: function(v){
@@ -50,7 +45,7 @@ const coachingCenterSchema = new Schema({
     },
     avatar: {
         type: String,
-        required: true
+        
     },
     coverImage: {
         type: String
@@ -61,9 +56,8 @@ const coachingCenterSchema = new Schema({
     subjects: {
         type: [Schema.Types.ObjectId],
         ref: 'Subject',
-        required: true
     },
-    teachersID: {
+    teachers: {
         type: [Schema.Types.ObjectId],
         ref: 'Teacher'
     },
@@ -72,9 +66,13 @@ const coachingCenterSchema = new Schema({
         enum: ['Pending', 'Approved', 'Suspended '],
         default: 'Pending'
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     role: {
         type: String,
-        default: 'COACHING'
+        default: 'Admin'
     }
 }, {timestamps: true})
 
