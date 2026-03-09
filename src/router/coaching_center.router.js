@@ -9,14 +9,24 @@ import { listOfAllCoachingCenterController } from "../api/v1/Coaching-center/con
 
 const coachingCenterRouter = Router();
 
-
-coachingCenterRouter.get('/coachingCenters', authVerify, listOfAllCoachingCenterController)
+coachingCenterRouter.get(
+  "/coachingCenters",
+  authVerify,
+  listOfAllCoachingCenterController,
+);
 
 coachingCenterRouter
-  .route("/coachingCenters/:id")
+  .route("/coaching-centers/:id")
   .get(authVerify, findSingleCoachingCenterController)
-  .patch(authVerify, updateCoachingCenterController)
-  .delete(authVerify, deleteCoachingCenterController)
+  .patch(
+    authVerify,
+    upload.fields([
+      { name: "avatar", maxCount: 1 },
+      { name: "coverImage", maxCount: 1 },
+    ]),
+    updateCoachingCenterController,
+  )
+  .delete(authVerify, deleteCoachingCenterController);
 
 coachingCenterRouter.post(
   "/coaching",

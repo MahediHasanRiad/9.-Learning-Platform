@@ -2,10 +2,6 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
-import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
-import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
-import { Subject } from "../../../../model/subject.model.js";
-import { Teacher } from "../../../../model/Teacher.model.js";
 
 export const createCoachingCenterController = asyncHandler(async (req, res) => {
   /**

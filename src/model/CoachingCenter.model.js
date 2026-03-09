@@ -9,7 +9,7 @@ const coachingCenterSchema = new Schema({
     },
     email:{
         type: String,
-        unique: [true, 'Email Must be Unique !!!'],
+        unique: [true, 'Email Must be Unique or One user Can create One Page !!!'],
         // required: [true, 'Email Required !!!'],
         validate: {
             validator: function(v) {
@@ -20,16 +20,6 @@ const coachingCenterSchema = new Schema({
     },
     address: {
         type: String,
-
-    },
-    city: {
-        type: String,
-        enum: ['Mirpur', 'Uttora'],
-
-    },
-    country: {
-        type: String,
-
     },
     contact: {
         type: Number,
@@ -57,9 +47,12 @@ const coachingCenterSchema = new Schema({
         type: [Schema.Types.ObjectId],
         ref: 'Subject',
     },
-    teachers: {
-        type: [Schema.Types.ObjectId],
-        ref: 'Teacher'
+    staffs: [{
+        type: Schema.Types.ObjectId,
+        ref: 'CoachingStaff'
+    }],
+    officeTime: {
+        type: String,
     },
     status:{
         type: String,
@@ -68,11 +61,15 @@ const coachingCenterSchema = new Schema({
     },
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     role: {
         type: String,
         default: 'Admin'
+    },
+    bio: {
+        type: String,
     }
 }, {timestamps: true})
 

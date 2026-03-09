@@ -1,14 +1,9 @@
 import { Schema, model } from "mongoose";
 
 const staffSchema = new Schema({
-    // userId: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     required: true
-    // },
-    teacherName: {
+    userId: {
         type: Schema.Types.ObjectId,
-        ref: 'Teacher',
+        ref: 'User',
         required: true
     },
     CcName: {
@@ -18,14 +13,9 @@ const staffSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['ADMIN', 'MANAGER', 'TEACHER'],
-        required: true
-    },
-    subjects: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Subject',
-        required: true
-    }]
+        enum: ['Admin', 'Manager', 'Teacher', 'Other'],
+        default: 'Teacher'
+    }
 }, {timestamps: true})
 
 export const CoachingStaff = model('CoachingStaff', staffSchema)
