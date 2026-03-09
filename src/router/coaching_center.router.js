@@ -6,6 +6,9 @@ import { findSingleCoachingCenterController } from "../api/v1/Coaching-center/co
 import { updateCoachingCenterController } from "../api/v1/Coaching-center/controller/update.controller.js";
 import { deleteCoachingCenterController } from "../api/v1/Coaching-center/controller/delete.controller.js";
 import { listOfAllCoachingCenterController } from "../api/v1/Coaching-center/controller/allCoachingCenter.controller.js";
+import { coachingFindByUserController } from "../api/v1/Coaching-center/controller/CoachingfindByUser.controller.js";
+import { coachingAllSubjectsController } from "../api/v1/Coaching-center/controller/coaching-subjects.controller.js";
+import { coachingAllStaffController } from "../api/v1/Coaching-center/controller/coaching-all-teachers.controller.js";
 
 const coachingCenterRouter = Router();
 
@@ -14,6 +17,9 @@ coachingCenterRouter.get(
   authVerify,
   listOfAllCoachingCenterController,
 );
+coachingCenterRouter.get('/coaching-center-by-user', authVerify, coachingFindByUserController)
+coachingCenterRouter.get('/coaching-all-subjects', authVerify, coachingAllSubjectsController)
+coachingCenterRouter.get('/coaching-all-staff', authVerify, coachingAllStaffController)
 
 coachingCenterRouter
   .route("/coaching-centers/:id")

@@ -8,7 +8,7 @@ import { allCoachingStaffController } from "../api/v1/Coaching-staff/controller/
 
 const coachingStaffRouter = Router();
 
-coachingStaffRouter.post("/coachingStaff", authVerify, createStaffController);
+coachingStaffRouter.post("/coaching-staff", authVerify, createStaffController);
 coachingStaffRouter.get("/coachingStaffs/:id", authVerify, allCoachingStaffController);
 
 coachingStaffRouter

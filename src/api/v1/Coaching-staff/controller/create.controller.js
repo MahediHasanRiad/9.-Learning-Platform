@@ -1,10 +1,9 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { Teacher } from "../../../../model/Teacher.model.js";
 import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
 import { CoachingStaff } from "../../../../model/CoachingStaff.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { Subject } from "../../../../model/subject.model.js";
+import { User } from "../../../../model/user.model.js";
 
 export const createStaffController = asyncHandler(async (req, res) => {
   /**
@@ -16,34 +15,23 @@ export const createStaffController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { teacherName, CcName, role = "Teacher", subjects } = req.body;
+  const {role = "Teacher", staffId } = req.body;
 
-  if ([CcName, role].some((item) => item.trim() === ""))
+  if ([staffId, role].some((item) => item?.trim() === ""))
     throw new apiError(400, "coachingCenterId and role are required !!!");
 
-  // exist user
-  const user = await Teacher.findOne({ teacherName });
-  if (!user) throw new apiError("invalid teacher id !!!");
-
   // exist coacheing center
-  const coaching = await CoachingCenter.findOne({ CcName });
-  if (!coaching) throw new apiError(400, "invalid coaching center !!!");
-
-  // exist subject
-  if (!Array.isArray(subjects) || subjects.length === 0)
-    throw new apiError(400, "Subject id required !!!");
-
-  const existSubjects = await Subject.find({ _id: { $in: subjects } });
-  if (existSubjects.length !== subjects.length)
-    throw new apiError(400, "one or more subject id are invalid !!!");
-
+  const user = await User.findById(req.user._id)
+  if(!user) throw new apiError(400, 'invalid token, user not found !!!')
+  
+  const coaching = await CoachingCenter.findOne({userId: user._id})
+  if (!coaching) throw new apiError(400, "Does not have any coaching page !!!");
 
   // create
   const coachingStaff = await CoachingStaff.create({
-    teacherName: user._id,
-    CcName: coaching._id,
-    role: role.toUpperCase(),
-    subjects: subjects,
+    staffId: staffId,
+    coachingId: coaching._id,
+    role: role
   });
 
   res

@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
 const staffSchema = new Schema({
-    userId: {
+    staffId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    CcName: {
+    coachingId: {
         type: Schema.Types.ObjectId,
         ref: 'CoachingCenter',
         required: true

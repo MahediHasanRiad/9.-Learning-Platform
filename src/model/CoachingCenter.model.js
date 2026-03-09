@@ -10,7 +10,6 @@ const coachingCenterSchema = new Schema({
     email:{
         type: String,
         unique: [true, 'Email Must be Unique or One user Can create One Page !!!'],
-        // required: [true, 'Email Required !!!'],
         validate: {
             validator: function(v) {
                 return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
@@ -21,14 +20,13 @@ const coachingCenterSchema = new Schema({
     address: {
         type: String,
     },
-    contact: {
+    mobile: {
         type: Number,
         min: [11, 'Not Valid'],
-        
         unique: true,
         validate:{
             validator: function(v){
-                return /^(?:\+88|88)?(01[3-9]\d{8})$/.test(v);
+                return /^01[3-9]\d{8}$/.test(v);
             },
             message: (props) => `${props.value} in not valid Number !!!`
         }
@@ -43,34 +41,45 @@ const coachingCenterSchema = new Schema({
     website:{
         type: String
     },
+    officeTime: {
+        type: String,
+    },
+    bio: {
+        type: String,
+    },
     subjects: {
         type: [Schema.Types.ObjectId],
         ref: 'Subject',
+    },
+    facebook: {
+        type: String,
+    },
+    linkedIn: {
+        type: String,
     },
     staffs: [{
         type: Schema.Types.ObjectId,
         ref: 'CoachingStaff'
     }],
-    officeTime: {
-        type: String,
+    batch: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Batch'
+    }],
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     status:{
         type: String,
         enum: ['Pending', 'Approved', 'Suspended '],
         default: 'Pending'
     },
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    role: {
-        type: String,
-        default: 'Admin'
-    },
-    bio: {
-        type: String,
-    }
+    // role: {
+    //     type: String,
+    //     default: 'Admin'
+    // },
+    
 }, {timestamps: true})
 
 

@@ -17,11 +17,13 @@ export const updateCoachingCenterController = asyncHandler(async (req, res) => {
 
   const { id } = req.params;
   const {
-    name,
+    CcName,
     email,
     mobile,
     address,
     website,
+    facebook,
+    linkedIn,
     bio,
     officeTime,
   } = req.body;
@@ -40,15 +42,17 @@ export const updateCoachingCenterController = asyncHandler(async (req, res) => {
 
   const updatedData = {};
 
-  if (name) updatedData.name = name;
+  if (CcName) updatedData.CcName = CcName;
   if (email) updatedData.email = email;
   if (mobile) updatedData.mobile = mobile;
   if (address) updatedData.address = address;
   if (website) updatedData.website = website;
+  if (facebook) updatedData.facebook = facebook;
+  if (linkedIn) updatedData.linkedIn = linkedIn;
   if (bio) updatedData.bio = bio;
   if (officeTime) updatedData.officeTime = officeTime;
-  if (avatar) updatedData.avatar = avatar;
-  if (coverImage) updatedData.coverImage = coverImage;
+  if (avatar) updatedData.avatar = avatar.url;
+  if (coverImage) updatedData.coverImage = coverImage.url;
 
   const coaching = await CoachingCenter.findByIdAndUpdate(
     id,
