@@ -5,20 +5,21 @@ import { findSingleBatchController } from "../api/v1/Batch/controller/findOne.co
 import { updateBatchController } from "../api/v1/Batch/controller/updateBatch.controller.js";
 import { deleteBatchController } from "../api/v1/Batch/controller/delete.controller.js";
 import { allBatchController } from "../api/v1/Batch/controller/all_batch.controller.js";
+import { upload } from "../middleware/multer.middleware.js";
 
 const batchRouter = Router();
 
-batchRouter.post("/batch", authVerify, createBatchController);
-batchRouter.get('/allBatches', authVerify, allBatchController)
+batchRouter.post(
+  "/batch",
+  authVerify,
+  upload.fields([{ name: "coverImage", maxCount: 1 }]),
+  createBatchController,
+);
+batchRouter.get("/allBatches", authVerify, allBatchController);
 batchRouter
   .route("/batches/:id")
   .get(authVerify, findSingleBatchController)
   .patch(authVerify, updateBatchController)
-  .delete(authVerify, deleteBatchController)
-
-
-
-
-
+  .delete(authVerify, deleteBatchController);
 
 export { batchRouter };

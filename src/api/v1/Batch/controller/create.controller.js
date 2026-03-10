@@ -5,6 +5,9 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Teacher } from "../../../../model/Teacher.model.js";
 import { Batch } from "../../../../model/batch.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
+import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
+import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
 
 export const createBatchController = asyncHandler(async (req, res) => {
   /**
@@ -26,39 +29,26 @@ export const createBatchController = asyncHandler(async (req, res) => {
     recurringRule,
   } = req.body;
 
-  if (
-    !name ||
-    !subjects ||
-    !start_date ||
-    !end_date ||
-    !capacity ||
-    !price ||
-    !assignedTeachers ||
-    !recurringRule
-  )
-    throw new apiError(400, "all field are required !!!");
+  if (!name) throw new apiError('Name are required !!!')
+  if (!subjects) throw new apiError('subjects are required !!!')
+  if (!start_date) throw new apiError('Start_date are required !!!')
+  if (!end_date) throw new apiError('End_date are required !!!')
+  if (!capacity) throw new apiError('Capacity are required !!!')
+  if (!price) throw new apiError('Price are required !!!')
+  if (!assignedTeachers) throw new apiError('Assigned Teachers are required !!!')
+  if (!recurringRule) throw new apiError('Recurring Rule are required !!!')
 
-  // exist subject
-  const subject = await Subject.find({
-    _id: {
-      $in: subjects.map((id) => new mongoose.Types.ObjectId(id)),
-    },
-  });
-  if (subjects.length !== subject.length)
-    throw new apiError(400, "one or more subject id invalid !!!");
 
-  // exist teacher
-  const teacher = await Teacher.find({
-    _id: {
-      $in: assignedTeachers.map((id) => new mongoose.Types.ObjectId(id)),
-    },
-  });
-  if (assignedTeachers.length !== teacher.length)
-    throw new apiError(400, "one or more teacher id invalid !!!");
+    const coverImageLocalFilePath = LocalFilePath(req, 'coverImage', true)
+    const coverImage = coverImageLocalFilePath ? await cloudinaryFileUpload(coverImageLocalFilePath) : ''
+
+    // find coaching by user
+    const coaching = await CoachingCenter.findOne({userId: req.user._id})
 
   // create
   const batch = await Batch.create({
     name,
+    coverImage: coverImage.url,
     subjects,
     start_date,
     end_date,
@@ -66,7 +56,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
     price,
     assignedTeachers,
     recurringRule,
-    CcName: req.user._id
+    coachingId: coaching._id,
   });
 
   res.status(201).json(new apiResponse(201, batch));

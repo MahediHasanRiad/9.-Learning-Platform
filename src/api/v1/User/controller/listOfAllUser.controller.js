@@ -24,22 +24,23 @@ const listOfAllUserController = asyncHandler(async (req, res) => {
 
   page = Number(page);
   limit = Number(limit);
-//   sortBy = Number(sortBy);
 
   const sortkey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
   const filterUser = await User.find({
-    name: { $regex: search, $options: "i" },
+    name: { $regex: search || "", $options: "i" },
   })
     .sort(sortkey)
     .skip((page - 1) * limit)
     .limit(limit);
 
   // add link
-  const users = filterUser.map((user) => ({
+  const users = filterUser.map((user) => (
+    {
     ...user._doc,
-    link: `/user/${user._id}`,
-  }));
+    link: `/users/${user._id}`,
+  }
+));
 
   // count
   const totalUser = await User.countDocuments(filterUser);

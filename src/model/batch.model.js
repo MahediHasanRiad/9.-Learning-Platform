@@ -5,6 +5,9 @@ const batchSchema = new Schema({
         type: String,
         required: true
     },
+    coverImage: {
+        type: String
+    },
     subjects: {
         type: [Schema.Types.ObjectId],
         ref: 'Subject',
@@ -37,7 +40,7 @@ const batchSchema = new Schema({
         type: [String],
         required: true
     },
-    CcName: {
+    coachingId: {
         type: Schema.Types.ObjectId,
         ref: 'CoachingCenter',
         required: [true, 'Coaching name required !!!']

@@ -13,7 +13,7 @@ const subjectRouter = Router();
 
 subjectRouter.post("/subject", authVerify, createSubjectController);
 subjectRouter.get('/subjects', authVerify, listOfAllSubjectsByClassController)
-subjectRouter.get('/subjectsByUser', authVerify, subjectListByUserController)
+subjectRouter.get('/subjects-by-user', authVerify, subjectListByUserController)
 subjectRouter
   .route("/subjects/:id")
   .get(authVerify, findSingleSubjectController)
