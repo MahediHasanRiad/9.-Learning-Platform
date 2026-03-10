@@ -5,6 +5,7 @@ import { Pagination } from "../../../../utils/pagination.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import mongoose from "mongoose";
 import { Links } from "../../../../utils/links.js";
+import { apiError } from "../../../../utils/apiError.js";
 
 export const allCoachingStaffController = asyncHandler(async (req, res) => {
   /**
@@ -17,41 +18,62 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { id } = req.params;
   let {
     page = 1,
     limit = 10,
     sortType = "dec",
     sortBy = "updatedAt",
     search = "",
+    role = "",
   } = req.query;
   page = Number(page);
   limit = Number(limit);
+
+  // find coaching by user id
+  const coaching = await CoachingCenter.findOne({ userId: req.user._id });
+  if (!coaching) throw new apiError("Does not have any Coaching Page");
 
   // filter by search
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
   const filterByCoaching = await CoachingStaff.aggregate([
     {
       $match: {
-        coachingId: new mongoose.Types.ObjectId(id),
+        coachingId: new mongoose.Types.ObjectId(coaching._id),
+        role: { $regex: role || "", $options: "i" },
       },
     },
     {
       $lookup: {
         from: "users",
-        as: "staffId",
         localField: "staffId",
         foreignField: "_id",
+        as: "staffDetails",
       },
     },
-    { $unwind: "$staffId" },
-
+    { $unwind: "$staffDetails" },
     {
       $match: {
-        $or: [
-          { "staffId.name": { $regex: search || "", $options: "i" } },
-          { role: { $regex: search || "", $options: "i" } },
-        ],
+        "staffDetails.name": { $regex: search || "", $options: "i" },
+      },
+    },
+    {
+      $lookup: {
+        from: "coachingcenters",
+        localField: "coachingId",
+        foreignField: "_id",
+        as: "coachingInfo",
+      },
+    },
+    { $unwind: "$coachingInfo" },
+    {
+      $project: {
+        _id: 1,
+        role: 1,
+        userId: "$staffDetails._id",
+        name: "$staffDetails.name",
+        avatar: "$staffDetails.avatar",
+        coachingId: "$coachingInfo._id",
+        CcName: "$coachingInfo.CcName",
       },
     },
   ])
@@ -61,7 +83,7 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
 
   const staff = filterByCoaching.map((item) => ({
     ...item,
-    staffLink: `/users/${item.staffId._id}`,
+    staffLink: `/users/${item._id}`,
   }));
 
   // pagination
@@ -70,11 +92,11 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
     page,
     limit,
     totalItems,
-    `coachingStaffs/${id}`,
+    `coachingStaffs`,
   );
 
   // links
-  const links = await Links(req, pagination, `coachingStaffs/${id}`);
+  const links = await Links(req, pagination, `coachingStaffs`);
 
   res.status(200).json(new apiResponse(200, { staff, pagination, links }));
 });

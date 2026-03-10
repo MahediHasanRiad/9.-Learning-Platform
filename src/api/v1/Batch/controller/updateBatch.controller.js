@@ -24,6 +24,7 @@ export const updateBatchController = asyncHandler(async (req, res) => {
     capacity,
     price,
     assignedTeachers,
+    bio,
     recurringRule,
   } = req.body;
   
@@ -50,6 +51,7 @@ export const updateBatchController = asyncHandler(async (req, res) => {
   if (capacity !== undefined) updateData.capacity = capacity;
   if (price !== undefined) updateData.price = price;
   if (recurringRule !== undefined) updateData.recurringRule = recurringRule;
+  if (bio !== undefined) updateData.bio = bio;
 
   // update
   const batch = await batchUpdateInDB(updateData, id);

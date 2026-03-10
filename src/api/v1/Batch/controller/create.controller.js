@@ -27,6 +27,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
     price,
     assignedTeachers,
     recurringRule,
+    bio
   } = req.body;
 
   if (!name) throw new apiError('Name are required !!!')
@@ -37,6 +38,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
   if (!price) throw new apiError('Price are required !!!')
   if (!assignedTeachers) throw new apiError('Assigned Teachers are required !!!')
   if (!recurringRule) throw new apiError('Recurring Rule are required !!!')
+
 
 
     const coverImageLocalFilePath = LocalFilePath(req, 'coverImage', true)
@@ -56,6 +58,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
     price,
     assignedTeachers,
     recurringRule,
+    bio,
     coachingId: coaching._id,
   });
 

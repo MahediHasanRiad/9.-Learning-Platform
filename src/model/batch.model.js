@@ -44,6 +44,9 @@ const batchSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'CoachingCenter',
         required: [true, 'Coaching name required !!!']
+    },
+    bio: {
+        type: string 
     }
 }, {timestamps: true})
 
