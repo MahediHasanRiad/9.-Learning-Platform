@@ -17,7 +17,7 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const {id} = req.params 
+  const { id } = req.params;
   let {
     page = 1,
     limit = 10,
@@ -33,46 +33,48 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
   const filterByCoaching = await CoachingStaff.aggregate([
     {
       $match: {
-        CcName: new mongoose.Types.ObjectId(id)
-      }
+        coachingId: new mongoose.Types.ObjectId(id),
+      },
     },
     {
       $lookup: {
-        from: 'teachers',    // collection name
-        as: 'Teacher_Name',
-        localField: 'teacherName',
-        foreignField: '_id'
-      }
+        from: "users",
+        as: "staffId",
+        localField: "staffId",
+        foreignField: "_id",
+      },
     },
+    { $unwind: "$staffId" },
+
     {
-      $unwind: "$Teacher_Name"     // i don't want as a array, i want as a single object
+      $match: {
+        $or: [
+          { "staffId.name": { $regex: search || "", $options: "i" } },
+          { role: { $regex: search || "", $options: "i" } },
+        ],
+      },
     },
-    {
-      $lookup: {
-        from: 'subjects',
-        as: 'Subjects',
-        localField: 'subjects',
-        foreignField: '_id'
-      }
-    }
   ])
     .sort(sortKey)
     .skip((page - 1) * limit)
-    .limit(limit)
+    .limit(limit);
 
-
-    const staff = filterByCoaching.map(item => ({
-      ...item,
-      teacher_link: `/teachers/${item.teacherName}`
-    }))
-
+  const staff = filterByCoaching.map((item) => ({
+    ...item,
+    staffLink: `/users/${item.staffId._id}`,
+  }));
 
   // pagination
-  const totalItems = await CoachingStaff.countDocuments(filterByCoaching)
-  const pagination = await Pagination(page, limit, totalItems, `coachingStaffs/${id}`)
+  const totalItems = await CoachingStaff.countDocuments(filterByCoaching);
+  const pagination = await Pagination(
+    page,
+    limit,
+    totalItems,
+    `coachingStaffs/${id}`,
+  );
 
-  // links 
-  const links = await Links(req, pagination, `coachingStaffs/${id}`)
+  // links
+  const links = await Links(req, pagination, `coachingStaffs/${id}`);
 
-  res.status(200).json(new apiResponse(200, {staff, pagination, links}))
+  res.status(200).json(new apiResponse(200, { staff, pagination, links }));
 });

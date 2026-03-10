@@ -16,11 +16,12 @@ export const createStaffController = asyncHandler(async (req, res) => {
    */
 
   const {role = "Teacher", staffId } = req.body;
+  
 
   if ([staffId, role].some((item) => item?.trim() === ""))
     throw new apiError(400, "coachingCenterId and role are required !!!");
 
-  // exist coacheing center
+  // find user then check coacheing center
   const user = await User.findById(req.user._id)
   if(!user) throw new apiError(400, 'invalid token, user not found !!!')
   
@@ -31,7 +32,7 @@ export const createStaffController = asyncHandler(async (req, res) => {
   const coachingStaff = await CoachingStaff.create({
     staffId: staffId,
     coachingId: coaching._id,
-    role: role
+    role: role 
   });
 
   res
