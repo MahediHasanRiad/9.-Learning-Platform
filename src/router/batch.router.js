@@ -6,6 +6,7 @@ import { updateBatchController } from "../api/v1/Batch/controller/updateBatch.co
 import { deleteBatchController } from "../api/v1/Batch/controller/delete.controller.js";
 import { allBatchController } from "../api/v1/Batch/controller/all_batch.controller.js";
 import { upload } from "../middleware/multer.middleware.js";
+import { batchListByCoachingIdController } from "../api/v1/Batch/controller/batch-list-by-coachingId.controller.js";
 
 const batchRouter = Router();
 
@@ -15,7 +16,10 @@ batchRouter.post(
   upload.fields([{ name: "coverImage", maxCount: 1 }]),
   createBatchController,
 );
+
 batchRouter.get("/allBatches", authVerify, allBatchController);
+// batchRouter.get('/allbatch/:id', authVerify, batchListByCoachingIdController);
+
 batchRouter
   .route("/batches/:id")
   .get(authVerify, findSingleBatchController)

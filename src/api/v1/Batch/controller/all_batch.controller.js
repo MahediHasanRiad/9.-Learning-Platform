@@ -4,6 +4,8 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
+import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
+import { apiError } from "../../../../utils/apiError.js";
 
 export const allBatchController = asyncHandler(async (req, res) => {
   /**
@@ -26,11 +28,14 @@ export const allBatchController = asyncHandler(async (req, res) => {
   page = Number(page);
   limit = Number(limit);
 
+  const coaching = await CoachingCenter.findOne({userId: req.user._id})
+  if(!coaching) throw new apiError('Does not hava any Coaching Page !!!')
+
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
   const batch = await Batch.aggregate([
     {
       $match: {
-        CcName: new mongoose.Types.ObjectId(req.user._id),
+        coachingId: new mongoose.Types.ObjectId(coaching._id),
       },
     },
     {
@@ -72,9 +77,9 @@ export const allBatchController = asyncHandler(async (req, res) => {
             as: "teacher",
             in: {
               _id: "$$teacher._id",
-              teacherName: "$$teacher.teacherName",
+              userId: "$$teacher.userId",
               education: "$$teacher.education",
-              experienceOfYears: "$$teacher.experienceOfYears",
+              experience: "$$teacher.experienceOfYears",
               rating: "$$teacher.rating",
               self: {
                 $concat: ["/teachers/", { $toString: "$$teacher._id" }],
@@ -91,7 +96,7 @@ export const allBatchController = asyncHandler(async (req, res) => {
     .sort(sortKey)
     .skip((page - 1) * limit)
     .limit(limit);
-
+console.log(batch)
   // pagination
   const totalItems = await Batch.countDocuments(batch);
   const pagination = await Pagination(page, limit, totalItems, "allBatches");
