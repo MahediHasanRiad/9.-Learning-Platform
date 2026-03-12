@@ -7,7 +7,7 @@ The system allows guardians to evaluate tutors through demo classes, ratings, an
 
 # Problem Statement
 
-Finding a trustworthy tutor is difficult.
+Finding a trustworthy tutor and also course is difficult.
 Guardians usually rely on word-of-mouth recommendations which are often unreliable.
 
 This platform solves the problem by providing:
@@ -16,6 +16,8 @@ This platform solves the problem by providing:
 • Demo classes
 • Transparent rating system
 • Coaching center listings
+• contact with them directly
+• watch review from real students
 
 ---
 
@@ -24,9 +26,11 @@ This platform solves the problem by providing:
 ### Student / Guardian
 
 * Browse tutors
+* filtered based on Switable time / Fee / Location
 * Watch demo classes
 * Compare tutor ratings
 * Enroll in coaching batches
+* check batch rating
 
 ### Tutor
 
@@ -34,6 +38,7 @@ This platform solves the problem by providing:
 * Upload demo classes
 * Manage teaching batches
 * Track enrolled students
+* Stablish as a Teacher Digital Protfolio
 
 ### Coaching Center
 
@@ -41,6 +46,7 @@ This platform solves the problem by providing:
 * Create subjects
 * Create batches
 * Manage students
+* Stablish as a Digital Protfolio
 
 ---
 
@@ -68,7 +74,7 @@ Media Storage
 
 Authentication
 
-* JWT + Cookies
+* JWT + Cookies + auth0
 
 ---
 
@@ -90,54 +96,38 @@ Database (MongoDB)
 
 ---
 
-# API Example
+API Example
+
+Register User
 
 POST /api/auth/register
-
-Request
-
+Request Body
 {
-"name": "Riad",
-"email": "[riad@gmail.com](mailto:riad@gmail.com)",
-"password": "123456"
+  "name": "Riad",
+  "email": "riad@gmail.com",
+  "password": "123456"
 }
-
 Response
-
 {
-"success": true,
-"user": {}
+  "success": true,
+  "user": {
+    "_id": "user_id",
+    "name": "Riad",
+    "email": "riad@gmail.com"
+  }
 }
+
 
 ---
 
-# Database Design
-
-User
-
-name
-email
-mobile
-avatar
-role
-
-Teacher
-
-userId
-subjects
-rating
-
-Coaching
-
-name
-teachers
-subjects
-
-Batch
-
-name
-teacher
-students
+Database Design
+User Model
+Field	Type	Description
+name	String	User full name
+email	String	User email
+mobile	String	User phone number
+avatar	String	Profile image
+role	String	User role (User / Teacher / CoachingOwner)
 
 ---
 
