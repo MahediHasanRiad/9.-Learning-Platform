@@ -2,8 +2,7 @@ import { Teacher } from "../../../../model/Teacher.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
-import {apiResponse} from '../../../../utils/apiResponse.js'
-
+import { apiResponse } from "../../../../utils/apiResponse.js";
 
 const allTeachersController = asyncHandler(async (req, res) => {
   /**
@@ -28,16 +27,29 @@ const allTeachersController = asyncHandler(async (req, res) => {
 
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
-  const filterSearch = await Teacher.find({
-    name: { $regex: search, $options: "i" },
-  }).populate("userId subjects")
+  const filterSearch = await Teacher.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "_id",
+        as: "userId",
+      },
+    },
+    { $unwind: "$userId" },
+    {
+      $match: {
+        "userId.name": { $regex: search, $options: "i" }, 
+      },
+    },
+  ])
     .sort(sortKey)
     .skip((page - 1) * limit)
     .limit(limit);
 
   // add link
   const teachers = filterSearch.map((teacher) => ({
-    ...teacher._doc,
+    ...teacher,
     link: `${req.path}/${teacher._id}`,
   }));
 
@@ -46,9 +58,17 @@ const allTeachersController = asyncHandler(async (req, res) => {
   const pagination = await Pagination(page, limit, totalItems, "teachers");
 
   // links
-  const links = await Links(req, pagination, 'teachers');
+  const links = await Links(req, pagination, "teachers");
 
-  res.status(200).json(new apiResponse(200, {teachers, pagination, links}, "List of All Teachers"))
+  res
+    .status(200)
+    .json(
+      new apiResponse(
+        200,
+        { teachers, pagination, links },
+        "List of All Teachers",
+      ),
+    );
 });
 
 export { allTeachersController };

@@ -46,7 +46,7 @@ const batchSchema = new Schema({
         required: [true, 'Coaching name required !!!']
     },
     bio: {
-        type: string 
+        type: String, 
     }
 }, {timestamps: true})
 

@@ -28,8 +28,9 @@ export const allBatchController = asyncHandler(async (req, res) => {
   page = Number(page);
   limit = Number(limit);
 
-  const coaching = await CoachingCenter.findOne({userId: req.user._id})
-  if(!coaching) throw new apiError('Does not hava any Coaching Page !!!')
+  // find coaching
+  const coaching = await CoachingCenter.findOne({ userId: req.user._id });
+  if (!coaching) throw new apiError("Does not hava any Coaching Page !!!");
 
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
   const batch = await Batch.aggregate([
@@ -40,8 +41,8 @@ export const allBatchController = asyncHandler(async (req, res) => {
     },
     {
       $match: {
-        name: {$regex: search, $options: 'i'}
-      }
+        name: { $regex: search, $options: "i" },
+      },
     },
     {
       $lookup: {
@@ -54,49 +55,67 @@ export const allBatchController = asyncHandler(async (req, res) => {
     {
       $lookup: {
         from: "teachers",
+        let: { teacherIds: "$assignedTeachers" },
+        pipeline: [
+          { $match: { $expr: { $in: ["$_id", "$$teacherIds"] } } },
+          {
+            $lookup: {
+              from: "users",
+              localField: "userId",
+              foreignField: "_id",
+              as: "user",
+            },
+          },
+          { $unwind: "$user" },
+          {
+            $project: {
+              _id: 1,
+              name: "$user.name",
+              avatar: "$user.avatar",
+            },
+          },
+        ],
         as: "assignedTeachers",
-        localField: "assignedTeachers",
-        foreignField: "_id",
       },
     },
-    {
-      $addFields: {
-        subjects: {
-          $map: {
-            input: "$subjects",
-            as: "subject",
-            in: {
-              _id: "$$subject._id",
-              name: "$$subject.name",
-            },
-          },
-        },
-        assignedTeachers: {
-          $map: {
-            input: "$assignedTeachers",
-            as: "teacher",
-            in: {
-              _id: "$$teacher._id",
-              userId: "$$teacher.userId",
-              education: "$$teacher.education",
-              experience: "$$teacher.experienceOfYears",
-              rating: "$$teacher.rating",
-              self: {
-                $concat: ["/teachers/", { $toString: "$$teacher._id" }],
-              },
-            },
-          },
-        },
-        Batch_link: {
-          $concat: ["/batches/", {$toString: "$_id"}]
-        },
-      },
-    },
+    // {
+    //   $addFields: {
+    //     subjects: {
+    //       $map: {
+    //         input: "$subjects",
+    //         as: "subject",
+    //         in: {
+    //           _id: "$$subject._id",
+    //           name: "$$subject.name",
+    //         },
+    //       },
+    //     },
+    //     assignedTeachers: {
+    //       $map: {
+    //         input: "$assignedTeachers",
+    //         as: "teacher",
+    //         in: {
+    //           _id: "$$teacher._id",
+    //           userId: "$$teacher.userId",
+    //           education: "$$teacher.education",
+    //           experience: "$$teacher.experienceOfYears",
+    //           rating: "$$teacher.rating",
+    //           self: {
+    //             $concat: ["/teachers/", { $toString: "$$teacher._id" }],
+    //           },
+    //         },
+    //       },
+    //     },
+    //     Batch_link: {
+    //       $concat: ["/batches/", {$toString: "$_id"}]
+    //     },
+    //   },
+    // },
   ])
     .sort(sortKey)
     .skip((page - 1) * limit)
     .limit(limit);
-console.log(batch)
+  console.log(batch);
   // pagination
   const totalItems = await Batch.countDocuments(batch);
   const pagination = await Pagination(page, limit, totalItems, "allBatches");
