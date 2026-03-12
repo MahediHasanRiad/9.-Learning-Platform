@@ -1,23 +1,10 @@
-import mongoose from "mongoose";
 import { Batch } from "../../../../model/batch.model.js";
-import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { Pagination } from "../../../../utils/pagination.js";
+import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Links } from "../../../../utils/links.js";
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
-import { apiError } from "../../../../utils/apiError.js";
+import { Pagination } from "../../../../utils/pagination.js";
 
 export const allBatchController = asyncHandler(async (req, res) => {
-  /**
-   * get {page, limit, sortType, sortBy, search} = req.query
-   * find all batch in this coaching center
-   * filter by search
-   * add link in every batch {teacher, batch}
-   * pagination
-   * links
-   * res
-   */
-
   let {
     page = 1,
     limit = 10,
@@ -25,31 +12,33 @@ export const allBatchController = asyncHandler(async (req, res) => {
     sortBy = "updatedAt",
     search = "",
   } = req.query;
-  page = Number(page);
-  limit = Number(limit);
 
-  // find coaching
-  const coaching = await CoachingCenter.findOne({ userId: req.user._id });
-  if (!coaching) throw new apiError("Does not hava any Coaching Page !!!");
+  page = Math.max(1, Number(page));
+  limit = Math.max(1, Number(limit));
 
-  const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
+  // Build Filter Object for reuse
+  const filter = {};
+  if (search) {
+    filter.CcName = { $regex: search, $options: "i" };
+  }
+
+  // Sort Stage Object
+  const sortStage = {
+    [sortBy]: sortType === "dec" ? -1 : 1,
+  };
+
+  // 1. Get total items for accurate pagination (Do this BEFORE or separately from aggregation)
+  const totalItems = await Batch.countDocuments(filter);
+
+  // 2. Main Aggregation
   const batch = await Batch.aggregate([
-    {
-      $match: {
-        coachingId: new mongoose.Types.ObjectId(coaching._id),
-      },
-    },
-    {
-      $match: {
-        name: { $regex: search, $options: "i" },
-      },
-    },
+    { $match: filter },
     {
       $lookup: {
         from: "subjects",
-        as: "subjects",
         localField: "subjects",
         foreignField: "_id",
+        as: "subjects",
       },
     },
     {
@@ -78,49 +67,13 @@ export const allBatchController = asyncHandler(async (req, res) => {
         as: "assignedTeachers",
       },
     },
-    // {
-    //   $addFields: {
-    //     subjects: {
-    //       $map: {
-    //         input: "$subjects",
-    //         as: "subject",
-    //         in: {
-    //           _id: "$$subject._id",
-    //           name: "$$subject.name",
-    //         },
-    //       },
-    //     },
-    //     assignedTeachers: {
-    //       $map: {
-    //         input: "$assignedTeachers",
-    //         as: "teacher",
-    //         in: {
-    //           _id: "$$teacher._id",
-    //           userId: "$$teacher.userId",
-    //           education: "$$teacher.education",
-    //           experience: "$$teacher.experienceOfYears",
-    //           rating: "$$teacher.rating",
-    //           self: {
-    //             $concat: ["/teachers/", { $toString: "$$teacher._id" }],
-    //           },
-    //         },
-    //       },
-    //     },
-    //     Batch_link: {
-    //       $concat: ["/batches/", {$toString: "$_id"}]
-    //     },
-    //   },
-    // },
-  ])
-    .sort(sortKey)
-    .skip((page - 1) * limit)
-    .limit(limit);
-  console.log(batch);
-  // pagination
-  const totalItems = await Batch.countDocuments(batch);
-  const pagination = await Pagination(page, limit, totalItems, "allBatches");
+    { $sort: sortStage },
+    { $skip: (page - 1) * limit },
+    { $limit: limit },
+  ]);
 
-  // links
+  // Pagination & Links
+  const pagination = await Pagination(page, limit, totalItems, "allBatches");
   const links = await Links(req, pagination, "batches");
 
   res.status(200).json(new apiResponse(200, { batch, pagination, links }));

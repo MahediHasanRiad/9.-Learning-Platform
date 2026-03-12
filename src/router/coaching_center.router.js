@@ -13,7 +13,7 @@ import { coachingAllSubjectsController } from "../api/v1/Coaching-center/control
 const coachingCenterRouter = Router();
 
 coachingCenterRouter.get(
-  "/coachingCenters",
+  "/coaching-centers",
   authVerify,
   listOfAllCoachingCenterController,
 );

@@ -25,29 +25,40 @@ export const listOfAllCoachingCenterController = asyncHandler(
     page = Number(page);
     limit = Number(limit);
 
+    const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
-    const sortKey = `${sortType === 'dec' ? '-' : ''}${sortBy}`
-    const filterCoachingCenter = await CoachingCenter.find({
-      name: { $regex: search, $options: "i" },
-    })
+    // search
+    const query = {};
+    if (search) {
+      query.CcName = { $regex: search, $options: "i" };
+    }
+    const filterCoachingCenter = await CoachingCenter.find(query)
       .sort(sortKey)
       .skip((page - 1) * limit)
       .limit(limit);
+    console.log("co", filterCoachingCenter);
 
+    // add link for every coaching center
+    const coachingCenter = filterCoachingCenter.map((coaching) => ({
+      ...coaching._doc,
+      link: `${req.path}/${coaching.id}`,
+    }));
 
-      // add link for every coaching center
-      const coachingCenter = filterCoachingCenter.map(coaching => ({
-        ...coaching._doc,
-        link: `${req.path}/${coaching.id}`
-      }))
+    // pagination
+    const totalItems =
+      await CoachingCenter.countDocuments(filterCoachingCenter);
+    const pagination = await Pagination(
+      page,
+      limit,
+      totalItems,
+      "coachingCenters",
+    );
 
-      // pagination
-      const totalItems = await CoachingCenter.countDocuments(filterCoachingCenter)
-      const pagination = await Pagination(page, limit, totalItems, 'coachingCenters')
+    // links
+    const links = await Links(req, pagination, "coachingCenters");
 
-      // links
-      const links = await Links(req, pagination, 'coachingCenters')
-
-      res.status(200).json(new apiResponse(200, {coachingCenter, pagination, links}))
+    res
+      .status(200)
+      .json(new apiResponse(200, { coachingCenter, pagination, links }));
   },
 );

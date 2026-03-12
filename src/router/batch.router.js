@@ -18,7 +18,7 @@ batchRouter.post(
 );
 
 batchRouter.get("/allBatches", authVerify, allBatchController);
-// batchRouter.get('/allbatch/:id', authVerify, batchListByCoachingIdController);
+batchRouter.get('/all-batch-in-coaching/:id', authVerify, batchListByCoachingIdController);
 
 batchRouter
   .route("/batches/:id")
