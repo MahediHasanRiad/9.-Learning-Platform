@@ -131,32 +131,64 @@ role	String	User role (User / Teacher / CoachingOwner)
 
 ---
 
-# Installation
+## Installation
 
 Clone repository
 
-git clone https://github.com/username/project.git
+```bash
+  git clone https://github.com/username/project.git
+```
+Run Locally
+
+Clone the project
+
+```bash
+  git clone https://link-to-project
+```
+
+Go to the project directory
+
+```bash
+  cd my-project
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
 
 Backend
 
-cd backend
-npm install
-npm run dev
+```bash
+  cd backend
+  npm install
+  npm run dev
+```
 
 Frontend
 
-cd frontend
-npm install
-npm run dev
-
+```bash
+  cd frontend
+  npm install
+  npm run dev
+```
+    
 ---
 
-# Future Improvements
+## Future Improvements
 
-• Online live classes
-• Payment gateway
-• AI tutor recommendation
-• Mobile application
+- Online live classes
+- Payment gateway
+- AI tutor recommendation
+- Mobile application
+
 
 ---
 
