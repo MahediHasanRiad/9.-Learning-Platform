@@ -7,6 +7,7 @@ import { deleteBatchController } from "../api/v1/Batch/controller/delete.control
 import { allBatchController } from "../api/v1/Batch/controller/all_batch.controller.js";
 import { upload } from "../middleware/multer.middleware.js";
 import { batchListByCoachingIdController } from "../api/v1/Batch/controller/batch-list-by-coachingId.controller.js";
+import { getAllBatchByUser } from "../api/v1/Batch/controller/get-all-batch-by-user.controller.js";
 
 const batchRouter = Router();
 
@@ -18,6 +19,7 @@ batchRouter.post(
 );
 
 batchRouter.get("/allBatches", authVerify, allBatchController);
+batchRouter.get("/get-all-batch-by-user", authVerify, getAllBatchByUser);
 batchRouter.get('/all-batch-in-coaching/:id', authVerify, batchListByCoachingIdController);
 
 batchRouter

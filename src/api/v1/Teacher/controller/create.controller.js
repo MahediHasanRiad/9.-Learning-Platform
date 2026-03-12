@@ -40,9 +40,9 @@ const createTeacherController = asyncHandler(async (req, res) => {
   });
 
   // // update user role
-  await User.findByIdAndUpdate(req.user._id, {
-    role: 'Teacher'
-  })
+  // await User.findByIdAndUpdate(req.user._id, {
+  //   role: 'Teacher'
+  // })
 
   // link
   const link = {
