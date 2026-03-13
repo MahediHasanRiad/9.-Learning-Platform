@@ -1,7 +1,8 @@
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { apiError } from "../../../../utils/apiError.js";
-import { CoachingCenter } from "../model/CoachingCenter.model.js";
+import { InputData } from "../validation/input-data.validate.js";
+import { CheckCoachingProfile } from "../repository/check-coaching-profile.repository.js";
+import { CreateCoaching } from "../repository/create-coaching.repository.js";
 
 export const createCoachingCenterController = asyncHandler(async (req, res) => {
   /**
@@ -13,19 +14,16 @@ export const createCoachingCenterController = asyncHandler(async (req, res) => {
    */
 
   const { CcName, address } = req.body;
+  const userId = req.user._id;
 
-  if ([CcName, address].some((item) => item?.trim?.() === ""))
-    throw new apiError(400, "all field are required !!!");
+  // check input data
+  await InputData({ CcName, address });
 
   // exist coaching profile ?
-  const existCoachingProfile = await CoachingCenter.findOne({ CcName });
-  if (existCoachingProfile) throw new apiError(400, "Profile already exist");
+  await CheckCoachingProfile(CcName);
 
-  const coachingCenter = await CoachingCenter.create({
-    CcName,
-    address,
-    userId: req.user._id,
-  });
+  // create
+  const coachingCenter = await CreateCoaching(userId);
 
   res
     .status(200)

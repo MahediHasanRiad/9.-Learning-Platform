@@ -3,6 +3,7 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Links } from "../../../../utils/links.js";
 import { Pagination } from "../../../../utils/pagination.js";
+import { FindCoaching } from "../repository/find-coaching.repository.js";
 
 export const listOfAllCoachingCenterController = asyncHandler(
   async (req, res) => {
@@ -22,22 +23,15 @@ export const listOfAllCoachingCenterController = asyncHandler(
       sortBy = "updatedAt",
       search = "",
     } = req.query;
-    page = Number(page);
-    limit = Number(limit);
+    
+    page = Math.max(1, Number(page || 1));
+    limit = Math.max(1, Number(limit || 10));
 
     const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
-    // search
-    const query = {};
-    if (search) {
-      query.CcName = { $regex: search, $options: "i" };
-    }
-    const filterCoachingCenter = await CoachingCenter.find(query)
-      .sort(sortKey)
-      .skip((page - 1) * limit)
-      .limit(limit);
-    console.log("co", filterCoachingCenter);
-
+    // find coaching based on search
+    const filterCoachingCenter = await FindCoaching({search, sortKey, page, limit})
+    
     // add link for every coaching center
     const coachingCenter = filterCoachingCenter.map((coaching) => ({
       ...coaching._doc,
