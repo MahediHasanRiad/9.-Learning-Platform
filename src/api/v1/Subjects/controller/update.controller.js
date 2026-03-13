@@ -2,6 +2,8 @@ import { Subject } from "../model/subject.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import { FindSubjectById } from "../repository/find-subject-by-id.repository.js";
+import { UpdateSubject } from "../repository/update-subject.repository.js";
 
 export const updateSubjectController = asyncHandler(async (req, res) => {
   /**
@@ -13,12 +15,11 @@ export const updateSubjectController = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { name, className } = req.body;
 
-  const existSubject = await Subject.findById(id);
-  if (!existSubject) throw new apiError(400, "not found !!!");
+  // find subject
+  await FindSubjectById(id);
 
-  existSubject.name = name || existSubject.name,
-  existSubject.className = className || existSubject.className;
-  existSubject.save();
+  // update
+  const subject = await UpdateSubject({ id, name, className });
 
-  res.status(200).json(new apiResponse(200, existSubject, "subject updated !"));
+  res.status(200).json(new apiResponse(200, subject, "subject updated !"));
 });

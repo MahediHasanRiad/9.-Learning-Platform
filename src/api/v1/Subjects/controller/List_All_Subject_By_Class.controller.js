@@ -3,6 +3,7 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { FilterSubject } from "../repository/filter-subject.repository.js";
 
 export const listOfAllSubjectsByClassController = asyncHandler(
   async (req, res) => {
@@ -22,35 +23,14 @@ export const listOfAllSubjectsByClassController = asyncHandler(
       sortBy = "updatedAt",
       search = "",
     } = req.query;
-    page = Number(page);
-    limit = Number(limit);
+    page = Math.max(1, Number(page || 1));
+    limit = Math.max(1, Number(limit || 10));
 
-    // filter
+    // sort key
     const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-    const filterSubjects = await Subject.aggregate([
-      {
-        $match: {
-          name: {
-            $regex: search,
-            $options: "i",
-          },
-        },
-      },
-      {
-        $group: {
-          _id: "$className",
-          subjects: { $push: "$$ROOT" }
-        },
-      },
-      {
-        $sort: {
-          _id: 1,
-        },
-      },
-    ])
-      .sort(sortKey)
-      .skip((page - 1) * limit)
-      .limit(limit);
+
+    // filter subjects based on search
+    const filterSubjects = await FilterSubject({search, sortKey, page, limit})
 
     // pagination
     const totalItems = await Subject.countDocuments(filterSubjects);

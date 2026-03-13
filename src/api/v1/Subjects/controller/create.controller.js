@@ -2,6 +2,8 @@ import {asyncHandler} from '../../../../utils/asyncHandler.js'
 import {apiResponse} from '../../../../utils/apiResponse.js'
 import {apiError} from '../../../../utils/apiError.js'
 import { Subject } from '../model/subject.model.js'
+import { FindSubject } from '../repository/find-subject.repository.js'
+import { CreateSubject } from '../repository/create-subject.repository.js'
 
 export const createSubjectController = asyncHandler(async(req, res) => {
     /**
@@ -18,14 +20,11 @@ export const createSubjectController = asyncHandler(async(req, res) => {
     if(!name) throw new apiError(400, 'subject name required !!!')
     if(!className) throw new apiError(400, 'class name required !!!')
     
-    const subjectExist = await Subject.findOne({name, className, userId: id})
-    if(subjectExist) throw new apiError(400, 'already exist')
+    // check subject exist or not
+    await FindSubject(id)
     
-    const subject = await Subject.create({
-        name,
-        className,
-        userId: id,
-    })
+    // create
+    const subject = await CreateSubject(id)
 
     res.status(201).json(new apiResponse(201, subject, 'successfully subject created'))
 
