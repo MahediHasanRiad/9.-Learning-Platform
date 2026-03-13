@@ -3,6 +3,7 @@ import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Teacher } from "../model/Teacher.model.js";
+import { FindTeacherOnSearch } from "../repository/find-teacher-on-search.repository.js";
 
 const allTeachersController = asyncHandler(async (req, res) => {
   /**
@@ -27,25 +28,8 @@ const allTeachersController = asyncHandler(async (req, res) => {
 
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
-  const filterSearch = await Teacher.aggregate([
-    {
-      $lookup: {
-        from: "users",
-        localField: "userId",
-        foreignField: "_id",
-        as: "userId",
-      },
-    },
-    { $unwind: "$userId" },
-    {
-      $match: {
-        "userId.name": { $regex: search, $options: "i" }, 
-      },
-    },
-  ])
-    .sort(sortKey)
-    .skip((page - 1) * limit)
-    .limit(limit);
+  // find teacher by search
+  const filterSearch = await FindTeacherOnSearch({search, sortKey, page, limit})
 
   // add link
   const teachers = filterSearch.map((teacher) => ({

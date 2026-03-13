@@ -4,7 +4,8 @@ import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { Teacher } from "../model/Teacher.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-// import { User } from "../../../../model/user.model.js";
+import { CreateTeacher } from "../repository/create-teacher.repository.js";
+
 
 const createTeacherController = asyncHandler(async (req, res) => {
   /**
@@ -17,7 +18,7 @@ const createTeacherController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { education, experienceOfYears = 0 } = req.body;
+  const { education, experience = 0 } = req.body;
 
   if ([education].some((item) => item === ""))
     throw new apiError(400, "Education data required !!!");
@@ -32,17 +33,8 @@ const createTeacherController = asyncHandler(async (req, res) => {
 
 
   // create teacher profile
-  const teacher = await Teacher.create({
-    userId: req.user._id,
-    education,
-    certificate: certificate.url || "",
-    experienceOfYears,
-  });
-
-  // // update user role
-  // await User.findByIdAndUpdate(req.user._id, {
-  //   role: 'Teacher'
-  // })
+  const userId = req.user._id;
+  const teacher = await CreateTeacher({userId, education, certificate, experience})
 
   // link
   const link = {
