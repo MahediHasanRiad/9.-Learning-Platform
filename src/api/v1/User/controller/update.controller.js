@@ -1,34 +1,41 @@
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { User } from "../model/user.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { apiError } from "../../../../utils/apiError.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
+import { FindUser } from "../repository/user.repository.js";
+import { UpdateUser } from "../repository/update-user.repository.js";
 
 const updateUserController = asyncHandler(async (req, res) => {
-  const { name, address, email, password, mobile, role, facebook, linkedIn } = req.body;
+  const { name, address, email, mobile, role, facebook, linkedIn } =
+    req.body;
   const { id } = req.params;
 
-  const existUser = await User.findById(id);
-  if (!existUser) throw new apiError(404, "user not found !!!");
+  // check user exist or not
+  const existUser = await FindUser(id);
 
-  const avatarLocalFilePath = LocalFilePath(req, 'avatar')
-  const coverImageLocalFilePath = LocalFilePath(req, 'coverImage')
+  // check image local path
+  const avatarLocalFilePath = LocalFilePath(req, "avatar");
+  const coverImageLocalFilePath = LocalFilePath(req, "coverImage");
 
-  const avatar = avatarLocalFilePath ? await cloudinaryFileUpload(avatarLocalFilePath) : ''
-  const coverImage = coverImageLocalFilePath ? await cloudinaryFileUpload(coverImageLocalFilePath) : ''
+  // image upload in cloudinary
+  const avatar = avatarLocalFilePath
+    ? await cloudinaryFileUpload(avatarLocalFilePath)
+    : "";
+  const coverImage = coverImageLocalFilePath
+    ? await cloudinaryFileUpload(coverImageLocalFilePath)
+    : "";
 
-  const user = await User.findByIdAndUpdate(id, {
-    name: name || existUser.name,
-    address: address || existUser.address,
-    email: email || existUser.email,
-    mobile: mobile || existUser.mobile,
-    password: password || existUser.password,
-    role: role || existUser.role,
-    avatar: avatar.url || existUser.avatar,
-    coverImage: coverImage.url || existUser.coverImage,
-    facebook: facebook || existUser.facebook,
-    linkedIn: linkedIn || existUser.linkedIn,
+  const user = await UpdateUser({
+    id,
+    name,
+    address,
+    email,
+    mobile,
+    role,
+    avatar,
+    coverImage,
+    facebook,
+    linkedIn,
   });
 
   res.status(200).json(new apiResponse(200, user, "successfully updated !!!"));

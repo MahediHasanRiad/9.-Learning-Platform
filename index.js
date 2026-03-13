@@ -14,6 +14,7 @@ import { coachingStaffRouter } from "./src/api/v1/Coaching-staff/router/coaching
 import { batchRouter } from "./src/api/v1/Batch/router/batch.router.js";
 import { demoClassRouter } from "./src/api/v1/Demo/router/demoClass.router.js";
 import { enrollmentRouter } from "./src/api/v1/Enrollment/router/enrollment.router.js";
+import { authRouter } from "./src/api/v1/Auth/router/auth.router.js";
 
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(cookieParser())
 
 
 // routers
+app.use('/api/v1', authRouter )
 app.use('/api/v1', userRouter )
 app.use('/api/v1', teacherRouter )
 app.use('/api/v1', subjectRouter )

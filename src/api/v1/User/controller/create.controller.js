@@ -4,6 +4,8 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { User } from "../model/user.model.js";
+import { ExistUser } from "../repository/exist-user-by-email.repository.js";
+import { CreateUser } from "../repository/create-user.repository.js";
 
 export const createUserController = asyncHandler(async (req, res) => {
   /**
@@ -16,36 +18,40 @@ export const createUserController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { name, email, password, mobile, address, bio, role} = req.body;
+  const { name, email, password, mobile, address, bio, role } = req.body;
 
   if ([name, email, password, mobile].some((item) => item === "")) {
     throw new apiError(400, "all field are required !!!");
   }
 
-  const existUser = await User.findOne({ email });
-  if (existUser) throw new apiError(400, "Exist User !!!");
+  // check user exist or not
+  await ExistUser(email);
 
-  const avaterLocalPath = LocalFilePath(req, 'avatar', true)
-  const coverImageLocalPath = LocalFilePath(req, 'coverImage')
+  // check image path
+  const avaterLocalPath = LocalFilePath(req, "avatar", true);
+  const coverImageLocalPath = LocalFilePath(req, "coverImage");
 
+  // upload image in cloudinary
   const avatar = await cloudinaryFileUpload(avaterLocalPath);
-  const coverImage = coverImageLocalPath ? await cloudinaryFileUpload(coverImageLocalPath) : ''
+  const coverImage = coverImageLocalPath
+    ? await cloudinaryFileUpload(coverImageLocalPath)
+    : "";
 
-  const user = await User.create({
+  // create
+  const createUser = await CreateUser({
     name,
     email,
     mobile,
     password,
-    avatar: avatar.url || "",
-    coverImage: coverImage.url || "",
+    avatar,
+    coverImage,
     address,
     bio,
     role,
   });
 
-  const getUser = await User.findById(user.id).select("-password");
-
-  if (!user) throw new apiError(500, "server error during create user !!!");
+  // remove password
+  const user = await User.findById(createUser.id).select("-password");
 
   // add self link
   const link = {
@@ -54,5 +60,7 @@ export const createUserController = asyncHandler(async (req, res) => {
 
   res
     .status(201)
-    .json(new apiResponse(201, { rmUser: getUser, link }, "successfully created !"));
+    .json(
+      new apiResponse(201, { user, link }, "successfully created !"),
+    );
 });

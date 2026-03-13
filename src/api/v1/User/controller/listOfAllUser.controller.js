@@ -3,6 +3,7 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Links } from "../../../../utils/links.js";
 import { Pagination } from "../../../../utils/pagination.js";
+import { FindUserBasedOnSearch } from "../repository/find-user-by-search.repository.js";
 
 const listOfAllUserController = asyncHandler(async (req, res) => {
   /**
@@ -27,12 +28,8 @@ const listOfAllUserController = asyncHandler(async (req, res) => {
 
   const sortkey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
-  const filterUser = await User.find({
-    name: { $regex: search || "", $options: "i" },
-  })
-    .sort(sortkey)
-    .skip((page - 1) * limit)
-    .limit(limit);
+  // filter user based on search
+  const filterUser = await FindUserBasedOnSearch({search, sortkey, page, limit})
 
   // add link
   const users = filterUser.map((user) => (

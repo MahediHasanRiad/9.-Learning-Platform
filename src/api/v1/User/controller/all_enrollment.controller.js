@@ -4,6 +4,7 @@ import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Enrollment } from "../../Enrollment/model/enrollment.model.js";
+import { EnrolledUser } from "../repository/enrolled-user.repository.js";
 
 export const allEnrollmentController = asyncHandler(async (req, res) => {
   /**
@@ -25,36 +26,27 @@ export const allEnrollmentController = asyncHandler(async (req, res) => {
   ((page = Number(page)), (limit = Number(limit)));
 
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-  const enrollment = await Enrollment.aggregate([
-    {
-      $match: {
-        studentId: new mongoose.Types.ObjectId(req.user._id),
-      },
-    },
-    {
-      $lookup: {
-        from: "batches",
-        as: "batchId",
-        localField: "batchId",
-        foreignField: "_id",
-      },
-    },
-  ])
-    .sort(sortKey)
-    .skip((page - 1) * limit)
-    .limit(limit);
-
+  
+  // get all enrolled user
+  const userId = req.user._id
+  const enrollment = await EnrolledUser({userId, sortKey, page, limit})
+   
 
   // add batch link
   const enrolled_Batch = enrollment.map((batch) => ({
     // console.log('b', batch)
     ...batch,
-    self: `/batches/${batch.batchId[0]._id}`
+    self: `/batches/${batch.batchId[0]._id}`,
   }));
 
   // pagination
   const totalItems = await Enrollment.countDocuments(enrollment);
-  const pagination = await Pagination(page, limit, totalItems, "user/enrollments");
+  const pagination = await Pagination(
+    page,
+    limit,
+    totalItems,
+    "user/enrollments",
+  );
 
   // links
   const links = await Links(req, pagination, "user/enrollments");

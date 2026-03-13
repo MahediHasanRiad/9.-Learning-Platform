@@ -1,16 +1,15 @@
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { Teacher } from "../../Teacher/model/Teacher.model.js";
-import { User } from "../model/user.model.js";
+import { FindTeacher } from "../repository/teacher.repository.js";
+import { FindUser } from "../repository/user.repository.js";
 
 export const meController = asyncHandler(async (req, res) => {
+
   const id = req.user._id;
 
-  const user = await User.findById(id).select("-password");
-  if (!user) throw new apiError("invalid token");
+  const user = await FindUser(id)
+  const teacher = await FindTeacher(user._id)
 
-  const teacher = await Teacher.findOne({ userId: user._id });
-  if(!teacher) return
 
   res.status(200).json(
     new apiResponse(200, {
