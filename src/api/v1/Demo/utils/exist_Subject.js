@@ -1,5 +1,5 @@
-import { Subject } from "../../../../model/subject.model.js";
 import { apiError } from "../../../../utils/apiError.js"
+import { Subject } from "../../Subjects/model/subject.model.js";
 
 export const existSubject = async (subjectId) => {
   try {

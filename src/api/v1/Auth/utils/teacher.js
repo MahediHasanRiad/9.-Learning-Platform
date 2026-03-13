@@ -1,4 +1,4 @@
-import { Teacher } from "../../../../model/Teacher.model.js";
+import { Teacher } from "../../Teacher/model/Teacher.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 
 export const verifyTeacher = async (email, password) => {

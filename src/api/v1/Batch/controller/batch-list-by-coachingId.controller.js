@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { Batch } from "../../../../model/batch.model.js";
+import { Batch } from "../model/batch.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
+import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 
 export const batchListByCoachingIdController = asyncHandler(async (req, res) => {

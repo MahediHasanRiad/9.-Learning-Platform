@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { DemoClass } from "../../../../model/demoClass.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { DemoClass } from "../../Demo/model/demoClass.model.js";
 
 export const allDemoClassController = asyncHandler(async (req, res) => {
   /**

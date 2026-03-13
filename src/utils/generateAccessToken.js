@@ -1,4 +1,5 @@
-import { User } from "../model/user.model.js"
+import { User } from "../api/v1/User/model/user.model.js"
+
 
 
 async function generateToken(id){

@@ -1,9 +1,10 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
-import { CoachingStaff } from "../../../../model/CoachingStaff.model.js";
+import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
+import { User } from "../../User/model/user.model.js";
+import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { User } from "../../../../model/user.model.js";
+
 
 export const createStaffController = asyncHandler(async (req, res) => {
   /**

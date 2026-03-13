@@ -1,4 +1,5 @@
-import { Batch } from "../../../../model/batch.model.js";
+import { Batch } from "../model/batch.model.js";
+
 
 export const batchUpdateInDB = async (updateData, id) => {
   try {

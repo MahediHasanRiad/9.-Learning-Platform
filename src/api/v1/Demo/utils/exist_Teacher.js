@@ -1,6 +1,7 @@
-import { Teacher } from "../../../../model/Teacher.model.js";
-import { User } from "../../../../model/user.model.js";
+
 import { apiError } from "../../../../utils/apiError.js";
+import { Teacher } from "../../Teacher/model/Teacher.model.js";
+import { User } from "../../User/model/user.model.js";
 
 
 export const existTeacher = async (teacherId) => {

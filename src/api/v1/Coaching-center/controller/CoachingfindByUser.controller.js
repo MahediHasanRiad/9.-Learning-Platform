@@ -1,4 +1,4 @@
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
+import { CoachingCenter } from "../model/CoachingCenter.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";

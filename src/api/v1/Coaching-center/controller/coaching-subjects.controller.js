@@ -1,10 +1,11 @@
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
-import { Subject } from "../../../../model/subject.model.js";
+import { CoachingCenter } from "../model/CoachingCenter.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import { Subject } from "../../Subjects/model/subject.model.js";
 
 export const coachingAllSubjectsController = asyncHandler(async(req, res) => {
+  
   const coaching = await CoachingCenter.findOne({userId: req.user._id})
   if(!coaching) throw new apiError('No Coaching Page found !')
 

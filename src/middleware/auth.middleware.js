@@ -1,6 +1,4 @@
-import { CoachingCenter } from "../model/CoachingCenter.model.js";
-import { Teacher } from "../model/Teacher.model.js";
-import { User } from "../model/user.model.js";
+import { User } from "../api/v1/User/model/user.model.js";
 import { apiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";

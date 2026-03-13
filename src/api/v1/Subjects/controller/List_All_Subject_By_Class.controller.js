@@ -1,4 +1,4 @@
-import { Subject } from "../../../../model/subject.model.js";
+import { Subject } from "../model/subject.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";

@@ -1,4 +1,4 @@
-import { DemoClass } from "../../../../model/demoClass.model.js";
+import { DemoClass } from "../model/demoClass.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 

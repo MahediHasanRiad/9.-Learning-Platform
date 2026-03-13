@@ -1,7 +1,8 @@
-import { User } from "../../../../model/user.model.js";
+
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import { User } from "../model/user.model.js";
 
 const changePasswordController =  asyncHandler(async (req, res) => {
     const {oldPassword, newPassword} = req.body 

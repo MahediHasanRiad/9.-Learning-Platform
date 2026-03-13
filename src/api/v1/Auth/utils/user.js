@@ -1,6 +1,7 @@
-import { User } from "../../../../model/user.model.js";
+
 import { apiError } from "../../../../utils/apiError.js";
 import { generateToken } from "../../../../utils/generateAccessToken.js";
+import { User } from "../../User/model/user.model.js";
 
 
 export const verifyUser = async (email, password) => {

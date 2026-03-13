@@ -1,7 +1,7 @@
 import {asyncHandler} from '../../../../utils/asyncHandler.js'
 import {apiResponse} from '../../../../utils/apiResponse.js'
 import {apiError} from '../../../../utils/apiError.js'
-import { Subject } from '../../../../model/subject.model.js'
+import { Subject } from '../model/subject.model.js'
 
 export const createSubjectController = asyncHandler(async(req, res) => {
     /**

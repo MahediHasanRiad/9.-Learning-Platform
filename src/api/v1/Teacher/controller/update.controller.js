@@ -1,10 +1,11 @@
-import { Teacher } from "../../../../model/Teacher.model.js";
-import { User } from "../../../../model/user.model.js";
+import { Teacher } from "../model/Teacher.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
+import { User } from "../../User/model/user.model.js";
+
 
 const updateTeacherController = asyncHandler(async (req, res) => {
   const {

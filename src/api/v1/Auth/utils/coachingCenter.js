@@ -1,5 +1,6 @@
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
+
 import { apiError } from "../../../../utils/apiError.js";
+import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
 
 
 export const verifyCoachingCenter = async (email, password) => {

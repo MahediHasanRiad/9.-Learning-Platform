@@ -1,7 +1,7 @@
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
+import { CoachingCenter } from "../model/CoachingCenter.model.js";
 
 export const createCoachingCenterController = asyncHandler(async (req, res) => {
   /**

@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { Enrollment } from "../../../../model/enrollment.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { Enrollment } from "../../Enrollment/model/enrollment.model.js";
 
 export const allEnrollmentController = asyncHandler(async (req, res) => {
   /**

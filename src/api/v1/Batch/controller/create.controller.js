@@ -1,19 +1,18 @@
 import mongoose from "mongoose";
-import { Subject } from "../../../../model/subject.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { Teacher } from "../../../../model/Teacher.model.js";
-import { Batch } from "../../../../model/batch.model.js";
+import { Batch } from "../model/batch.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
+import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
+
 
 export const createBatchController = asyncHandler(async (req, res) => {
   /**
    * get {name, subjectIds, scheduleId, capacity, price, assignedTeachersIds, recurringRule} = req.body
    * if(empty) return error
-   * if(!subjectIds || !scheduleId || !teacherId) return error
+   * if(!subjectIds || !scheduleId ) return error
    * create
    * res
    */

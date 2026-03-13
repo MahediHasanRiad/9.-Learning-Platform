@@ -2,9 +2,9 @@ import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
-import { Teacher } from "../../../../model/Teacher.model.js";
+import { Teacher } from "../model/Teacher.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { User } from "../../../../model/user.model.js";
+// import { User } from "../../../../model/user.model.js";
 
 const createTeacherController = asyncHandler(async (req, res) => {
   /**

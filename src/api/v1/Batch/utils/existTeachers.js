@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import { Teacher } from "../../../../model/Teacher.model.js";
+
 import { apiError } from "../../../../utils/apiError.js";
+import { Teacher } from "../../Teacher/model/Teacher.model.js";
 
 export const existTeachers = async (assignedTeachers, updateData) => {
   try {

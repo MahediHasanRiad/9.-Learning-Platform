@@ -1,9 +1,9 @@
-import { CoachingCenter } from "../../../../model/CoachingCenter.model.js";
-import { CoachingStaff } from "../../../../model/CoachingStaff.model.js";
+import mongoose from "mongoose";
+import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
+import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import mongoose from "mongoose";
 import { Links } from "../../../../utils/links.js";
 import { apiError } from "../../../../utils/apiError.js";
 

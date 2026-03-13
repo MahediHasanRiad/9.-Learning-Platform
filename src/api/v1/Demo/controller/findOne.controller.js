@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { DemoClass } from "../../../../model/demoClass.model.js";
+import { DemoClass } from "../model/demoClass.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 
 

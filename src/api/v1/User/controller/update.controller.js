@@ -1,5 +1,5 @@
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { User } from "../../../../model/user.model.js";
+import { User } from "../model/user.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";

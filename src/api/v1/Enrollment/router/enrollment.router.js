@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { authVerify } from "../middleware/auth.middleware.js";
-import { createEnrollmentController } from "../api/v1/Enrollment/controller/create.controller.js";
+import { authVerify } from "../../../../middleware/auth.middleware.js";
+import { createEnrollmentController } from "../controller/create.controller.js";
+
 
 const enrollmentRouter = Router();
 

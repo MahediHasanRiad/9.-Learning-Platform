@@ -1,8 +1,8 @@
-import { Teacher } from "../../../../model/Teacher.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { Teacher } from "../model/Teacher.model.js";
 
 const allTeachersController = asyncHandler(async (req, res) => {
   /**

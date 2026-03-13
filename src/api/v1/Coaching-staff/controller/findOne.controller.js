@@ -1,4 +1,4 @@
-import { CoachingStaff } from "../../../../model/CoachingStaff.model.js";
+import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
@@ -10,13 +10,12 @@ export const findSingleCoachingStaffController = asyncHandler(
 
     const staff = await CoachingStaff.findById(id)
       .select("-password")
-      .populate("teacherName", "teacherName")
-      .populate("CcName", "CcName")
-      .populate("subjects", "name className")
+      .populate("staffId", "name avatar mobile")
+      .populate("coachingId", "CcName")
     if (!staff) throw new apiError(400, "coaching staff not found !!!");
 
     const link = {
-      teacher: `/teachers/${staff.teacherName._id}`,
+      teacher: `/teachers/${staff.staffId._id}`,
     };
 
     res.status(200).json(new apiResponse(200, {staff, link}));

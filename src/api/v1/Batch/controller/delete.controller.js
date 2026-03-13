@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { Batch } from "../../../../model/batch.model.js";
+import { Batch } from "../model/batch.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 
 export const deleteBatchController = asyncHandler(async (req, res) => {

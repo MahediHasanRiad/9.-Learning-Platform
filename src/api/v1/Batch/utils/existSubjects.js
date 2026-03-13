@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import { Subject } from "../../../../model/subject.model.js";
+
 import { apiError } from "../../../../utils/apiError.js";
+import { Subject } from "../../Subjects/model/subject.model.js";
 
 export const existSubjects = async (subjects, updateData) => {
   try {

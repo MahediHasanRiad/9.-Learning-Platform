@@ -1,4 +1,4 @@
-import { Batch } from "../../../../model/batch.model.js";
+import { Batch } from "../model/batch.model.js";
 
 export const existBatch = async (id) => {
   try {

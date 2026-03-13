@@ -1,7 +1,7 @@
-import { Teacher } from "../../../../model/Teacher.model.js";
-import { User } from "../../../../model/user.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import { Teacher } from "../../Teacher/model/Teacher.model.js";
+import { User } from "../model/user.model.js";
 
 export const meController = asyncHandler(async (req, res) => {
   const id = req.user._id;
