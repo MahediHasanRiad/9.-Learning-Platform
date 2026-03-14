@@ -1,7 +1,7 @@
 import { Batch } from "../model/batch.model.js";
 
 
-export const batchUpdateInDB = async (updateData, id) => {
+export const BatchUpdate = async (updateData, id) => {
   try {
     const batch = await Batch.findByIdAndUpdate(
         id,

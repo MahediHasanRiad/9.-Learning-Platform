@@ -1,12 +1,10 @@
-import mongoose from "mongoose";
-import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { Batch } from "../model/batch.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
-import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
-
+import { InputData } from "../validation/input-data.validation.js";
+import { FindCoaching } from "../repository/find-coaching.repository.js";
+import { CreateBatch } from "../repository/create-batch.repository.js";
 
 export const createBatchController = asyncHandler(async (req, res) => {
   /**
@@ -26,30 +24,36 @@ export const createBatchController = asyncHandler(async (req, res) => {
     price,
     assignedTeachers,
     recurringRule,
-    bio
+    bio,
   } = req.body;
 
-  if (!name) throw new apiError('Name are required !!!')
-  if (!subjects) throw new apiError('subjects are required !!!')
-  if (!start_date) throw new apiError('Start_date are required !!!')
-  if (!end_date) throw new apiError('End_date are required !!!')
-  if (!capacity) throw new apiError('Capacity are required !!!')
-  if (!price) throw new apiError('Price are required !!!')
-  if (!assignedTeachers) throw new apiError('Assigned Teachers are required !!!')
-  if (!recurringRule) throw new apiError('Recurring Rule are required !!!')
+  const id = req.user._id;
 
+  // check input data
+  await InputData({
+    name,
+    subjects,
+    start_date,
+    end_date,
+    capacity,
+    price,
+    assignedTeachers,
+    recurringRule,
+  });
 
+  // cover-image
+  const coverImageLocalFilePath = LocalFilePath(req, "coverImage", true);
+  const coverImage = coverImageLocalFilePath
+    ? await cloudinaryFileUpload(coverImageLocalFilePath)
+    : "";
 
-    const coverImageLocalFilePath = LocalFilePath(req, 'coverImage', true)
-    const coverImage = coverImageLocalFilePath ? await cloudinaryFileUpload(coverImageLocalFilePath) : ''
-
-    // find coaching by user
-    const coaching = await CoachingCenter.findOne({userId: req.user._id})
+  // find coaching by user
+  const coaching = await FindCoaching(id);
 
   // create
-  const batch = await Batch.create({
+  const batch = await CreateBatch({
     name,
-    coverImage: coverImage.url,
+    coverImage,
     subjects,
     start_date,
     end_date,
@@ -58,7 +62,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
     assignedTeachers,
     recurringRule,
     bio,
-    coachingId: coaching._id,
+    coachingId: coaching?._id,
   });
 
   res.status(201).json(new apiResponse(201, batch));

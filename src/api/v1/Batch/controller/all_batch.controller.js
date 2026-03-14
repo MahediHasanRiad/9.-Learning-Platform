@@ -3,6 +3,7 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Links } from "../../../../utils/links.js";
 import { Pagination } from "../../../../utils/pagination.js";
+import { FilterBatchOnSearch } from "../repository/filter-batch-by-search.repository.js";
 
 export const allBatchController = asyncHandler(async (req, res) => {
   let {
@@ -16,7 +17,7 @@ export const allBatchController = asyncHandler(async (req, res) => {
   page = Math.max(1, Number(page));
   limit = Math.max(1, Number(limit));
 
-  // Build Filter Object for reuse
+  // Build Filter Object
   const filter = {};
   if (search) {
     filter.CcName = { $regex: search, $options: "i" };
@@ -27,50 +28,11 @@ export const allBatchController = asyncHandler(async (req, res) => {
     [sortBy]: sortType === "dec" ? -1 : 1,
   };
 
-  // 1. Get total items for accurate pagination (Do this BEFORE or separately from aggregation)
+  // total item count
   const totalItems = await Batch.countDocuments(filter);
 
-  // 2. Main Aggregation
-  const batch = await Batch.aggregate([
-    { $match: filter },
-    {
-      $lookup: {
-        from: "subjects",
-        localField: "subjects",
-        foreignField: "_id",
-        as: "subjects",
-      },
-    },
-    {
-      $lookup: {
-        from: "teachers",
-        let: { teacherIds: "$assignedTeachers" },
-        pipeline: [
-          { $match: { $expr: { $in: ["$_id", "$$teacherIds"] } } },
-          {
-            $lookup: {
-              from: "users",
-              localField: "userId",
-              foreignField: "_id",
-              as: "user",
-            },
-          },
-          { $unwind: "$user" },
-          {
-            $project: {
-              _id: 1,
-              name: "$user.name",
-              avatar: "$user.avatar",
-            },
-          },
-        ],
-        as: "assignedTeachers",
-      },
-    },
-    { $sort: sortStage },
-    { $skip: (page - 1) * limit },
-    { $limit: limit },
-  ]);
+  // filter batch
+  const batch = await FilterBatchOnSearch({filter, sortStage, page, limit})
 
   // Pagination & Links
   const pagination = await Pagination(page, limit, totalItems, "allBatches");

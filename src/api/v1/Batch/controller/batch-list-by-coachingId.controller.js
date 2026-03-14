@@ -6,6 +6,8 @@ import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
 import { apiError } from "../../../../utils/apiError.js";
+import { FindCoaching } from "../repository/find-coaching.repository.js";
+import { FilterBatchOnCoaching } from "../repository/filter-batch-by-coaching.repository.js";
 
 export const batchListByCoachingIdController = asyncHandler(async (req, res) => {
   let {
@@ -18,61 +20,16 @@ export const batchListByCoachingIdController = asyncHandler(async (req, res) => 
   page = Number(page);
   limit = Number(limit);
 
+  const id = req.user._id;
+
   // find coaching
-  const coaching = await CoachingCenter.findOne({ userId: req.user._id });
-  if (!coaching) throw new apiError("Does not hava any Coaching Page !!!");
+  const coaching = await FindCoaching(id)
 
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-  const batch = await Batch.aggregate([
-    {
-      $match: {
-        coachingId: new mongoose.Types.ObjectId(coaching._id),
-      },
-    },
-    {
-      $match: {
-        name: { $regex: search, $options: "i" },
-      },
-    },
-    {
-      $lookup: {
-        from: "subjects",
-        as: "subjects",
-        localField: "subjects",
-        foreignField: "_id",
-      },
-    },
-    {
-      $lookup: {
-        from: "teachers",
-        let: { teacherIds: "$assignedTeachers" },
-        pipeline: [
-          { $match: { $expr: { $in: ["$_id", "$$teacherIds"] } } },
-          {
-            $lookup: {
-              from: "users",
-              localField: "userId",
-              foreignField: "_id",
-              as: "user",
-            },
-          },
-          { $unwind: "$user" },
-          {
-            $project: {
-              _id: 1,
-              name: "$user.name",
-              avatar: "$user.avatar",
-            },
-          },
-        ],
-        as: "assignedTeachers",
-      },
-    },
-  ])
-    .sort(sortKey)
-    .skip((page - 1) * limit)
-    .limit(limit);
-  console.log(batch);
+
+  // all batch based on coaching
+  const batch = await FilterBatchOnCoaching({search, coachingId: coaching?._id, sortKey, page, limit})
+
   // pagination
   const totalItems = await Batch.countDocuments(batch);
   const pagination = await Pagination(page, limit, totalItems, "allBatches");
