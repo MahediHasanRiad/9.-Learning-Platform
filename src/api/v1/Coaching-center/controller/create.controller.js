@@ -23,7 +23,7 @@ export const createCoachingCenterController = asyncHandler(async (req, res) => {
   await CheckCoachingProfile(CcName);
 
   // create
-  const coachingCenter = await CreateCoaching(userId);
+  const coachingCenter = await CreateCoaching({userId, CcName, address});
 
   res
     .status(200)

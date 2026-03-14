@@ -1,7 +1,7 @@
 import { apiError } from "../../../../utils/apiError.js"
 import { CoachingCenter } from "../model/CoachingCenter.model.js";
 
-export const CreateCoaching = async (userId) => {
+export const CreateCoaching = async ({userId, CcName, address}) => {
   try {
     const coachingCenter = await CoachingCenter.create({
         CcName,

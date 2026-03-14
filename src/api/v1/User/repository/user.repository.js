@@ -2,7 +2,7 @@ import { User } from "../model/user.model.js";
 
 export const FindUser = async (id) => {
   try {
-    const user = await User.findById(id).select("-password");
+    const user = await User.findById(id);
     if (!user) throw new apiError("User not Found !!!");
 
     return user;

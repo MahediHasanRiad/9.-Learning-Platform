@@ -23,7 +23,6 @@ const userSchema = new Schema(
       type: String,
       min: [11, "Not Valid"],
       required: [true, "Mobile number required !!!"],
-      unique: true,
       validate: {
         validator: function (v) {
           return /^01[3-9]\d{8}$/.test(v);
@@ -56,11 +55,6 @@ const userSchema = new Schema(
     linkedIn: {
       type: String
     },
-    role: {
-      type: String,
-      enum: ['User', 'Teacher'],
-      default: 'User'
-    }
   },
   { timestamps: true },
 );

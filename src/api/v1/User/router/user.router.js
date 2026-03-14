@@ -5,7 +5,7 @@ import { meController } from "../controller/me.controller.js";
 import { logInController } from "../../Auth/controller/login.controller.js";
 import { logOutController } from "../../Auth/controller/logOut.controller.js";
 import { createUserController } from "../controller/create.controller.js";
-import { allEnrollmentController } from "../controller/all_enrollment.controller.js";
+import { allEnrolledController } from "../controller/all_enrollment.controller.js";
 import { changePasswordController } from "../controller/changePassword.controller.js";
 import { listOfAllUserController } from "../controller/listOfAllUser.controller.js";
 import { findUserController } from "../controller/findUser.controller.js";
@@ -28,7 +28,7 @@ userRouter.post(
   createUserController,
 );
 
-userRouter.get("/user/enrollments", authVerify, allEnrollmentController);
+userRouter.get("/user/all-enrolled", authVerify, allEnrolledController);
 userRouter.post("/changePassword", authVerify, changePasswordController);
 userRouter.get("/users/all", authVerify, listOfAllUserController);
 userRouter

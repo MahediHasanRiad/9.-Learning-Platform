@@ -6,7 +6,7 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Enrollment } from "../../Enrollment/model/enrollment.model.js";
 import { EnrolledUser } from "../repository/enrolled-user.repository.js";
 
-export const allEnrollmentController = asyncHandler(async (req, res) => {
+export const allEnrolledController = asyncHandler(async (req, res) => {
   /**
    * get {page, limit, sortType, sortBy, search} = req.query
    * get find by req.user._id
@@ -34,7 +34,6 @@ export const allEnrollmentController = asyncHandler(async (req, res) => {
 
   // add batch link
   const enrolled_Batch = enrollment.map((batch) => ({
-    // console.log('b', batch)
     ...batch,
     self: `/batches/${batch.batchId[0]._id}`,
   }));

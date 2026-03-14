@@ -1,41 +1,18 @@
 import { User } from "../model/user.model.js";
 
-export const UpdateUser = async ({
-  id,
-  name,
-  address,
-  email,
-  mobile,
-  role,
-  avatar,
-  coverImage,
-  facebook,
-  linkedIn,
-}) => {
-  const updatedData = {};
-
-  if (name) updatedData.name = name;
-  if (address) updatedData.address = address;
-  if (email) updatedData.email = email;
-  if (mobile) updatedData.mobile = mobile;
-  if (role) updatedData.role = role;
-  if (avatar) updatedData.avatar = avatar.url;
-  if (coverImage) updatedData.coverImage = coverImage.url;
-  if (facebook) updatedData.facebook = facebook;
-  if (linkedIn) updatedData.linkedIn = linkedIn;
-
+export const UpdateUser = async ({ id, updated }) => {
   try {
+    console.log("u", updated);
     const user = await User.findByIdAndUpdate(
       id,
       {
-        $set: updatedData,
+        $set: updated,
       },
       { new: true },
     );
 
-    return user
-  } 
-  catch (error) {
+    return user;
+  } catch (error) {
     console.log("Update user", error);
   }
 };

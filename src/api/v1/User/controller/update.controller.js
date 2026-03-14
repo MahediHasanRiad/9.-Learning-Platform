@@ -4,14 +4,14 @@ import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { FindUser } from "../repository/user.repository.js";
 import { UpdateUser } from "../repository/update-user.repository.js";
+import { InputValue } from "../validation/input-value.validation.js";
 
 const updateUserController = asyncHandler(async (req, res) => {
-  const { name, address, email, mobile, role, facebook, linkedIn } =
-    req.body;
+  const { name, address, email, mobile, role, facebook, linkedIn } = req.body;
   const { id } = req.params;
 
   // check user exist or not
-  const existUser = await FindUser(id);
+  await FindUser(id);
 
   // check image local path
   const avatarLocalFilePath = LocalFilePath(req, "avatar");
@@ -25,8 +25,8 @@ const updateUserController = asyncHandler(async (req, res) => {
     ? await cloudinaryFileUpload(coverImageLocalFilePath)
     : "";
 
-  const user = await UpdateUser({
-    id,
+  // verify input data
+  const updated = InputValue({
     name,
     address,
     email,
@@ -36,6 +36,12 @@ const updateUserController = asyncHandler(async (req, res) => {
     coverImage,
     facebook,
     linkedIn,
+  });
+
+  // update
+  const user = await UpdateUser({
+    id,
+    updated,
   });
 
   res.status(200).json(new apiResponse(200, user, "successfully updated !!!"));

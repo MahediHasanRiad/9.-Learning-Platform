@@ -9,7 +9,7 @@ const coachingCenterSchema = new Schema({
     },
     email:{
         type: String,
-        unique: [true, 'Email Must be Unique or One user Can create One Page !!!'],
+        // unique: [true, 'Email Must be Unique or One user Can create One Page !!!'],
         validate: {
             validator: function(v) {
                 return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
@@ -23,7 +23,6 @@ const coachingCenterSchema = new Schema({
     mobile: {
         type: Number,
         min: [11, 'Not Valid'],
-        unique: true,
         validate:{
             validator: function(v){
                 return /^01[3-9]\d{8}$/.test(v);

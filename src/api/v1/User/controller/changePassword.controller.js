@@ -7,10 +7,12 @@ const changePasswordController =  asyncHandler(async (req, res) => {
     const {oldPassword, newPassword} = req.body 
 
     if(!oldPassword || !newPassword) throw new apiError(400, 'old and new password both are required !!!')
-    
+
+    // find user
     const user = await FindUser(req.user._id)
-    
+
     const verifyPassword = await user.isPasswordCorrect(oldPassword) 
+
     if(!verifyPassword) throw new apiError(400, 'password not matched !!!')
 
     user.password = newPassword
