@@ -2,6 +2,8 @@ import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import { FindStaff } from "../repository/find-staff.repository.js";
+import { UpdateStaff } from "../repository/update-staff.repository.js";
 
 export const updateCoachingStaffController = asyncHandler(async (req, res) => {
   /**
@@ -12,16 +14,14 @@ export const updateCoachingStaffController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const {role, subjects, status} = req.body 
+  const {role} = req.body 
   const {id} = req.params 
 
-  const staff = await CoachingStaff.findById(id).select("-password")
-  if(!staff) throw new apiError(400, 'staff not found !!!')
+  // check staff exist or not
+  const existStaff = await FindStaff(id)
 
-  staff.role = role || staff.role,
-  staff.subjects = subjects || staff.subjects,
-  staff.status = status || staff.status
-  await staff.save()
+  // update
+  const staff = await UpdateStaff({id: existStaff._id, role})
 
   res.status(200).json(new apiResponse(200, staff))
 })

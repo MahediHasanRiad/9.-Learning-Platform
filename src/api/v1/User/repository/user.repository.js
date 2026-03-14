@@ -4,6 +4,8 @@ export const FindUser = async (id) => {
   try {
     const user = await User.findById(id).select("-password");
     if (!user) throw new apiError("User not Found !!!");
+
+    return user;
   } 
   catch (error) {
     console.log("Find User Error", error);

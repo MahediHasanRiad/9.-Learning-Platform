@@ -6,6 +6,8 @@ import { Pagination } from "../../../../utils/pagination.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Links } from "../../../../utils/links.js";
 import { apiError } from "../../../../utils/apiError.js";
+import { FindCoaching } from "../repository/find-coaching.repository.js";
+import { FilterStaffBySearch } from "../repository/filter-staff-by-search.repository.js";
 
 export const allCoachingStaffController = asyncHandler(async (req, res) => {
   /**
@@ -26,61 +28,19 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
     search = "",
     role = "",
   } = req.query;
-  page = Number(page);
-  limit = Number(limit);
+  page = Math.max(1, Number(page || 1));
+  limit = Math.max(1, Number(limit || 10));
+
+  const userId = req.user._id;
 
   // find coaching by user id
-  const coaching = await CoachingCenter.findOne({ userId: req.user._id });
-  if (!coaching) throw new apiError("Does not have any Coaching Page");
+  const coaching = await FindCoaching({ userId });
 
   // filter by search
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-  const filterByCoaching = await CoachingStaff.aggregate([
-    {
-      $match: {
-        coachingId: new mongoose.Types.ObjectId(coaching._id),
-        role: { $regex: role || "", $options: "i" },
-      },
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "staffId",
-        foreignField: "_id",
-        as: "staffDetails",
-      },
-    },
-    { $unwind: "$staffDetails" },
-    {
-      $match: {
-        "staffDetails.name": { $regex: search || "", $options: "i" },
-      },
-    },
-    {
-      $lookup: {
-        from: "coachingcenters",
-        localField: "coachingId",
-        foreignField: "_id",
-        as: "coachingInfo",
-      },
-    },
-    { $unwind: "$coachingInfo" },
-    {
-      $project: {
-        _id: 1,
-        role: 1,
-        userId: "$staffDetails._id",
-        name: "$staffDetails.name",
-        avatar: "$staffDetails.avatar",
-        coachingId: "$coachingInfo._id",
-        CcName: "$coachingInfo.CcName",
-      },
-    },
-  ])
-    .sort(sortKey)
-    .skip((page - 1) * limit)
-    .limit(limit);
+  const filterByCoaching = await FilterStaffBySearch({coachingId: coaching?._id, role, search, sortKey, page, limit})
 
+  // add indivisual link
   const staff = filterByCoaching.map((item) => ({
     ...item,
     staffLink: `/users/${item._id}`,

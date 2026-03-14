@@ -4,6 +4,10 @@ import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model
 import { User } from "../../User/model/user.model.js";
 import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { InputData } from "../validation/input-data-to-create.validate.js";
+import { FindUser } from "../../User/repository/user.repository.js";
+import { FindCoaching } from "../repository/find-coaching.repository.js";
+import { CreateStaff } from "../repository/create-staff.repository.js";
 
 
 export const createStaffController = asyncHandler(async (req, res) => {
@@ -17,24 +21,19 @@ export const createStaffController = asyncHandler(async (req, res) => {
    */
 
   const {role = "Teacher", staffId } = req.body;
+  const id = req.user._id;
   
-
-  if ([staffId, role].some((item) => item?.trim() === ""))
-    throw new apiError(400, "coachingCenterId and role are required !!!");
+  // check input value
+  await InputData({staffId, role})
 
   // find user then check coacheing center
-  const user = await User.findById(req.user._id)
-  if(!user) throw new apiError(400, 'invalid token, user not found !!!')
-  
-  const coaching = await CoachingCenter.findOne({userId: user._id})
-  if (!coaching) throw new apiError(400, "Does not have any coaching page !!!");
+  const user = await FindUser(id)
+
+  // check coaching already exist or not
+  const coaching = await FindCoaching({userId: user?._id})
 
   // create
-  const coachingStaff = await CoachingStaff.create({
-    staffId: staffId,
-    coachingId: coaching._id,
-    role: role 
-  });
+  const coachingStaff = await CreateStaff({staffId, coachingId: coaching?._id, role})
 
   res
     .status(201)

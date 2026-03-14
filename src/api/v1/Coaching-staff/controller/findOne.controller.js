@@ -1,19 +1,17 @@
-import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import { FindStaff } from "../repository/find-staff.repository.js";
 
 export const findSingleCoachingStaffController = asyncHandler(
   async (req, res) => {
     const { id } = req.params;
     if (!id) throw new apiError(400, "id required !!!");
 
-    const staff = await CoachingStaff.findById(id)
-      .select("-password")
-      .populate("staffId", "name avatar mobile")
-      .populate("coachingId", "CcName")
-    if (!staff) throw new apiError(400, "coaching staff not found !!!");
+    // check staff exist or not
+    const staff = await FindStaff(id)
 
+    // add link
     const link = {
       teacher: `/teachers/${staff.staffId._id}`,
     };
