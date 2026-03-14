@@ -3,6 +3,7 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { DemoClass } from "../model/demoClass.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import { FindDemoClass } from "../repository/find-demoClass.repository.js";
 
 
 export const findSingleDemoClassController = asyncHandler(async (req, res) => {
@@ -11,16 +12,13 @@ export const findSingleDemoClassController = asyncHandler(async (req, res) => {
   if (!id || !mongoose.Types.ObjectId.isValid(id))
     throw new apiError(400, "Demo class id not found !!!");
 
-  const demoClass = await DemoClass.findById(id)
-    .populate("subjectId", "name")
-    .populate("batchId", "name")
-    .populate("teacherId", "teacherName");
-  if (!demoClass) throw new apiError(400, "demo class not found !!!");
+  // find demo-class
+  const demoClass = await FindDemoClass(id)
 
   // add links
   const link = {
     self: `${req.path}`,
-    teacher: `/teachers/${demoClass.teacherId._id}`
+    // user: `/users/${demoClass.userId._id}`
   }
   if(demoClass.batchId){
     link.batch = `/batches/${demoClass.batchId._id}`
