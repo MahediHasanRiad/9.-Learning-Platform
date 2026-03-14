@@ -4,7 +4,7 @@ import Yaml from "yamljs";
 import swaggerUiExpress from "swagger-ui-express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import cors from 'cors'
+import cors from "cors";
 
 import { userRouter } from "./src/api/v1/User/router/user.router.js";
 import { teacherRouter } from "./src/api/v1/Teacher/router/teacher.router.js";
@@ -16,35 +16,39 @@ import { demoClassRouter } from "./src/api/v1/Demo/router/demoClass.router.js";
 import { enrollmentRouter } from "./src/api/v1/Enrollment/router/enrollment.router.js";
 import { authRouter } from "./src/api/v1/Auth/router/auth.router.js";
 
-
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
 dotenv.config({ path: "./src/config/.env" });
 
-
 // middleware
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://learning-platform-0kai.onrender.com",
+    ],
+    credentials: true,
+  }),
+);
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use("/docs", swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerDocs));
-app.use(cookieParser())
-
+app.use(cookieParser());
 
 // routers
-app.use('/api/v1', authRouter )
-app.use('/api/v1', userRouter )
-app.use('/api/v1', teacherRouter )
-app.use('/api/v1', subjectRouter )
-app.use('/api/v1', coachingCenterRouter )
-app.use('/api/v1', coachingStaffRouter )
-app.use('/api/v1', batchRouter)
-app.use('/api/v1', demoClassRouter)
-app.use('/api/v1', enrollmentRouter)
+app.use("/api/v1", authRouter);
+app.use("/api/v1", userRouter);
+app.use("/api/v1", teacherRouter);
+app.use("/api/v1", subjectRouter);
+app.use("/api/v1", coachingCenterRouter);
+app.use("/api/v1", coachingStaffRouter);
+app.use("/api/v1", batchRouter);
+app.use("/api/v1", demoClassRouter);
+app.use("/api/v1", enrollmentRouter);
 
 app.get("/health", (_req, res) => {
   res.send("this is health route !!!");
 });
-
 
 // database connection
 mongoose
