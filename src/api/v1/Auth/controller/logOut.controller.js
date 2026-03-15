@@ -5,6 +5,7 @@ export const logOutController = asyncHandler(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "None",
   };
 
   res

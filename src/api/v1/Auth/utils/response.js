@@ -4,6 +4,7 @@ export const Responses = async (res, user, accessToken) => {
   const options = {
     httpOnly: true,
     secure: true,
+    sameSite: "None",
   };
 
   return res

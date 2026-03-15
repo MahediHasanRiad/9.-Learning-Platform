@@ -48,7 +48,7 @@ export const createUserController = asyncHandler(async (req, res) => {
     address,
     bio,
   });
-console.log(createUser)
+
   // remove password
   const user = await User.findById(createUser?._id).select("-password");
 
