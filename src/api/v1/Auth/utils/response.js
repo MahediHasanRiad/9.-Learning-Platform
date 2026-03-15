@@ -5,6 +5,7 @@ export const Responses = async (res, user, accessToken) => {
     httpOnly: true,
     secure: true,
     sameSite: "None",
+    path: "/",
   };
 
   return res
