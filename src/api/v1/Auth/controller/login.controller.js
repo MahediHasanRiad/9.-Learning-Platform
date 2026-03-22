@@ -16,7 +16,7 @@ const logInController = asyncHandler(async (req, res) => {
   const {user, accessToken} = await verifyUser(email, password)
 
   // set cookies and response data
-  Responses(res, user, accessToken)
+  await Responses(res, user, accessToken)
 
 });
 
