@@ -43,9 +43,8 @@ const updateOrCreateController = asyncHandler(async (req, res) => {
       password,
       avatar: avatar.url || '',
       coverImage: coverImage.url || '',
-      role,
-      classLevel,
-      subjectOfInterest
+      // role,
+
     });
 
     res.status(200).json(new apiResponse(201, user, "new user created !"));

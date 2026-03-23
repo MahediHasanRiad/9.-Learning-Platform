@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model, type InferSchemaType } from "mongoose";
 
 const enrollmentSchema = new Schema({
     studentId: {
@@ -18,4 +18,6 @@ const enrollmentSchema = new Schema({
     }
 }, {timestamps: true})
 
-export const Enrollment = model('Enrollment', enrollmentSchema)
+export type EnrolledType = InferSchemaType<typeof enrollmentSchema> & {_id: Types.ObjectId}
+
+export const Enrollment = model<EnrolledType>('Enrollment', enrollmentSchema)

@@ -11,7 +11,6 @@ const Links = (req: Request, pagination:Pick<PaginationType, "prev" | "next"> , 
     const links: LinksType = {
     self: `${req.path}`,
   };
-  // let page = Number(req.query.page)
 
   if (pagination.prev) {
     const query = new URLSearchParams({...req.query as Record<string, string>, page: (page - 1).toString()}).toString();

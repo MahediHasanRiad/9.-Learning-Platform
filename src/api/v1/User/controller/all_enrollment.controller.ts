@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Enrollment } from "../../Enrollment/model/enrollment.model.js";
 import { EnrolledUser } from "../repository/enrolled-user.repository.js";
+import { apiError } from "../../../../utils/apiError.js";
 
 export const allEnrolledController = asyncHandler(async (req, res) => {
   /**
@@ -27,20 +27,21 @@ export const allEnrolledController = asyncHandler(async (req, res) => {
 
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
   
-  // get all enrolled user
-  const userId = req.user._id
-  const enrollment = await EnrolledUser({userId, sortKey, page, limit})
-   
+  if(!req.user?._id) throw new apiError(400, 'Invalid Token !!!')
 
+  // get all enrolled user
+  const userId = req.user._id;
+  const enrollmentBatch = await EnrolledUser({userId, sortKey, page, limit})
+   
   // add batch link
-  const enrolled_Batch = enrollment.map((batch) => ({
+  const enrolled_Batch = enrollmentBatch?.map((batch) => ({
     ...batch,
-    self: `/batches/${batch.batchId[0]._id}`,
+    self: `/batches/${batch?.batchId?.[0]?._id}`,
   }));
 
   // pagination
-  const totalItems = await Enrollment.countDocuments(enrollment);
-  const pagination = await Pagination(
+  const totalItems = await Enrollment.countDocuments(enrollmentBatch);
+  const pagination = Pagination(
     page,
     limit,
     totalItems,
@@ -48,7 +49,7 @@ export const allEnrolledController = asyncHandler(async (req, res) => {
   );
 
   // links
-  const links = await Links(req, pagination, "user/enrollments");
+  const links = Links(req, pagination, page, "user/enrollments");
 
   res
     .status(200)

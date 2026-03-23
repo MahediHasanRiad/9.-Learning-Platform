@@ -22,3 +22,9 @@ export interface ImageType {
   url: string;
   public_id: string;
 }
+
+export interface BatchType {
+  studentId: string;
+  batchId: string;
+  status: string;
+}

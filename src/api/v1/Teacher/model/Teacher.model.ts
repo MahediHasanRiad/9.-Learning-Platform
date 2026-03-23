@@ -35,4 +35,4 @@ const teacherSchema = new Schema(
 );
 
 export type TeacherType = InferSchemaType<typeof teacherSchema> & { _id: Types.ObjectId };
-export const Teacher = model("Teacher", teacherSchema);
+export const Teacher = model<TeacherType>("Teacher", teacherSchema);
