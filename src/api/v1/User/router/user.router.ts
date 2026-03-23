@@ -10,7 +10,7 @@ import { changePasswordController } from "../controller/changePassword.controlle
 import { listOfAllUserController } from "../controller/listOfAllUser.controller.js";
 import { findUserController } from "../controller/findUser.controller.js";
 import { updateUserController } from "../controller/update.controller.js";
-// import { deleteUserController } from "../controller/delete.controller.js";
+import { deleteUserController } from "../controller/delete.controller.js";
 // import { updateOrCreateController } from "../controller/updateOrCreate.controller.js";
 
 
@@ -42,7 +42,7 @@ userRouter
     ]),
     updateUserController,
   )
-//   .delete(deleteUserController)
+  .delete(deleteUserController)
   // .put(
   //   upload.fields([
   //     { name: "avatar", maxCount: 1 },
