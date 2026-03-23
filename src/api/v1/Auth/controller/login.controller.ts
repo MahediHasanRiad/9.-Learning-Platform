@@ -1,3 +1,4 @@
+import type { Request, Response } from "express";
 import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Responses } from "../utils/response.js";
@@ -5,7 +6,7 @@ import { verifyUser } from "../utils/user.js";
 
 
 
-const logInController = asyncHandler(async (req, res) => {
+const logInController = asyncHandler(async (req: Request, res: Response) => {
   
   const { email, password } = req.body;
 

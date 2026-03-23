@@ -1,10 +1,13 @@
+import type { Response } from "express";
 import { apiResponse } from "../../../../utils/apiResponse.js";
+import type { optionsType } from "../auth-types.js";
+import type { userType } from "../../User/user-types.js";
 
-export const Responses = async (res, user, accessToken) => {
-  const options = {
+export const Responses = async (res: Response, user: userType, accessToken: string) => {
+  const options: optionsType = {
     httpOnly: true,
     secure: true,
-    sameSite: "None",
+    sameSite: "none",
     path: "/",
   };
 

@@ -5,13 +5,15 @@ export interface jwtDecodedType {
   role: string;
 }
 
-export interface user {
+export interface userType {
   name: string;
   email: string;
   mobile: string;
   password: string;
-  avatar: { url: string; public_id: string };
-  coverImage: { url: string; public_id: string };
-  address: string;
-  bio: string;
+  avatar: string;
+  coverImage?: string;
+  address?: string;
+  bio?: string;
+  facebook?: string,
+  linkedIn?: string
 }
