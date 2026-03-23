@@ -2,7 +2,6 @@ import { apiError } from "../../../../utils/apiError.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
-import { Teacher } from "../model/Teacher.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { CreateTeacher } from "../repository/create-teacher.repository.js";
 
@@ -19,6 +18,8 @@ const createTeacherController = asyncHandler(async (req, res) => {
    */
 
   const { education, experience = 0 } = req.body;
+
+  if(!req.user?._id) throw new apiError(400, 'Invalid Token !!!')
 
   if ([education].some((item) => item === ""))
     throw new apiError(400, "Education data required !!!");

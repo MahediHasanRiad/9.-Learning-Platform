@@ -12,7 +12,7 @@ const teacherSchema = new Schema(
       required: true,
     },
     certificate: {
-      type: [String],
+      type: String,
     },
     experience: {
       type: String,
