@@ -1,7 +1,14 @@
 import { apiError } from "../../../../utils/apiError.js"
 import { Teacher } from "../model/Teacher.model.js";
 
-export const FindTeacherOnSearch = async ({search, sortKey, page, limit}) => {
+interface GetAllTeacher {
+  search: string;
+  sortKey: string;
+  page: number;
+  limit: number;
+}
+
+export const FindTeacherOnSearch = async ({search, sortKey, page, limit}: GetAllTeacher) => {
   try {
     const filterSearch = await Teacher.aggregate([
         {
@@ -25,7 +32,8 @@ export const FindTeacherOnSearch = async ({search, sortKey, page, limit}) => {
 
       return filterSearch;
   } 
-  catch (error) {
-    throw new apiError(400, error)
+  catch (error: any) {
+    console.log(error)
+    throw new apiError(400, error?.message)
   }
 }

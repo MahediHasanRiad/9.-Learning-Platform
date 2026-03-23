@@ -4,8 +4,9 @@ import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Teacher } from "../model/Teacher.model.js";
 import { FindTeacherOnSearch } from "../repository/find-teacher-on-search.repository.js";
+import type { Request, Response } from "express";
 
-const allTeachersController = asyncHandler(async (req, res) => {
+const allTeachersController = asyncHandler(async (req: Request, res: Response) => {
   /**
    * get {page, limit, sortType, sortBy, search} = req.query
    * filter by search
@@ -23,8 +24,12 @@ const allTeachersController = asyncHandler(async (req, res) => {
     search = "",
   } = req.query;
 
-  page = Number(page);
-  limit = Number(limit);
+  // varify query
+  page = Number(req.query.page) || 1;
+  limit = Number(req.query.limit) || 10;
+  sortType = (req.query.sortType as string) || "dec";
+  sortBy = (req.query.sortBy as string) || "updatedAt";
+  search = (req.query.search as string) || "";
 
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
@@ -38,11 +43,11 @@ const allTeachersController = asyncHandler(async (req, res) => {
   }));
 
   // pagination
-  const totalItems = await Teacher.countDocuments(teachers);
-  const pagination = await Pagination(page, limit, totalItems, "teachers");
+  const totalItems = await Teacher.countDocuments(filterSearch);
+  const pagination = Pagination(page, limit, totalItems, "teachers");
 
   // links
-  const links = await Links(req, pagination, "teachers");
+  const links = Links(req, pagination, page, "teachers");
 
   res
     .status(200)
