@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { upload } from "../../../../middleware/multer.middleware.js";
 import { authVerify } from "../../../../middleware/auth.middleware.js";
-// import { meController } from "../controller/me.controller.js";
+import { meController } from "../controller/me.controller.js";
 import { logInController } from "../../Auth/controller/login.controller.js";
 // import { logOutController } from "../../Auth/controller/logOut.controller.js";
 import { createUserController } from "../controller/create.controller.js";
@@ -16,7 +16,7 @@ import { createUserController } from "../controller/create.controller.js";
 
 const userRouter = Router();
 
-// userRouter.get("/me", authVerify, meController);
+userRouter.get("/me", authVerify, meController);
 userRouter.post("/login", logInController);
 // userRouter.get("/logout", logOutController);
 userRouter.post(
