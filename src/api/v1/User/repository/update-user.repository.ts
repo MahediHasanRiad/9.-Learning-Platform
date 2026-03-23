@@ -1,8 +1,13 @@
 import { User } from "../model/user.model.js";
+import type { userType } from "../user-types.js";
 
-export const UpdateUser = async ({ id, updated }) => {
+interface UpdateUserType {
+  id: string,
+  updated: Partial<userType>
+}
+
+export const UpdateUser = async ({ id, updated }: UpdateUserType) => {
   try {
-    console.log("u", updated);
     const user = await User.findByIdAndUpdate(
       id,
       {

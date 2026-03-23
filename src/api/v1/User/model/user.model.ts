@@ -2,6 +2,7 @@ import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt, { type SignOptions } from "jsonwebtoken";
 
+
 interface UserDocument extends Document {
   name: string;
   email: string;
@@ -54,7 +55,7 @@ const userSchema = new Schema<UserDocument>(
     },
     address: {
       type: String,
-      default: "",
+      default: ''
     },
     avatar: {
       type: String,
@@ -67,10 +68,10 @@ const userSchema = new Schema<UserDocument>(
       type: String,
     },
     facebook: {
-      type: String,
+      type: String
     },
     linkedIn: {
-      type: String,
+      type: String
     },
   },
   { timestamps: true },
@@ -103,9 +104,9 @@ userSchema.methods.generateAccessToken = function () {
       role: this.role,
     },
     process.env.ACCESS_TOKEN_SECRET_KEY as string,
-    { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE } as SignOptions,
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE } as SignOptions ,
   );
 };
 
 export const User = model<UserDocument>("User", userSchema);
-export type { UserDocument };
+export type {UserDocument}

@@ -17,3 +17,8 @@ export interface userType {
   facebook?: string,
   linkedIn?: string
 }
+
+export interface ImageType {
+  url: string;
+  public_id: string;
+}

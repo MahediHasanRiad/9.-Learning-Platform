@@ -8,8 +8,8 @@ import { createUserController } from "../controller/create.controller.js";
 // import { allEnrolledController } from "../controller/all_enrollment.controller.js";
 // import { changePasswordController } from "../controller/changePassword.controller.js";
 // import { listOfAllUserController } from "../controller/listOfAllUser.controller.js";
-// import { findUserController } from "../controller/findUser.controller.js";
-// import { updateUserController } from "../controller/update.controller.js";
+import { findUserController } from "../controller/findUser.controller.js";
+import { updateUserController } from "../controller/update.controller.js";
 // import { deleteUserController } from "../controller/delete.controller.js";
 // import { updateOrCreateController } from "../controller/updateOrCreate.controller.js";
 
@@ -31,17 +31,17 @@ userRouter.post(
 // userRouter.get("/user/all-enrolled", authVerify, allEnrolledController);
 // userRouter.post("/changePassword", authVerify, changePasswordController);
 // userRouter.get("/users/all", authVerify, listOfAllUserController);
-// userRouter
-//   .route("/users/:id")
-//   .get(findUserController)
-//   .patch(
-//     authVerify,
-//     upload.fields([
-//       { name: "avatar", maxCount: 1 },
-//       { name: "coverImage", maxCount: 1 },
-//     ]),
-//     updateUserController,
-//   )
+userRouter
+  .route("/users/:id")
+  .get(findUserController)
+  .patch(
+    authVerify,
+    upload.fields([
+      { name: "avatar", maxCount: 1 },
+      { name: "coverImage", maxCount: 1 },
+    ]),
+    updateUserController,
+  )
 //   .delete(deleteUserController)
 //   .put(
 //     upload.fields([

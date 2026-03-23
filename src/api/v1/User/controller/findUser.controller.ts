@@ -2,8 +2,9 @@ import { User } from "../model/user.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import type { Request, Response } from "express";
 
-const findUserController = asyncHandler(async(req, res) => {
+const findUserController = asyncHandler(async(req: Request, res: Response) => {
     /**
      * get id = req.params
      * if(!id) return error
