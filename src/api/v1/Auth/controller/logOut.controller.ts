@@ -1,11 +1,12 @@
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import type { optionsType } from "../auth-types.js";
 
 export const logOutController = asyncHandler(async (req, res) => {
-  const options = {
+  const options: optionsType = {
     httpOnly: true,
     secure: true,
-    sameSite: "None",
+    sameSite: "none",
   };
 
   res
