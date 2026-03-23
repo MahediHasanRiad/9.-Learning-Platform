@@ -1,8 +1,25 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { type SignOptions } from "jsonwebtoken";
 
-const userSchema = new Schema(
+interface UserDocument extends Document {
+  name: string;
+  email: string;
+  mobile: string;
+  password: string;
+  address?: string;
+  avatar: string;
+  coverImage?: string;
+  bio?: string;
+  facebook?: string;
+  linkedIn?: string;
+
+  // methods
+  isPasswordCorrect(password: string): Promise<boolean>;
+  generateAccessToken(): string;
+}
+
+const userSchema = new Schema<UserDocument>(
   {
     name: {
       type: String,
@@ -13,10 +30,10 @@ const userSchema = new Schema(
       unique: true,
       required: [true, "Email Required !!!"],
       validate: {
-        validator: function (v) {
+        validator: function (v: string) {
           return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
         },
-        message: (props) => `${props.value} is not a valid Email !`,
+        message: (props: any) => `${props.value} is not a valid Email !`,
       },
     },
     mobile: {
@@ -24,10 +41,10 @@ const userSchema = new Schema(
       min: [11, "Not Valid"],
       required: [true, "Mobile number required !!!"],
       validate: {
-        validator: function (v) {
+        validator: function (v: string) {
           return /^01[3-9]\d{8}$/.test(v);
         },
-        message: (props) => `${props.value} in not valid Number !!!`,
+        message: (props: any) => `${props.value} in not valid Number !!!`,
       },
     },
     password: {
@@ -37,7 +54,7 @@ const userSchema = new Schema(
     },
     address: {
       type: String,
-      default: ''
+      default: "",
     },
     avatar: {
       type: String,
@@ -50,17 +67,17 @@ const userSchema = new Schema(
       type: String,
     },
     facebook: {
-      type: String
+      type: String,
     },
     linkedIn: {
-      type: String
+      type: String,
     },
   },
   { timestamps: true },
 );
 
 // hash password
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function (next: any) {
   try {
     if (!this.isModified("password")) return;
 
@@ -72,7 +89,7 @@ userSchema.pre("save", async function (next) {
 });
 
 // compare password
-userSchema.methods.isPasswordCorrect = async function (password) {
+userSchema.methods.isPasswordCorrect = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
@@ -85,9 +102,10 @@ userSchema.methods.generateAccessToken = function () {
       email: this.email,
       role: this.role,
     },
-    process.env.ACCESS_TOKEN_SECRET_KEY,
-    { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE },
+    process.env.ACCESS_TOKEN_SECRET_KEY as string,
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE } as SignOptions,
   );
 };
 
-export const User = model("User", userSchema);
+export const User = model<UserDocument>("User", userSchema);
+export type { UserDocument };

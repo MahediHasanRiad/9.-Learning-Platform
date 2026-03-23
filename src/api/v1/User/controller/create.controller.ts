@@ -7,6 +7,7 @@ import { User } from "../model/user.model.js";
 import { ExistUser } from "../repository/exist-user-by-email.repository.js";
 import { CreateUser } from "../repository/create-user.repository.js";
 
+
 export const createUserController = asyncHandler(async (req, res) => {
   /**
    * get {name, email, password, mobile, avatar, coverImage, role} = req.body
@@ -50,7 +51,9 @@ export const createUserController = asyncHandler(async (req, res) => {
   });
 
   // remove password
-  const user = await User.findById(createUser?._id).select("-password");
+  const user  = await User.findById(createUser?._id).select("-password");
+
+  if(!user) throw new apiError(500, 'user not created !!!')
 
   // add self link
   const link = {

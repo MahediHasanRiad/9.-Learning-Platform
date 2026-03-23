@@ -1,6 +1,8 @@
+import { apiError } from "../../../../utils/apiError.js";
 import { User } from "../model/user.model.js";
+import type { user } from "../user-types.js";
 
-export const CreateUser = async ({name, email, mobile, password, avatar, coverImage, address, bio}) => {
+export const CreateUser = async ({name, email, mobile, password, avatar, coverImage, address, bio}: user) => {
   try {
     const user = await User.create({
       name,
