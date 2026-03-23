@@ -23,28 +23,35 @@ const listOfAllUserController = asyncHandler(async (req, res) => {
     search = "",
   } = req.query;
 
-  page = Number(page);
-  limit = Number(limit);
+  // check all query params
+  if(typeof page !== 'string') page = '1'
+  if(typeof limit !== 'string') limit = '10'
+  if(typeof sortType !== 'string') sortType = 'dec'
+  if(typeof sortBy !== 'string') sortType = 'updatedAt'
+  if(typeof search !== 'string') search = ''
 
-  const sortkey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
+  page = Number(req.query.page) || 1;
+  limit = Number(req.query.limit) || 10;
+
+  const sortkey = `${sortType === "dec" ? `-${sortBy}` : `${sortBy}`}${sortBy}`;
 
   // filter user based on search
   const filterUser = await FindUserBasedOnSearch({search, sortkey, page, limit})
 
   // add link
-  const users = filterUser.map((user) => (
+  const users = filterUser?.map((user) => (
     {
-    ...user._doc,
+    ...user,
     link: `/users/${user._id}`,
   }
 ));
-
+console.log('ddd', users)
   // count
   const totalUser = await User.countDocuments(filterUser);
   // pagination
-  const pagination = await Pagination(page, limit, totalUser, 'users')
+  const pagination = Pagination(page, limit, totalUser, 'users')
   // links
-  const links = await Links(req, pagination, 'users/all')
+  const links = await Links(req, pagination, page, 'users/all')
 
   res
     .status(200)
