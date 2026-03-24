@@ -8,7 +8,7 @@ import cors from "cors";
 
 import { userRouter } from "./api/v1/User/router/user.router.js";
 import { teacherRouter } from "./api/v1/Teacher/router/teacher.router.js";
-// import { subjectRouter } from "./api/v1/Subjects/router/subject.router.js";
+import { subjectRouter } from "./api/v1/Subjects/router/subject.router.js";
 import { coachingCenterRouter } from "./api/v1/Coaching-center/router/coaching_center.router.js";
 // import { coachingStaffRouter } from "./api/v1/Coaching-staff/router/coaching_staff.router.js";
 // import { batchRouter } from "./api/v1/Batch/router/batch.router.js";
@@ -47,7 +47,7 @@ app.use(cookieParser());
 app.use("/api/v1", userRouter);
 app.use("/api/v1", authRouter);
 app.use("/api/v1", teacherRouter);
-// app.use("/api/v1", subjectRouter);
+app.use("/api/v1", subjectRouter);
 app.use("/api/v1", coachingCenterRouter);
 // app.use("/api/v1", coachingStaffRouter);
 // app.use("/api/v1", batchRouter);
