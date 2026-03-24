@@ -60,6 +60,7 @@ Frontend
 
 Backend
 
+* TypeStript
 * Node.js
 * Express.js
 
