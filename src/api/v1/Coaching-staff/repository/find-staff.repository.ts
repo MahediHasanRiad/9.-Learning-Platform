@@ -1,7 +1,7 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { CoachingStaff } from "../model/CoachingStaff.model.js";
 
-export const FindStaff = async (id) => {
+export const FindStaff = async (id: string) => {
   try {
     const staff = await CoachingStaff.findById(id)
       .select("-password")
@@ -11,7 +11,7 @@ export const FindStaff = async (id) => {
 
     return staff;
   } 
-  catch (error) {
+  catch (error: any) {
     if (error instanceof Error) throw Error;
     new apiError(500, error.message);
   }
