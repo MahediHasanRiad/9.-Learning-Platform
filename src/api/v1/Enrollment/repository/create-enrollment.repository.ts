@@ -1,7 +1,12 @@
 import { apiError } from "../../../../utils/apiError.js"
 import { Enrollment } from "../model/enrollment.model.js";
 
-export const CreateEnrollment = async ({id, batchId}) => {
+interface enrollment {
+  id: string;
+  batchId: string;
+}
+
+export const CreateEnrollment = async ({id, batchId}: enrollment) => {
   try {
     const enrollment = await Enrollment.create({
         studentId: id,
@@ -9,7 +14,8 @@ export const CreateEnrollment = async ({id, batchId}) => {
       });
 
     return enrollment;
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error)
     throw new apiError(400, error.message)
   }
 }
