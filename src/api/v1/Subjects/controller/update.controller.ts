@@ -1,18 +1,18 @@
-import { Subject } from "../model/subject.model.js";
-import { apiError } from "../../../../utils/apiError.js";
+import type { Request, Response } from "express";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { FindSubjectById } from "../repository/find-subject-by-id.repository.js";
 import { UpdateSubject } from "../repository/update-subject.repository.js";
 
-export const updateSubjectController = asyncHandler(async (req, res) => {
+export const updateSubjectController = asyncHandler(async (req: Request, res: Response) => {
   /**
    * get {name, className} = req.body
    * if(!name || !className) return error
    * if(exist = subject) then update
    * res
    */
-  const { id } = req.params;
+  
+  const id = req.params.id as string;
   const { name, className } = req.body;
 
   // find subject

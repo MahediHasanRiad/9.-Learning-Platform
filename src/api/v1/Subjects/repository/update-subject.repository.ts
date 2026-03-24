@@ -1,9 +1,15 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { Subject } from "../model/subject.model.js";
 
-export const UpdateSubject = async ({id, name, className}) => {
+interface UpdateType {
+  id: string;
+  name?: string;
+  className?: string;
+}
+
+export const UpdateSubject = async ({id, name, className}: UpdateType) => {
   try {
-    const updateSubject = {};
+    const updateSubject: Partial<UpdateType> = {};
     if (name) updateSubject.name = name;
     if (className) updateSubject.className = className;
 
@@ -14,7 +20,9 @@ export const UpdateSubject = async ({id, name, className}) => {
     );
 
     return subject;
-  } catch (error) {
-    throw new apiError(400, error.message);
+  } 
+  catch (error: any) {
+    console.log(error)
+    throw new apiError(400, error?.message);
   }
 };
