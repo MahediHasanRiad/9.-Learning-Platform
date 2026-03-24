@@ -3,8 +3,15 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { InputData } from "../validation/input-data.validate.js";
 import { CheckCoachingProfile } from "../repository/check-coaching-profile.repository.js";
 import { CreateCoaching } from "../repository/create-coaching.repository.js";
+import { apiError } from "../../../../utils/apiError.js";
+import type { Request, Response } from "express";
 
-export const createCoachingCenterController = asyncHandler(async (req, res) => {
+interface coachingType {
+  CcName: string;
+  address: string;
+}
+
+export const createCoachingCenterController = asyncHandler(async (req: Request, res: Response) => {
   /**
    * get {name, address} = req.body
    * if(empty) return error
@@ -13,8 +20,10 @@ export const createCoachingCenterController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { CcName, address } = req.body;
-  const userId = req.user._id;
+  const { CcName, address } = req.body as coachingType;
+
+  const userId = req.user?._id?.toString();
+  if(!userId) throw new apiError(400, 'Invalid Token !!!')
 
   // check input data
   await InputData({ CcName, address });

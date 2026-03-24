@@ -1,6 +1,4 @@
-import { Schema, model } from "mongoose";
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import { Schema, Types, model, type InferSchemaType } from "mongoose";
 
 const coachingCenterSchema = new Schema({
     CcName: {
@@ -9,12 +7,11 @@ const coachingCenterSchema = new Schema({
     },
     email:{
         type: String,
-        // unique: [true, 'Email Must be Unique or One user Can create One Page !!!'],
         validate: {
-            validator: function(v) {
+            validator: function(v: any) {
                 return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
             },
-             message: (props) => `${props.value} is not a valid Email !`
+             message: (props: any) => `${props.value} is not a valid Email !`
         }
     },
     address: {
@@ -24,10 +21,10 @@ const coachingCenterSchema = new Schema({
         type: Number,
         min: [11, 'Not Valid'],
         validate:{
-            validator: function(v){
+            validator: function(v: any){
                 return /^01[3-9]\d{8}$/.test(v);
             },
-            message: (props) => `${props.value} in not valid Number !!!`
+            message: (props: any) => `${props.value} in not valid Number !!!`
         }
     },
     avatar: {
@@ -82,38 +79,5 @@ const coachingCenterSchema = new Schema({
 }, {timestamps: true})
 
 
-// hash password
-coachingCenterSchema.pre("save", async function (next) {
-   try {
-     if(!this.isModified("password")) return
- 
-     this.password = await bcrypt.hash(this.password, 10)
-     return next()
-   }
-    catch (error) {
-    console.log(error)
-   }
-})
-
-// compare password
-coachingCenterSchema.methods.isPasswordCorrect = async function (password) {
-    return await bcrypt.compare(password, this.password)
-}  
-
-
-// generate access token
-coachingCenterSchema.methods.generateAccessToken = function () {
-    return jwt.sign(
-        {
-            _id: this._id,
-            name: this.CcName,
-            email: this.email,
-            role: this.role
-        },
-        process.env.ACCESS_TOKEN_SECRET_KEY,
-        {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE}
-    )
-}
-
-
+export type CoachingCenterType = InferSchemaType<typeof CoachingCenter> & {_id: Types.ObjectId}
 export const CoachingCenter = model('CoachingCenter', coachingCenterSchema)
