@@ -1,8 +1,28 @@
+import type { Request } from "express";
 import { apiError } from "../../../../utils/apiError.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
+import type { CoachingType } from "../coaching-type.js";
 
-export const CheckValueForUpdate = async ({req, CcName, email, mobile, address, website, facebook, linkedIn, bio, officeTime}) => {
+interface updateType {
+  CcName?: string | undefined;
+  email?: string | undefined;
+  mobile?: string | undefined;
+  address?: string | undefined;
+  website?: string | undefined;
+  facebook?: string | undefined;
+  linkedIn?: string | undefined;
+  bio?: string | undefined;
+  officeTime?: string | undefined;
+  avatar?: string | undefined;
+  coverImage?: string | undefined;
+}
+
+interface Update extends updateType {
+  req: Request;
+}
+
+export const CheckValueForUpdate = async ({req, CcName, email, mobile, address, website, facebook, linkedIn, bio, officeTime}: Update) => {
   try {
     const avatarLocalFilePath = LocalFilePath(req, "avatar");
     const coverImageLocalFilePath = LocalFilePath(req, "coverImage");
@@ -14,7 +34,7 @@ export const CheckValueForUpdate = async ({req, CcName, email, mobile, address, 
       ? await cloudinaryFileUpload(coverImageLocalFilePath)
       : "";
 
-    const updatedData = {};
+    const updatedData: Partial<CoachingType> = {};
 
     if (CcName) updatedData.CcName = CcName;
     if (email) updatedData.email = email;
@@ -29,7 +49,9 @@ export const CheckValueForUpdate = async ({req, CcName, email, mobile, address, 
     if (coverImage) updatedData.coverImage = coverImage.url;
 
     return updatedData;
-  } catch (error) {
-    throw new apiError(400, error.message);
+  } 
+  catch (error: any) {
+    console.log(error)
+    throw new apiError(400, error?.message);
   }
 };

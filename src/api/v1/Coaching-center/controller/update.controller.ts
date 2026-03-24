@@ -4,6 +4,7 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { CheckValueForUpdate } from "../validation/update-coaching.validation.js";
 import { UpdateData } from "../repository/update-coaching.repository.js";
+import type { CoachingType } from "../coaching-type.js";
 
 export const updateCoachingCenterController = asyncHandler(async (req, res) => {
   /**
@@ -15,7 +16,7 @@ export const updateCoachingCenterController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { id } = req.params;
+  const id = req.params.id as string;
   const {
     CcName,
     email,
@@ -26,7 +27,7 @@ export const updateCoachingCenterController = asyncHandler(async (req, res) => {
     linkedIn,
     bio,
     officeTime,
-  } = req.body;
+  } = req.body as Partial<CoachingType>;
 
   if (!id) throw new apiError(400, "Coaching Page not found !!!");
 

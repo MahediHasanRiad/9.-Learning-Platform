@@ -1,7 +1,13 @@
 import { apiError } from "../../../../utils/apiError.js"
+import type { CoachingType } from "../coaching-type.js";
 import { CoachingCenter } from "../model/CoachingCenter.model.js";
 
-export const UpdateData = async ({id, updatedData}) => {
+interface update {
+  id: string;
+  updatedData: Partial<CoachingType>
+}
+
+export const UpdateData = async ({id, updatedData}: update) => {
   try {
     const coaching = await CoachingCenter.findByIdAndUpdate(
         id,
@@ -10,7 +16,9 @@ export const UpdateData = async ({id, updatedData}) => {
       );
     
       return coaching
-  } catch (error) {
-    throw new apiError(400, error.message)
+  } 
+  catch (error: any) {
+    console.log(error)
+    throw new apiError(400, error?.message)
   }
 }
