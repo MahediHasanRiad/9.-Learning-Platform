@@ -4,6 +4,9 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Links } from "../../../../utils/links.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { FilterBatchOnSearch } from "../repository/filter-batch-by-search.repository.js";
+import type { QueryType } from "../batch-type.js";
+import { FindCoaching } from "../repository/find-coaching.repository.js";
+import { apiError } from "../../../../utils/apiError.js";
 
 export const allBatchController = asyncHandler(async (req, res) => {
   let {
@@ -12,31 +15,26 @@ export const allBatchController = asyncHandler(async (req, res) => {
     sortType = "dec",
     sortBy = "updatedAt",
     search = "",
-  } = req.query;
+  } = req.query as Partial<QueryType>;
 
   page = Math.max(1, Number(page));
   limit = Math.max(1, Number(limit));
 
-  // Build Filter Object
-  const filter = {};
-  if (search) {
-    filter.CcName = { $regex: search, $options: "i" };
-  }
+  const id = req.user?._id?.toString()
+  if(!id) throw new apiError(400, 'Invalid Token !!!')
 
   // Sort Stage Object
-  const sortStage = {
-    [sortBy]: sortType === "dec" ? -1 : 1,
-  };
+  const sortKey = `${sortType === 'dec' ? `-${sortBy}` : `${sortBy}`}`
+  
+  // filter batch
+  const batch = await FilterBatchOnSearch({search, sortKey, page, limit})
 
   // total item count
-  const totalItems = await Batch.countDocuments(filter);
-
-  // filter batch
-  const batch = await FilterBatchOnSearch({filter, sortStage, page, limit})
+  const totalItems = await Batch.countDocuments(batch);
 
   // Pagination & Links
-  const pagination = await Pagination(page, limit, totalItems, "allBatches");
-  const links = await Links(req, pagination, "batches");
+  const pagination = Pagination(page, limit, totalItems, "allBatches");
+  const links = Links(req, pagination, page, "batches");
 
   res.status(200).json(new apiResponse(200, { batch, pagination, links }));
 });

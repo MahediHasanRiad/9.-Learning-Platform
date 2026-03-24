@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import { apiError } from "../../../../utils/apiError.js"
 import { Batch } from "../model/batch.model.js";
+import type { FilterBySearchType } from "../batch-type.js";
 
-export const FilterBatchOnCoaching = async ({search, coachingId, sortKey, page, limit}) => {
+export const FilterBatchOnCoaching = async ({search = '', coachingId, sortKey, page = 1, limit = 10}: FilterBySearchType) => {
   try {
      const batch = await Batch.aggregate([
          {
@@ -55,7 +56,9 @@ export const FilterBatchOnCoaching = async ({search, coachingId, sortKey, page, 
          .limit(limit);
 
       return batch
-  } catch (error) {
+  } 
+  catch (error: any) {
+    console.log(error)
     throw new apiError(400, error.message)
   }
 }
