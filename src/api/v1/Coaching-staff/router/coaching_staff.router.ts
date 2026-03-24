@@ -3,7 +3,7 @@ import { authVerify } from "../../../../middleware/auth.middleware.js";
 import { createStaffController } from "../controller/create.controller.js";
 import { allCoachingStaffController } from "../controller/list_of_all_staff.controller.js";
 import { findSingleCoachingStaffController } from "../controller/findOne.controller.js";
-// import { updateCoachingStaffController } from "../controller/update.controller.js";
+import { updateCoachingStaffController } from "../controller/update.controller.js";
 import { deleteCoachingStaffController } from "../controller/delete.controller.js";
 
 
@@ -15,7 +15,7 @@ coachingStaffRouter.get("/coaching-staffs", authVerify, allCoachingStaffControll
 coachingStaffRouter
   .route("/coachingStaffs/:id")
   .get(authVerify, findSingleCoachingStaffController)
-//   .patch(authVerify, updateCoachingStaffController)
+  .patch(authVerify, updateCoachingStaffController)
   .delete(authVerify, deleteCoachingStaffController)
 
 

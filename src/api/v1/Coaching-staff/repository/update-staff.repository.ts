@@ -1,20 +1,26 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { CoachingStaff } from "../model/CoachingStaff.model.js";
 
-export const UpdateStaff = async ({ id, role }) => {
+interface UpdateStaffType {
+  staffId: string;
+  role: 'Admin' | 'Manager' | 'Teacher' | 'Other'
+}
+
+export const UpdateStaff = async ({ staffId, role }: UpdateStaffType) => {
   try {
-    const updated = {};
+    const updated: Partial<UpdateStaffType> = {};
     if (role) updated.role = role;
 
     const staff = await CoachingStaff.findByIdAndUpdate(
-      id,
+      staffId,
       { $set: updated },
       { new: true },
     );
 
     return staff
   } 
-  catch (error) {
+  catch (error: any) {
+    console.log(error)
     throw new apiError(400, error.message);
   }
 };
