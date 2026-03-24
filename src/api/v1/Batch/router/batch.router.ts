@@ -4,7 +4,7 @@ import { authVerify } from "../../../../middleware/auth.middleware.js";
 import { createBatchController } from "../controller/create.controller.js";
 import { batchListByCoachingIdController } from "../controller/batch-list-by-coachingId.controller.js";
 import { findSingleBatchController } from "../controller/findOne.controller.js";
-// import { updateBatchController } from "../controller/updateBatch.controller.js";
+import { updateBatchController } from "../controller/updateBatch.controller.js";
 import { deleteBatchController } from "../controller/delete.controller.js";
 
 
@@ -21,7 +21,7 @@ batchRouter.get('/all-batch-in-coaching/:id', authVerify, batchListByCoachingIdC
 batchRouter
   .route("/batches/:id")
   .get(authVerify, findSingleBatchController)
-//   .patch(authVerify, updateBatchController)
+  .patch(authVerify, updateBatchController)
   .delete(authVerify, deleteBatchController);
 
 export { batchRouter };

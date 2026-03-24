@@ -5,6 +5,7 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { BatchUpdate } from "../repository/batchUpdate.js";
 import { existBatch } from "../repository/existBatch.js";
 import { VerifyInputForUpdate } from "../validation/varify-input-data-for-update.validattion.js";
+import type { BatchType } from "../batch-type.js";
 
 export const updateBatchController = asyncHandler(async (req, res) => {
   /**
@@ -24,12 +25,10 @@ export const updateBatchController = asyncHandler(async (req, res) => {
     assignedTeachers,
     bio,
     recurringRule,
-  } = req.body;
+  } = req.body as Partial<BatchType>;
 
-  const { id } = req.params;
-  
-  if (!id || !mongoose.Types.ObjectId.isValid(id))
-    throw new apiError(400, "batch id not found !!!");
+  const id = req.params.id as string;
+  if (!id) throw new apiError(400, "batch id not found !!!");
 
   // exist batch
   await existBatch(id);

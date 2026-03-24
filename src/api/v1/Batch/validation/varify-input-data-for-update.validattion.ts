@@ -1,4 +1,5 @@
 import { apiError } from "../../../../utils/apiError.js";
+import type { UpdateBatchType } from "../batch-type.js";
 
 export const VerifyInputForUpdate = async ({
   name,
@@ -10,8 +11,8 @@ export const VerifyInputForUpdate = async ({
   assignedTeachers,
   subjects,
   bio,
-}) => {
-  const updateData = {};
+}: Partial<UpdateBatchType>) => {
+  const updateData: Partial<UpdateBatchType> = {};
 
   if (name !== undefined) updateData.name = name;
   if (start_date !== undefined) updateData.start_date = start_date;
