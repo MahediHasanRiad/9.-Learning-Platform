@@ -10,12 +10,12 @@ export interface userType {
   email: string;
   mobile: string;
   password: string;
-  avatar: string;
-  coverImage?: string;
-  address?: string;
-  bio?: string;
-  facebook?: string,
-  linkedIn?: string
+  avatar?: string | undefined;
+  coverImage?: string | undefined;
+  address?: string | undefined;
+  bio?: string | undefined;
+  facebook?: string | undefined;
+  linkedIn?: string | undefined;
 }
 
 

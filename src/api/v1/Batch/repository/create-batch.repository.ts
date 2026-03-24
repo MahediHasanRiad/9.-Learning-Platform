@@ -1,5 +1,10 @@
 import { apiError } from "../../../../utils/apiError.js";
+import type { BatchType } from "../batch-type.js";
 import { Batch } from "../model/batch.model.js";
+
+interface CreateBatchType extends BatchType {
+  coachingId: string;
+}
 
 export const CreateBatch = async ({
   name,
@@ -13,11 +18,11 @@ export const CreateBatch = async ({
   recurringRule,
   bio,
   coachingId,
-}) => {
+}: Required<CreateBatchType>) => {
   try {
     const batch = await Batch.create({
       name,
-      coverImage: coverImage.url,
+      coverImage: coverImage,
       subjects,
       start_date,
       end_date,
@@ -30,7 +35,8 @@ export const CreateBatch = async ({
     });
 
     return batch;
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error)
     throw new apiError(400, error.message);
   }
 };

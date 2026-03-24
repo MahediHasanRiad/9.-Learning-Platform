@@ -6,6 +6,7 @@ import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { User } from "../model/user.model.js";
 import { ExistUser } from "../repository/exist-user-by-email.repository.js";
 import { CreateUser } from "../repository/create-user.repository.js";
+import type { userType } from "../user-types.js";
 
 
 export const createUserController = asyncHandler(async (req, res) => {
@@ -19,7 +20,7 @@ export const createUserController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { name, email, password, mobile, address, bio } = req.body;
+  const { name, email, password, mobile, address, bio } = req.body as userType;
 
   if ([name, email, password, mobile].some((item) => item === "")) {
     throw new apiError(400, "all field are required !!!");
@@ -31,6 +32,8 @@ export const createUserController = asyncHandler(async (req, res) => {
   // check image path
   const avaterLocalPath = LocalFilePath(req, "avatar", true);
   const coverImageLocalPath = LocalFilePath(req, "coverImage");
+
+  if(!avaterLocalPath) throw new apiError(400, 'Avatar local file not found !!!')
 
   // upload image in cloudinary
   const avatar = await cloudinaryFileUpload(avaterLocalPath);

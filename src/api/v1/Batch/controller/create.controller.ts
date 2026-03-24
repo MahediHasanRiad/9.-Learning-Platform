@@ -5,6 +5,8 @@ import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { InputData } from "../validation/input-data.validation.js";
 import { FindCoaching } from "../repository/find-coaching.repository.js";
 import { CreateBatch } from "../repository/create-batch.repository.js";
+import { apiError } from "../../../../utils/apiError.js";
+import type { BatchType } from "../batch-type.js";
 
 export const createBatchController = asyncHandler(async (req, res) => {
   /**
@@ -25,9 +27,10 @@ export const createBatchController = asyncHandler(async (req, res) => {
     assignedTeachers,
     recurringRule,
     bio,
-  } = req.body;
+  } = req.body as Required<BatchType> ;
 
-  const id = req.user._id;
+  const id = req.user?._id?.toString();
+  if(!id) throw new apiError(400, 'param id not found !!!')
 
   // check input data
   await InputData({
@@ -49,6 +52,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
 
   // find coaching by user
   const coaching = await FindCoaching(id);
+  const coachingId = coaching?._id?.toString()
 
   // create
   const batch = await CreateBatch({
@@ -62,7 +66,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
     assignedTeachers,
     recurringRule,
     bio,
-    coachingId: coaching?._id,
+    coachingId: coachingId,
   });
 
   res.status(201).json(new apiResponse(201, batch));

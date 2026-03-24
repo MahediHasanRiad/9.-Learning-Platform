@@ -19,7 +19,7 @@ export const cloudinaryFileUpload = async (
     });
 
     fs.unlinkSync(localFilePath);
-    return response;
+    return response.url;
   } 
   catch (error: any) {
     console.log(error);

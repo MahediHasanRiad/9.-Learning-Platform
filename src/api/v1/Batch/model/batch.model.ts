@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model, type InferSchemaType } from "mongoose";
 
 const batchSchema = new Schema({
     name: {
@@ -11,7 +11,7 @@ const batchSchema = new Schema({
     subjects: {
         type: [Schema.Types.ObjectId],
         ref: 'Subject',
-        validate: [arr => arr.length > 0, 'At least one subject required'],
+        // validate: [arr => arr.length > 0, 'At least one subject required'],
         required: true
     },
     start_date: {
@@ -33,7 +33,7 @@ const batchSchema = new Schema({
     assignedTeachers: {
         type: [Schema.Types.ObjectId],
         ref: 'Teacher',
-        validate: [arr => arr.length > 0, 'At least one Teacher required'],
+        // validate: [arr => arr.length > 0, 'At least one Teacher required'],
         required: true
     },
     recurringRule: {
@@ -50,4 +50,5 @@ const batchSchema = new Schema({
     }
 }, {timestamps: true})
 
+export type BatchType = InferSchemaType<typeof Batch> & {_id: Types.ObjectId}
 export const Batch = model('Batch', batchSchema)
