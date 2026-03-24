@@ -6,7 +6,7 @@ import { subjectListByUserController } from "../controller/subjectListByUser.js"
 import { findSingleSubjectController } from "../controller/findOne.controller.js";
 // import { updateOrCreateSubjectController } from "../controller/update_or_create.controller.js";
 // import { updateSubjectController } from "../controller/update.controller.js";
-// import { deleteSubjectController } from "../controller/delete.controller.js";
+import { deleteSubjectController } from "../controller/delete.controller.js";
 
 
 
@@ -20,8 +20,8 @@ subjectRouter
   .route("/subjects/:id")
   .get(authVerify, findSingleSubjectController)
 //   .put(authVerify, updateOrCreateSubjectController)
-//   .patch(authVerify, updateSubjectController)
-//   .delete(authVerify, deleteSubjectController)
+  // .patch(authVerify, updateSubjectController)
+  .delete(authVerify, deleteSubjectController)
 
 
 
