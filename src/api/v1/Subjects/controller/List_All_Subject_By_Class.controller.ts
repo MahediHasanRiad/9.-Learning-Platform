@@ -4,6 +4,7 @@ import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { FilterSubject } from "../repository/filter-subject.repository.js";
+import type { QueryType } from "../subject-type.js";
 
 export const listOfAllSubjectsByClassController = asyncHandler(
   async (req, res) => {
@@ -22,7 +23,8 @@ export const listOfAllSubjectsByClassController = asyncHandler(
       sortType = "dec",
       sortBy = "updatedAt",
       search = "",
-    } = req.query;
+    } = req.query as Partial<QueryType>;
+
     page = Math.max(1, Number(page || 1));
     limit = Math.max(1, Number(limit || 10));
 
@@ -34,10 +36,10 @@ export const listOfAllSubjectsByClassController = asyncHandler(
 
     // pagination
     const totalItems = await Subject.countDocuments(filterSubjects);
-    const pagination = await Pagination(page, limit, totalItems, "subjects");
+    const pagination = Pagination(page, limit, totalItems, "subjects");
 
     // links
-    const links = await Links(req, pagination, "subjects");
+    const links = Links(req, pagination, page, "subjects");
 
     res
       .status(200)

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { authVerify } from "../../../../middleware/auth.middleware.js";
 import { createSubjectController } from "../controller/create.controller.js";
-// import { listOfAllSubjectsByClassController } from "../controller/List_All_Subject_By_Class.controller.js";
+import { listOfAllSubjectsByClassController } from "../controller/List_All_Subject_By_Class.controller.js";
 // import { subjectListByUserController } from "../controller/subjectListByUser.js";
 // import { findSingleSubjectController } from "../controller/findOne.controller.js";
 // import { updateOrCreateSubjectController } from "../controller/update_or_create.controller.js";
@@ -14,7 +14,7 @@ const subjectRouter = Router();
 
 
 subjectRouter.post("/subject", authVerify, createSubjectController);
-// subjectRouter.get('/subjects', authVerify, listOfAllSubjectsByClassController)
+subjectRouter.get('/subjects', authVerify, listOfAllSubjectsByClassController)
 // subjectRouter.get('/subjects-by-user', authVerify, subjectListByUserController)
 // subjectRouter
 //   .route("/subjects/:id")

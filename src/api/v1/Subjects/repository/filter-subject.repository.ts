@@ -1,7 +1,14 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { Subject } from "../model/subject.model.js";
 
-export const FilterSubject = async ({search, sortKey,  page = 1, limit = 10 }) => {
+interface FilterType {
+  search: string;
+  sortKey: string; 
+  page: number;
+  limit: number;
+}
+
+export const FilterSubject = async ({search, sortKey = 'dec',  page = 1, limit = 10 }: Partial<FilterType>) => {
   try {
     const filterSubjects = await Subject.aggregate([
       {
@@ -30,7 +37,8 @@ export const FilterSubject = async ({search, sortKey,  page = 1, limit = 10 }) =
 
     return filterSubjects;
   } 
-  catch (error) {
+  catch (error: any) {
+    console.log(error)
     throw new apiError(400, error.message);
   }
 };
