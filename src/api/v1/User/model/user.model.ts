@@ -1,0 +1,112 @@
+import { Schema, model, Document } from "mongoose";
+import bcrypt from "bcrypt";
+import jwt, { type SignOptions } from "jsonwebtoken";
+
+
+interface UserDocument extends Document {
+  name: string;
+  email: string;
+  mobile: string;
+  password: string;
+  address?: string;
+  avatar: string;
+  coverImage?: string;
+  bio?: string;
+  facebook?: string;
+  linkedIn?: string;
+
+  // methods
+  isPasswordCorrect(password: string): Promise<boolean>;
+  generateAccessToken(): string;
+}
+
+const userSchema = new Schema<UserDocument>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email Required !!!"],
+      validate: {
+        validator: function (v: string) {
+          return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(v);
+        },
+        message: (props: any) => `${props.value} is not a valid Email !`,
+      },
+    },
+    mobile: {
+      type: String,
+      min: [11, "Not Valid"],
+      required: [true, "Mobile number required !!!"],
+      validate: {
+        validator: function (v: string) {
+          return /^01[3-9]\d{8}$/.test(v);
+        },
+        message: (props: any) => `${props.value} in not valid Number !!!`,
+      },
+    },
+    password: {
+      type: String,
+      minLength: [6, "Minimum 6 character"],
+      required: [true, "Password Required !!!"],
+    },
+    address: {
+      type: String,
+      default: ''
+    },
+    avatar: {
+      type: String,
+      required: true,
+    },
+    coverImage: {
+      type: String,
+    },
+    bio: {
+      type: String,
+    },
+    facebook: {
+      type: String
+    },
+    linkedIn: {
+      type: String
+    },
+  },
+  { timestamps: true },
+);
+
+// hash password
+userSchema.pre("save", async function (next: any) {
+  try {
+    if (!this.isModified("password")) return;
+
+    this.password = await bcrypt.hash(this.password, 10);
+    return next();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// compare password
+userSchema.methods.isPasswordCorrect = async function (password: string) {
+  return await bcrypt.compare(password, this.password);
+};
+
+// generate access token
+userSchema.methods.generateAccessToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+      role: this.role,
+    },
+    process.env.ACCESS_TOKEN_SECRET_KEY as string,
+    { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE } as SignOptions ,
+  );
+};
+
+export const User = model<UserDocument>("User", userSchema);
+export type {UserDocument}
