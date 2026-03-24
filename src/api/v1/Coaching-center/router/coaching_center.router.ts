@@ -2,7 +2,7 @@ import { Router } from "express";
 import { authVerify } from "../../../../middleware/auth.middleware.js";
 import { upload } from "../../../../middleware/multer.middleware.js";
 import { listOfAllCoachingCenterController } from "../controller/allCoachingCenter.controller.js";
-// import { coachingFindByUserController } from "../controller/CoachingfindByUser.controller.js";
+import { coachingFindByUserController } from "../controller/CoachingfindByUser.controller.js";
 // import { coachingAllSubjectsController } from "../controller/coaching-subjects.controller.js";
 // import { findSingleCoachingCenterController } from "../controller/findOne.controller.js";
 // import { updateCoachingCenterController } from "../controller/update.controller.js";
@@ -18,7 +18,7 @@ coachingCenterRouter.get(
   authVerify,
   listOfAllCoachingCenterController,
 );
-// coachingCenterRouter.get('/coaching-center-by-user', authVerify, coachingFindByUserController)
+coachingCenterRouter.get('/coaching-center-by-user', authVerify, coachingFindByUserController)
 // coachingCenterRouter.get('/coaching-all-subjects', authVerify, coachingAllSubjectsController)
 
 // coachingCenterRouter

@@ -5,7 +5,3 @@ export interface QueryType {
   sortBy: string,
   search: string,
 }
-
-export interface CoachingType {
-  
-}
