@@ -6,7 +6,7 @@ import { allDemoClassController } from "../controller/All_demoClass.controller.j
 import { createTeacherController } from "../controller/create.controller.js";
 import { findSingleTeacherController } from "../controller/findOne.controller.js";
 import { updateTeacherController } from "../controller/update.controller.js";
-// import { deleteTeacherController } from "../controller/delete.controller.js";
+import { deleteTeacherController } from "../controller/delete.controller.js";
 
 
 const teacherRouter = Router();
@@ -27,6 +27,6 @@ teacherRouter
     upload.fields([{ name: "certificate", maxCount: 10 }]),
     updateTeacherController,
   )
-//   .delete(authVerify, deleteTeacherController);
+  .delete(authVerify, deleteTeacherController);
 
 export { teacherRouter };
