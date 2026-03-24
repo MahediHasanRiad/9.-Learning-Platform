@@ -4,9 +4,11 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Links } from "../../../../utils/links.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { FindCoaching } from "../repository/find-coaching.repository.js";
+import type { Request, Response } from "express";
+import type { QueryType } from "../coaching-type.js";
 
 export const listOfAllCoachingCenterController = asyncHandler(
-  async (req, res) => {
+  async (req: Request, res: Response) => {
     /**
      * get {page, limit, sortType, sortBy, search} = req.query
      * filter by search
@@ -22,10 +24,10 @@ export const listOfAllCoachingCenterController = asyncHandler(
       sortType = "dec",
       sortBy = "updatedAt",
       search = "",
-    } = req.query;
+    } = req.query as Partial<QueryType>;
     
-    page = Math.max(1, Number(page || 1));
-    limit = Math.max(1, Number(limit || 10));
+    page = Number(page)
+    limit = Number(limit)
 
     const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
@@ -34,8 +36,8 @@ export const listOfAllCoachingCenterController = asyncHandler(
     
     // add link for every coaching center
     const coachingCenter = filterCoachingCenter.map((coaching) => ({
-      ...coaching._doc,
-      link: `${req.path}/${coaching.id}`,
+      ...coaching,
+      link: `${req.path}/${coaching._id}`,
     }));
 
     // pagination
@@ -49,7 +51,7 @@ export const listOfAllCoachingCenterController = asyncHandler(
     );
 
     // links
-    const links = await Links(req, pagination, "coachingCenters");
+    const links = await Links(req, pagination, page, "coachingCenters");
 
     res
       .status(200)
