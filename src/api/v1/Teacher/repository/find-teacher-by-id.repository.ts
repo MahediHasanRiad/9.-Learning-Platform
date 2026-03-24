@@ -1,7 +1,7 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { Teacher } from "../model/Teacher.model.js";
 
-export const FindTeacherByID = async (id) => {
+export const FindTeacherByID = async (id: string) => {
   try {
     const teacher = await Teacher.findById(id)
       .populate("userId")
@@ -9,7 +9,8 @@ export const FindTeacherByID = async (id) => {
     if (!teacher) throw new apiError(404, "teacher not found !!!");
 
     return teacher;
-  } catch (error) {
-    throw new apiError(404, error.message);
+  } catch (error: any) {
+    console.log(error)
+    throw new apiError(404, error?.message);
   }
 };

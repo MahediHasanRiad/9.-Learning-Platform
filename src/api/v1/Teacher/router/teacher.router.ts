@@ -4,7 +4,7 @@ import { upload } from "../../../../middleware/multer.middleware.js";
 import { allTeachersController } from "../controller/allTeachers.controller.js";
 import { allDemoClassController } from "../controller/All_demoClass.controller.js";
 import { createTeacherController } from "../controller/create.controller.js";
-// import { findSingleTeacherController } from "../controller/findOne.controller.js";
+import { findSingleTeacherController } from "../controller/findOne.controller.js";
 // import { updateTeacherController } from "../controller/update.controller.js";
 // import { deleteTeacherController } from "../controller/delete.controller.js";
 
@@ -19,9 +19,9 @@ teacherRouter.post(
   upload.fields([{ name: 'certificate', maxCount: 1 }]),
   createTeacherController
 );
-// teacherRouter
-//   .route("/teachers/:id")
-//   .get(authVerify, findSingleTeacherController)
+teacherRouter
+  .route("/teachers/:id")
+  .get(authVerify, findSingleTeacherController)
 //   .patch(
 //     authVerify,
 //     upload.fields([{ name: "certificate", maxCount: 10 }]),
