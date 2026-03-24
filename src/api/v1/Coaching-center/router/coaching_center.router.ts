@@ -4,7 +4,7 @@ import { upload } from "../../../../middleware/multer.middleware.js";
 import { listOfAllCoachingCenterController } from "../controller/allCoachingCenter.controller.js";
 import { coachingFindByUserController } from "../controller/CoachingfindByUser.controller.js";
 import { coachingAllSubjectsController } from "../controller/coaching-subjects.controller.js";
-// import { findSingleCoachingCenterController } from "../controller/findOne.controller.js";
+import { findSingleCoachingCenterController } from "../controller/findOne.controller.js";
 // import { updateCoachingCenterController } from "../controller/update.controller.js";
 // import { deleteCoachingCenterController } from "../controller/delete.controller.js";
 import { createCoachingCenterController } from "../controller/create.controller.js";
@@ -21,9 +21,9 @@ coachingCenterRouter.get(
 coachingCenterRouter.get('/coaching-center-by-user', authVerify, coachingFindByUserController)
 coachingCenterRouter.get('/coaching-all-subjects', authVerify, coachingAllSubjectsController)
 
-// coachingCenterRouter
-//   .route("/coaching-centers/:id")
-//   .get(authVerify, findSingleCoachingCenterController)
+coachingCenterRouter
+  .route("/coaching-centers/:id")
+  .get(authVerify, findSingleCoachingCenterController)
 //   .patch(
 //     authVerify,
 //     upload.fields([
