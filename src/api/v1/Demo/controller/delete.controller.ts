@@ -1,9 +1,12 @@
 import { DemoClass } from "../model/demoClass.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
+import type { Request, Response } from "express";
+import { apiError } from "../../../../utils/apiError.js";
 
-export const deleteDemoClassController = asyncHandler(async (req, res) => {
-  const {id} = req.params 
+export const deleteDemoClassController = asyncHandler(async (req: Request, res: Response) => {
+  const id = req.params.id as string
+  if(!id) throw new apiError(400, 'id param not found !!!') 
 
   await DemoClass.findByIdAndDelete(id)
 

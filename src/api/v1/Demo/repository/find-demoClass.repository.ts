@@ -1,7 +1,7 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { DemoClass } from "../model/demoClass.model.js";
 
-export const FindDemoClass = async (id) => {
+export const FindDemoClass = async (id: string) => {
   try {
     const demoClass = await DemoClass.findById(id)
       // .populate("subjectId", "name")
@@ -10,7 +10,7 @@ export const FindDemoClass = async (id) => {
     if (!demoClass) throw new apiError(400, "demo class not found !!!");
 
     return demoClass;
-  } catch (error) {
+  } catch (error: any) {
     throw new apiError(400, error.message);
   }
 };
