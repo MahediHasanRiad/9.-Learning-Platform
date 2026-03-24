@@ -5,7 +5,7 @@ import { allTeachersController } from "../controller/allTeachers.controller.js";
 import { allDemoClassController } from "../controller/All_demoClass.controller.js";
 import { createTeacherController } from "../controller/create.controller.js";
 import { findSingleTeacherController } from "../controller/findOne.controller.js";
-// import { updateTeacherController } from "../controller/update.controller.js";
+import { updateTeacherController } from "../controller/update.controller.js";
 // import { deleteTeacherController } from "../controller/delete.controller.js";
 
 
@@ -22,11 +22,11 @@ teacherRouter.post(
 teacherRouter
   .route("/teachers/:id")
   .get(authVerify, findSingleTeacherController)
-//   .patch(
-//     authVerify,
-//     upload.fields([{ name: "certificate", maxCount: 10 }]),
-//     updateTeacherController,
-//   )
+  .patch(
+    authVerify,
+    upload.fields([{ name: "certificate", maxCount: 10 }]),
+    updateTeacherController,
+  )
 //   .delete(authVerify, deleteTeacherController);
 
 export { teacherRouter };

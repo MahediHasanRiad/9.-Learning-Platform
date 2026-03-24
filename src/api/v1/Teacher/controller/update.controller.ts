@@ -1,10 +1,10 @@
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
-import { User } from "../../User/model/user.model.js";
 import { FindTeacherByID } from "../repository/find-teacher-by-id.repository.js";
 import { UpdateTeacher } from "../repository/update-teacher.repository.js";
 import { UpdateUser } from "../repository/update-user.repository.js";
+import type { TeacherType } from "../teachers-type.js";
 import { UpdateTeacherFields } from "../validation/update-teacher.validation.js";
 import { UpdateUserFields } from "../validation/update-user.validation.js";
 
@@ -21,20 +21,23 @@ const updateTeacherController = asyncHandler(async (req, res) => {
     availableDay,
     availableTime,
     experience,
-  } = req.body;
-  const { id } = req.params;
+  } = req.body as Partial<TeacherType>;
+  
+  const id = req.params.id as string;
+  if(!id) throw new apiError(400, 'teacher id not found !!!')
 
-  const userId = req.user._id;
+  if(!req.user?._id) throw new apiError(400, 'Invalid Token !!!')
+  const userId = req.user._id.toString();
 
   // find teacher
-  const findTeacher = await FindTeacherByID(id)
+  const findTeacher = await FindTeacherByID(id?.toString())
 
   if (findTeacher.userId._id.toString() !== userId.toString()) {
     throw new apiError(403, "unauthorized");
   }
 
   // check teacher input values for update
-  const updatedTeacher = await UpdateTeacherFields({education, availableDay, availableTime, experience, req})
+  const updatedTeacher = await UpdateTeacherFields({ education, availableDay, availableTime, experience, req });
 
   // update teacher
   const teacher = await UpdateTeacher({id, updatedTeacher})

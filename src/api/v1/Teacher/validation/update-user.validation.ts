@@ -1,8 +1,22 @@
+import type { Request } from "express";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
+import type { userType } from "../../User/user-types.js";
 
-export const UpdateUserFields = async ({req, name, mobile, address, bio, linkedIn, facebook}) => {
+export interface UpdateType {
+  req: Request;
+  name?: string | undefined;
+  email?: string | undefined;
+  mobile?: string | undefined;
+  password?: string | undefined;
+  avatar?: string | undefined;
+  coverImage?: string | undefined;
+  address?: string | undefined;
+  bio?: string | undefined;
+  facebook?: string | undefined;
+  linkedIn?: string | undefined;}
 
+export const UpdateUserFields = async ({req, name, mobile, address, bio, linkedIn, facebook}: UpdateType) => {
 
    const avatarLocalFilePath = LocalFilePath(req, "avatar");
     const coverImageLocalFilePath = LocalFilePath(req, "coverImage");
@@ -14,7 +28,7 @@ export const UpdateUserFields = async ({req, name, mobile, address, bio, linkedI
       ? await cloudinaryFileUpload(coverImageLocalFilePath)
       : "";
   
-    const userUpdated = {};
+    const userUpdated: Partial<userType> = {};
   
     if (name) userUpdated.name = name;
     if (mobile) userUpdated.mobile = mobile;
