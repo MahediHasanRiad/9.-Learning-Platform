@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, Types, model, type InferSchemaType } from "mongoose";
 
 const subjectSchema = new Schema({
     name: {
@@ -15,4 +15,5 @@ const subjectSchema = new Schema({
     }
 }, {timestamps: true})
 
+export type SubjectType = InferSchemaType<typeof subjectSchema> & {_id: Types.ObjectId}
 export const Subject = model('Subject', subjectSchema)
