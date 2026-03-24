@@ -6,7 +6,7 @@ import { coachingFindByUserController } from "../controller/CoachingfindByUser.c
 import { coachingAllSubjectsController } from "../controller/coaching-subjects.controller.js";
 import { findSingleCoachingCenterController } from "../controller/findOne.controller.js";
 import { updateCoachingCenterController } from "../controller/update.controller.js";
-// import { deleteCoachingCenterController } from "../controller/delete.controller.js";
+import { deleteCoachingCenterController } from "../controller/delete.controller.js";
 import { createCoachingCenterController } from "../controller/create.controller.js";
 
 
@@ -32,7 +32,7 @@ coachingCenterRouter
     ]),
     updateCoachingCenterController,
   )
-//   .delete(authVerify, deleteCoachingCenterController);
+  .delete(authVerify, deleteCoachingCenterController);
 
 coachingCenterRouter.post(
   "/coaching",
