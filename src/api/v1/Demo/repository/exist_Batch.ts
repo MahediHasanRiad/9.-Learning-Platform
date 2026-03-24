@@ -1,7 +1,7 @@
 import { Batch } from "../../Batch/model/batch.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 
-export const existBatch = async (batchId) => {
+export const existBatch = async (batchId: string) => {
   try {
     if (!batchId) return;
 
@@ -9,7 +9,8 @@ export const existBatch = async (batchId) => {
     if (!batch) throw new apiError(400, "Batch not found !!!");
 
   } 
-  catch (error) {
+  catch (error: any) {
+    console.log(error)
     new apiError(400, error.message);
   }
 };
