@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { apiError } from "../../../../utils/apiError.js"
 import { Batch } from "../model/batch.model.js";
 
-export const FindSingleBatch = async (id) => {
+export const FindSingleBatch = async (id: string) => {
   try {
     const batch = await Batch.aggregate([
         {
@@ -58,7 +58,8 @@ export const FindSingleBatch = async (id) => {
 
     return batch
   } 
-  catch (error) {
+  catch (error: any) {
+    console.log(error)
     throw new apiError(400, error.message)
   }
 }
