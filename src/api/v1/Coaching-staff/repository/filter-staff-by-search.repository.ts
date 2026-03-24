@@ -1,14 +1,17 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { apiError } from "../../../../utils/apiError.js"
 import { CoachingStaff } from "../model/CoachingStaff.model.js";
+import type { FilterStaffBySearchType } from "../coaching-staff-type.js";
 
-export const FilterStaffBySearch = async ({coachingId, role, search, sortKey, page, limit}) => {
+
+export const FilterStaffBySearch = async ({coachingId, role, search, sortKey = 'dec', page = 1, limit = 10}: Partial<FilterStaffBySearchType>) => {
   try {
+
     const filterByCoaching = await CoachingStaff.aggregate([
         {
           $match: {
-            coachingId: new mongoose.Types.ObjectId(coachingId),
-            role: { $regex: role || "", $options: "i" },
+            coachingId: new Types.ObjectId(coachingId),
+            role: { $regex: role || "Teacher", $options: "i" },
           },
         },
         {
@@ -52,7 +55,8 @@ export const FilterStaffBySearch = async ({coachingId, role, search, sortKey, pa
 
     return filterByCoaching
   } 
-  catch (error) {
+  catch (error: any) {
+    console.log(error)
     if(error instanceof Error) throw Error
     new apiError(500, error.message)
   }

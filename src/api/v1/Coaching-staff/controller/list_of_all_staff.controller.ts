@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
-import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
 import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Links } from "../../../../utils/links.js";
-import { apiError } from "../../../../utils/apiError.js";
 import { FindCoaching } from "../repository/find-coaching.repository.js";
 import { FilterStaffBySearch } from "../repository/filter-staff-by-search.repository.js";
+import type { Request, Response } from "express";
+import type { QueryType } from "../coaching-staff-type.js";
+import { apiError } from "../../../../utils/apiError.js";
 
-export const allCoachingStaffController = asyncHandler(async (req, res) => {
+export const allCoachingStaffController = asyncHandler(async (req: Request, res: Response) => {
   /**
    * get {id} = req.params (coaching center id)
    * get {page, limit, sortType, sortBy, search} = req.query
@@ -26,22 +26,27 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
     sortType = "dec",
     sortBy = "updatedAt",
     search = "",
-    role = "",
-  } = req.query;
+    role = "Teacher",
+  } = req.query as Partial<QueryType>;
+
   page = Math.max(1, Number(page || 1));
   limit = Math.max(1, Number(limit || 10));
 
-  const userId = req.user._id;
+  const userId = req.user?._id?.toString();
+  if(!userId) throw new apiError(400, 'invalid token !!!')
 
   // find coaching by user id
-  const coaching = await FindCoaching({ userId });
+  const coaching = await FindCoaching( userId );
+  if(!coaching) throw new apiError(404, 'Coaching center not found !!!')
 
   // filter by search
   const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-  const filterByCoaching = await FilterStaffBySearch({coachingId: coaching?._id, role, search, sortKey, page, limit})
+
+  const coachingId = coaching._id?.toString()
+  const filterByCoaching = await FilterStaffBySearch({coachingId, role, search, sortKey, page, limit})
 
   // add indivisual link
-  const staff = filterByCoaching.map((item) => ({
+  const staff = filterByCoaching?.map((item) => ({
     ...item,
     staffLink: `/users/${item._id}`,
   }));
@@ -56,7 +61,7 @@ export const allCoachingStaffController = asyncHandler(async (req, res) => {
   );
 
   // links
-  const links = await Links(req, pagination, `coachingStaffs`);
+  const links = await Links(req, pagination, page, `coachingStaffs`);
 
   res.status(200).json(new apiResponse(200, { staff, pagination, links }));
 });
