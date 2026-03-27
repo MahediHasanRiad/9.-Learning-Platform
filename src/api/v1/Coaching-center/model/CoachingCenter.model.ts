@@ -53,14 +53,6 @@ const coachingCenterSchema = new Schema({
     linkedIn: {
         type: String,
     },
-    staffs: [{
-        type: Schema.Types.ObjectId,
-        ref: 'CoachingStaff'
-    }],
-    batch: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Batch'
-    }],
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
