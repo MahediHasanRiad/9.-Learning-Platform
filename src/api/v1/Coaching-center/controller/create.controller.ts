@@ -22,7 +22,7 @@ export const createCoachingCenterController = asyncHandler(async (req: Request, 
 
   const { CcName, address } = req.body as coachingType;
 
-  const userId = req.user?._id?.toString();
+  const userId = req.user?.id?.toString();
   if(!userId) throw new apiError(400, 'Invalid Token !!!')
 
   // check input data

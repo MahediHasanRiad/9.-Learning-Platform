@@ -6,6 +6,7 @@ import { Pagination } from "../../../../utils/pagination.js";
 import { FindCoaching } from "../repository/find-coaching.repository.js";
 import type { Request, Response } from "express";
 import type { QueryType } from "../coaching-type.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 export const listOfAllCoachingCenterController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -21,29 +22,25 @@ export const listOfAllCoachingCenterController = asyncHandler(
     let {
       page = 1,
       limit = 10,
-      sortType = "dec",
-      sortBy = "updatedAt",
+      sortType = "desc",
       search = "",
     } = req.query as Partial<QueryType>;
     
     page = Number(page)
     limit = Number(limit)
 
-    const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-
     // find coaching based on search
-    const filterCoachingCenter = await FindCoaching({search, sortKey, page, limit})
+    const filterCoachingCenter = await FindCoaching({search, sortType, page, limit})
     
     // add link for every coaching center
     const coachingCenter = filterCoachingCenter.map((coaching) => ({
       ...coaching,
-      link: `${req.path}/${coaching._id}`,
+      link: `${req.path}/${coaching.id}`,
     }));
 
     // pagination
-    const totalItems =
-      await CoachingCenter.countDocuments(filterCoachingCenter);
-    const pagination = await Pagination(
+    const totalItems = await prisma.coachingCenter.count({where: {CcName: {contains: search, mode: "insensitive"}}});
+    const pagination = Pagination(
       page,
       limit,
       totalItems,
@@ -51,7 +48,7 @@ export const listOfAllCoachingCenterController = asyncHandler(
     );
 
     // links
-    const links = await Links(req, pagination, page, "coachingCenters");
+    const links = Links(req, pagination, page, "coachingCenters");
 
     res
       .status(200)

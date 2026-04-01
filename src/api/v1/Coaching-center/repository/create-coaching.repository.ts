@@ -1,6 +1,5 @@
-import type { Types } from "mongoose";
-import { apiError } from "../../../../utils/apiError.js"
-import { CoachingCenter } from "../model/CoachingCenter.model.js";
+import { apiError } from "../../../../utils/apiError.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 interface CreateCoachingType {
   CcName: string;
@@ -8,17 +7,24 @@ interface CreateCoachingType {
   userId: string;
 }
 
-export const CreateCoaching = async ({userId, CcName, address}: CreateCoachingType) => {
+export const CreateCoaching = async ({
+  userId,
+  CcName,
+  address,
+}: CreateCoachingType) => {
   try {
-    const coachingCenter = await CoachingCenter.create({
+
+    const coachingCenter = await prisma.coachingCenter.create({
+      data: {
         CcName,
         address,
         userId: userId,
-      });
+      },
+    });
 
-      return coachingCenter;
+    return coachingCenter;
   } catch (error: any) {
-    console.log(error)
-    throw new apiError(400, error?.message)
+    console.log(error);
+    throw new apiError(400, error?.message);
   }
-}
+};
