@@ -4,11 +4,14 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Responses } from "../utils/response.js";
 import { verifyUser } from "../utils/user.js";
 
-
+interface LoginType {
+  email: string;
+  password: string;
+}
 
 const logInController = asyncHandler(async (req: Request, res: Response) => {
   
-  const { email, password } = req.body;
+  const { email, password }: LoginType = req.body;
 
   if (!email || !password)
     throw new apiError(400, "Email & Password both are required !!!");

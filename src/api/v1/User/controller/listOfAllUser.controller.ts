@@ -1,9 +1,11 @@
-import { User } from "../model/user.model.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Links } from "../../../../utils/links.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { FindUserBasedOnSearch } from "../repository/find-user-by-search.repository.js";
+import type { QueryType } from "../../Subjects/subject-type.js";
+import { apiError } from "../../../../utils/apiError.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 const listOfAllUserController = asyncHandler(async (req, res) => {
   /**
@@ -18,40 +20,46 @@ const listOfAllUserController = asyncHandler(async (req, res) => {
   let {
     page = 1,
     limit = 10,
-    sortType = "dec",
-    sortBy = "updatedAt",
+    sortType = "desc",
     search = "",
-  } = req.query;
+  } = req.query as QueryType;
 
   // check all query params
-  if(typeof page !== 'string') page = '1'
-  if(typeof limit !== 'string') limit = '10'
-  if(typeof sortType !== 'string') sortType = 'dec'
-  if(typeof sortBy !== 'string') sortType = 'updatedAt'
-  if(typeof search !== 'string') search = ''
+  if (typeof page !== "string") page = "1";
+  if (typeof limit !== "string") limit = "10";
+  if (typeof sortType !== "string") sortType = "desc";
+  if (typeof search !== "string") search = "";
 
   page = Number(req.query.page) || 1;
   limit = Number(req.query.limit) || 10;
 
-  const sortkey = `${sortType === "dec" ? `-${sortBy}` : `${sortBy}`}${sortBy}`;
-
   // filter user based on search
-  const filterUser = await FindUserBasedOnSearch({search, sortkey, page, limit})
+  const id = req.user?.id;
+  if (!id) throw new apiError(400, "invalid token");
+
+  const filterUser = await FindUserBasedOnSearch({
+    search,
+    sortType,
+    page,
+    limit,
+    id,
+  });
 
   // add link
-  const users = filterUser?.map((user) => (
-    {
+  const users = filterUser?.map((user) => ({
     ...user,
-    link: `/users/${user._id}`,
-  }
-));
-console.log('ddd', users)
+    link: `/users/${user.id}`,
+  }));
+console.log(users)
   // count
-  const totalUser = await User.countDocuments(filterUser);
+  // const totalUser = await User.countDocuments(filterUser);
+  const totalUser = await prisma.user.count({
+    where: { name: { contains: search, mode: "insensitive" } },
+  });
   // pagination
-  const pagination = Pagination(page, limit, totalUser, 'users')
+  const pagination = Pagination(page, limit, totalUser, "users");
   // links
-  const links = await Links(req, pagination, page, 'users/all')
+  const links = Links(req, pagination, page, "users/all");
 
   res
     .status(200)

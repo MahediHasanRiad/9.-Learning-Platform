@@ -7,14 +7,15 @@ import { UpdateUser } from "../repository/update-user.repository.js";
 import { InputValue } from "../validation/input-value.validation.js";
 import type { Request, Response } from "express";
 import { apiError } from "../../../../utils/apiError.js";
+import type { userType } from "../user-types.js";
 
 interface paramsType {
   id: string
 }
 
 const updateUserController = asyncHandler(async (req: Request, res: Response) => {
-  const { name, address, email, mobile, role, facebook, linkedIn } = req.body;
-  const { id } = req.params;
+  const { name, address, email, mobile, facebook, linkedIn } = req.body as Partial<userType>;
+  const id = req.params.id as string;
 
   if(typeof id !== "string") throw new apiError(400, 'invalid param id')
 
@@ -39,7 +40,6 @@ const updateUserController = asyncHandler(async (req: Request, res: Response) =>
     address,
     email,
     mobile,
-    // role,
     avatar,
     coverImage,
     facebook,

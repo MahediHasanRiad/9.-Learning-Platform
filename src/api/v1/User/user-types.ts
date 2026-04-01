@@ -1,21 +1,22 @@
 export interface jwtDecodedType {
-  _id: string;
-  name: string;
-  email: string;
-  role: string;
+  id: string;
+  // name: string;
+  // email: string;
+  // role: string;
 }
 
 export interface userType {
+  readonly id: string;
   name: string;
   email: string;
   mobile: string;
   password: string;
-  avatar?: string | undefined;
-  coverImage?: string | undefined;
-  address?: string | undefined;
-  bio?: string | undefined;
-  facebook?: string | undefined;
-  linkedIn?: string | undefined;
+  avatar?: string | undefined | null;
+  coverImage?: string | undefined | null;
+  address?: string | undefined | null;
+  bio?: string | undefined | null;
+  facebook?: string | undefined | null;
+  linkedIn?: string | undefined | null;
 }
 
 

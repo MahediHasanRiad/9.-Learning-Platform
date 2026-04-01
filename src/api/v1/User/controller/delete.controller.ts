@@ -5,7 +5,7 @@ import { FindUserThenDelete } from "../repository/find-user-and-delete.repositor
 
 const deleteUserController = asyncHandler(async (req, res) => {
 
-    const {id} = req.params 
+    const id = req.params.id as string
     if(!id) throw new apiError(400, 'id required !')
 
     if(typeof id !== 'string') throw new apiError(400, 'id must be string !!!')

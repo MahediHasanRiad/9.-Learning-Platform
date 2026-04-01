@@ -6,7 +6,7 @@ import { FindUser } from "../repository/user.repository.js";
 
 export const meController = asyncHandler(async (req: Request, res: Response) => {
 
-  const id = req.user!._id.toString();
+  const id = req.user!.id;
 
   const user = await FindUser(id.toString())
   // const teacher = await FindTeacher(user._id)

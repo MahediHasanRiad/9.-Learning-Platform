@@ -1,39 +1,34 @@
-import mongoose, { Types } from "mongoose";
-import { Enrollment } from "../../Enrollment/model/enrollment.model.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 interface EnrolledUserType {
-  userId: Types.ObjectId;
-  sortKey: string;
+  userId: string;
+  sortType: string;
   page: number;
-  limit: number
+  limit: number;
 }
-export const EnrolledUser = async ({userId, sortKey = 'dec', page = 1, limit = 10}: EnrolledUserType) => {
-
+export const EnrolledUser = async ({
+  userId,
+  sortType = "dec",
+  page = 1,
+  limit = 10,
+}: EnrolledUserType) => {
   try {
-    const enrollment = await Enrollment.aggregate([
-      {
-        $match: {
-          studentId: userId,
-        },
+    
+    const skipPage = (page - 1) * limit
+
+    const enrollment = await prisma.enrollment.findMany({
+      where: { studentId: userId },
+      include: {
+        batch: true
       },
-      // {
-      //   $lookup: {
-      //     from: "batches",
-      //     localField: "batchId",
-      //     foreignField: "_id",
-      //     as: "batch",
-      //   },
-      // },
-      // {
-      //   $unwind: "$batch"
-      // }
-    ])
-      .sort(sortKey)
-      .skip((page - 1) * limit)
-      .limit(limit);
+      orderBy: {
+        createdAt: sortType as 'asc' | 'desc'
+      },
+      skip: skipPage,
+      take: limit
+    });
 
     return enrollment;
-
   } 
   catch (error) {
     console.log("Enrolled user", error);

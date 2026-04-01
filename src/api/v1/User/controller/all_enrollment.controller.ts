@@ -5,8 +5,11 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Enrollment } from "../../Enrollment/model/enrollment.model.js";
 import { EnrolledUser } from "../repository/enrolled-user.repository.js";
 import { apiError } from "../../../../utils/apiError.js";
+import type { Request, Response } from "express";
+import type { QueryType } from "../../Subjects/subject-type.js";
+import { prisma } from "../../../../lib/prisma.js";
 
-export const allEnrolledController = asyncHandler(async (req, res) => {
+export const allEnrolledController = asyncHandler(async (req: Request, res: Response) => {
   /**
    * get {page, limit, sortType, sortBy, search} = req.query
    * get find by req.user._id
@@ -19,28 +22,25 @@ export const allEnrolledController = asyncHandler(async (req, res) => {
   let {
     page = 1,
     limit = 10,
-    sortType = "dec",
-    sortBy = "updatedAt",
+    sortType = "desc",
     search = "",
-  } = req.query;
+  } = req.query as QueryType;
   ((page = Number(page)), (limit = Number(limit)));
 
-  const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-  
-  if(!req.user?._id) throw new apiError(400, 'Invalid Token !!!')
+  if(!req.user?.id) throw new apiError(400, 'Invalid Token !!!')
 
   // get all enrolled user
-  const userId = req.user._id;
-  const enrollmentBatch = await EnrolledUser({userId, sortKey, page, limit})
+  const userId = req.user.id;
+  const enrollmentBatch = await EnrolledUser({userId, sortType, page, limit})
    
   // add batch link
   const enrolled_Batch = enrollmentBatch?.map((batch) => ({
     ...batch,
-    self: `/batches/${batch?.batchId?.[0]?._id}`,
+    // self: `/batches/${batch?.batchId?.[0]?.id}`,
   }));
 
   // pagination
-  const totalItems = await Enrollment.countDocuments(enrollmentBatch);
+  const totalItems = await prisma.enrollment.count({where: {studentId: userId}});
   const pagination = Pagination(
     page,
     limit,

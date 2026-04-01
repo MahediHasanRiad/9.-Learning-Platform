@@ -1,5 +1,6 @@
+import { prisma } from "../../../../lib/prisma.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { User } from "../model/user.model.js";
+import { HashPassword } from "../../Auth/service/password.js";
 import type { userType } from "../user-types.js";
 
 export const CreateUser = async ({
@@ -13,15 +14,20 @@ export const CreateUser = async ({
   bio = "",
 }: userType) => {
   try {
-    const user = await User.create({
-      name,
-      email,
-      mobile,
-      password,
-      avatar,
-      coverImage,
-      address,
-      bio,
+
+    const hashPass = await HashPassword(password)
+
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        mobile,
+        password: hashPass,
+        avatar,
+        coverImage,
+        address,
+        bio,
+      },
     });
 
     if (!user) throw new apiError(500, "server error during create user !!!");

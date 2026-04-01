@@ -1,4 +1,4 @@
-import { User } from "../model/user.model.js";
+import { prisma } from "../../../../lib/prisma.js";
 import type { userType } from "../user-types.js";
 
 interface UpdateUserType {
@@ -8,13 +8,8 @@ interface UpdateUserType {
 
 export const UpdateUser = async ({ id, updated }: UpdateUserType) => {
   try {
-    const user = await User.findByIdAndUpdate(
-      id,
-      {
-        $set: updated,
-      },
-      { new: true },
-    );
+
+    const user = await prisma.user.update({where: {id: id}, data: updated as any})
 
     return user;
   } catch (error) {

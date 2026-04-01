@@ -11,7 +11,7 @@ import { deleteTeacherController } from "../controller/delete.controller.js";
 
 const teacherRouter = Router();
 
-teacherRouter.get("/teachers", authVerify, allTeachersController);
+teacherRouter.get("/teachers", allTeachersController);
 teacherRouter.get("/teacher/demoClasses", authVerify, allDemoClassController);
 teacherRouter.post(
   "/teacher",

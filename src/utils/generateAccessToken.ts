@@ -1,12 +1,21 @@
-import { User } from "../api/v1/User/model/user.model.js";
+import { prisma } from "../lib/prisma.js";
 import { apiError } from "./apiError.js";
+import jwt from 'jsonwebtoken'
 
 async function generateToken(id: string): Promise<string> {
   try {
-    const user = await User.findById(id);
+    const user = await prisma.user.findUnique({where: {id: id}})
     if (!user) throw new apiError(404, "user not found for generate token !!!");
 
-    const accessToken = user.generateAccessToken();
+    // generate token
+    const accessToken = jwt.sign(
+      {
+        id: id
+      },
+      process.env.ACCESS_TOKEN_SECRET_KEY as string,
+      {expiresIn: process.env.ACCESS_TOKEN_EXPIRE_DATE as any}
+    )
+
     if (!accessToken)
       throw new apiError(500, "Failed to generate access token");
 

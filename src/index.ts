@@ -23,7 +23,7 @@ dotenv.config({ path: "./src/config/.env" });
 // middleware
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://learning-platform-gilt.vercel.app"
+  "https://learning-platform-gilt.vercel.app",
 ];
 
 app.use(
@@ -35,8 +35,8 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true
-  })
+    credentials: true,
+  }),
 );
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
@@ -45,30 +45,21 @@ app.use(cookieParser());
 
 // routers
 app.use("/api/v1", userRouter);
-app.use("/api/v1", authRouter);
-app.use("/api/v1", teacherRouter);
-app.use("/api/v1", subjectRouter);
-app.use("/api/v1", coachingCenterRouter);
-app.use("/api/v1", coachingStaffRouter);
-app.use("/api/v1", batchRouter);
-app.use("/api/v1", demoClassRouter);
-app.use("/api/v1", enrollmentRouter);
+// app.use("/api/v1", authRouter);
+// app.use("/api/v1", teacherRouter);
+// app.use("/api/v1", subjectRouter);
+// app.use("/api/v1", coachingCenterRouter);
+// app.use("/api/v1", coachingStaffRouter);
+// app.use("/api/v1", batchRouter);
+// app.use("/api/v1", demoClassRouter);
+// app.use("/api/v1", enrollmentRouter);
 
 app.get("/health", (_req, res) => {
   res.send("this is health route !!!");
 });
 
 // database connection
-mongoose
-  .connect(`${process.env.DB_URL}/${process.env.DB_NAME}`)
-  // .connect(`${process.env.DB_URL_LOCALHOST}/${process.env.DB_NAME}`)
-  .then(() => {
-    console.log("Database connected !");
+app.listen(3000, () => {
+  console.log("server in on...");
+});
 
-    app.listen(3000, () => {
-      console.log("server in on...");
-    });
-  })
-  .catch((e) => {
-    console.log(e);
-  });

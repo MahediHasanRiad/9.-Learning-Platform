@@ -63,10 +63,6 @@ const coachingCenterSchema = new Schema({
         enum: ['Pending', 'Approved', 'Suspended '],
         default: 'Pending'
     },
-    // role: {
-    //     type: String,
-    //     default: 'Admin'
-    // },
     
 }, {timestamps: true})
 
