@@ -1,5 +1,5 @@
+import { prisma } from "../../../../lib/prisma.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { Subject } from "../model/subject.model.js";
 
 interface subjectType {
   id: string;
@@ -7,18 +7,20 @@ interface subjectType {
   className: string;
 }
 
-export const CreateSubject = async ({id, name, className}: subjectType) => {
+export const CreateSubject = async ({ id, name, className }: subjectType) => {
   try {
-    const subject = await Subject.create({
-      name,
-      className,
-      userId: id,
+    const subject = await prisma.subject.create({
+      data: {
+        name,
+        className,
+        userId: id,
+      },
     });
 
     return subject;
   } 
   catch (error: any) {
-    console.log(error)
+    console.log(error);
     throw new apiError(400, error?.message);
   }
 };

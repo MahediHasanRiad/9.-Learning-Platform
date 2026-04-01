@@ -4,6 +4,11 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { FindSubjectById } from "../repository/find-subject-by-id.repository.js";
 import { UpdateSubject } from "../repository/update-subject.repository.js";
 
+interface sub {
+  name: string;
+  className: string;
+}
+
 export const updateSubjectController = asyncHandler(async (req: Request, res: Response) => {
   /**
    * get {name, className} = req.body
@@ -13,7 +18,7 @@ export const updateSubjectController = asyncHandler(async (req: Request, res: Re
    */
   
   const id = req.params.id as string;
-  const { name, className } = req.body;
+  const { name, className } = req.body as sub;
 
   // find subject
   await FindSubjectById(id);

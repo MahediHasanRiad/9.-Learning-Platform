@@ -5,6 +5,10 @@ import { FindSubject } from '../repository/find-subject.repository.js'
 import { CreateSubject } from '../repository/create-subject.repository.js'
 import type { Request, Response } from 'express'
 
+interface sub {
+    name: string;
+    className: string;
+}
 
 export const createSubjectController = asyncHandler(async(req:Request, res:Response) => {
     /**
@@ -15,9 +19,9 @@ export const createSubjectController = asyncHandler(async(req:Request, res:Respo
      * res
      */
 
-    const {name, className} = req.body
+    const {name, className} = req.body as sub
     
-    const id = req.user?._id?.toString() 
+    const id = req.user?.id?.toString() 
     if(!id) throw new apiError(400, 'Invalid Token !!!')
     
     if(!name) throw new apiError(400, 'subject name required !!!')

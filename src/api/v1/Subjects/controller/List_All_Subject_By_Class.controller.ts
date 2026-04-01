@@ -5,6 +5,8 @@ import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { FilterSubject } from "../repository/filter-subject.repository.js";
 import type { QueryType } from "../subject-type.js";
+import { prisma } from "../../../../lib/prisma.js";
+import { apiError } from "../../../../utils/apiError.js";
 
 export const listOfAllSubjectsByClassController = asyncHandler(
   async (req, res) => {
@@ -20,22 +22,25 @@ export const listOfAllSubjectsByClassController = asyncHandler(
     let {
       page = 1,
       limit = 10,
-      sortType = "dec",
-      sortBy = "updatedAt",
+      sortType = "desc",
       search = "",
     } = req.query as Partial<QueryType>;
 
     page = Math.max(1, Number(page || 1));
     limit = Math.max(1, Number(limit || 10));
 
-    // sort key
-    const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
-
     // filter subjects based on search
-    const filterSubjects = await FilterSubject({search, sortKey, page, limit})
+    const filterSubjects = await FilterSubject({
+      search,
+      sortType,
+      page,
+      limit,
+    });
 
     // pagination
-    const totalItems = await Subject.countDocuments(filterSubjects);
+    const totalItems = await prisma.subject.count({
+      where: { name: { contains: search ? search : "", mode: "insensitive" } },
+    });
     const pagination = Pagination(page, limit, totalItems, "subjects");
 
     // links
