@@ -26,13 +26,13 @@ const updateTeacherController = asyncHandler(async (req, res) => {
   const id = req.params.id as string;
   if(!id) throw new apiError(400, 'teacher id not found !!!')
 
-  if(!req.user?._id) throw new apiError(400, 'Invalid Token !!!')
-  const userId = req.user._id.toString();
+  if(!req.user?.id) throw new apiError(400, 'Invalid Token !!!')
+  const userId = req.user.id.toString();
 
   // find teacher
-  const findTeacher = await FindTeacherByID(id?.toString())
+  const findTeacher = await FindTeacherByID(id)
 
-  if (findTeacher.userId._id.toString() !== userId.toString()) {
+  if (findTeacher.user.id !== userId) {
     throw new apiError(403, "unauthorized");
   }
 

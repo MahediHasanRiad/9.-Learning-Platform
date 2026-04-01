@@ -1,15 +1,11 @@
-import type { Types } from "mongoose";
 import { apiError } from "../../../../utils/apiError.js"
-import { Teacher } from "../model/Teacher.model.js";
+import { prisma } from "../../../../lib/prisma.js";
 
-interface ImageType {
-  url: string;
-}
 
 interface TeacherType {
-  userId: Types.ObjectId;
+  userId: string;
   education: string;
-  certificate?: ImageType;
+  certificate?: string;
   experience?: string;
 }
 
@@ -21,12 +17,12 @@ export const CreateTeacher = async ({
 }: TeacherType) => {
   try {
 
-    const teacher = await Teacher.create({
+    const teacher = await prisma.teacher.create({data: {
       userId,
       education,
-      certificate: certificate?.url || null, 
+      certificate: certificate || null, 
       experience: experience || "0 years of experience",
-    });
+    }})
 
     return teacher
   } 

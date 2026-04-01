@@ -6,15 +6,16 @@ import type { userType } from "../../User/user-types.js";
 export interface UpdateType {
   req: Request;
   name?: string | undefined;
-  email?: string | undefined;
   mobile?: string | undefined;
-  password?: string | undefined;
-  avatar?: string | undefined;
-  coverImage?: string | undefined;
   address?: string | undefined;
   bio?: string | undefined;
   facebook?: string | undefined;
-  linkedIn?: string | undefined;}
+  linkedIn?: string | undefined;
+  email?: string | undefined;
+  password?: string | undefined;
+  avatar?: string | undefined;
+  coverImage?: string | undefined;
+}
 
 export const UpdateUserFields = async ({req, name, mobile, address, bio, linkedIn, facebook}: UpdateType) => {
 
@@ -30,14 +31,14 @@ export const UpdateUserFields = async ({req, name, mobile, address, bio, linkedI
   
     const userUpdated: Partial<userType> = {};
   
-    if (name) userUpdated.name = name;
-    if (mobile) userUpdated.mobile = mobile;
-    if (address) userUpdated.address = address;
-    if (bio) userUpdated.bio = bio;
-    if (linkedIn) userUpdated.linkedIn = linkedIn;
-    if (facebook) userUpdated.facebook = facebook;
-    if (avatar?.url) userUpdated.avatar = avatar.url;
-    if (coverImage?.url) userUpdated.coverImage = coverImage.url;
+    if (name !== undefined) userUpdated.name = name;
+    if (mobile !== undefined) userUpdated.mobile = mobile;
+    if (address !== undefined) userUpdated.address = address;
+    if (bio !== undefined) userUpdated.bio = bio;
+    if (linkedIn !== undefined) userUpdated.linkedIn = linkedIn;
+    if (facebook !== undefined) userUpdated.facebook = facebook;
+    if (avatar !== undefined) userUpdated.avatar = avatar.url;
+    if (coverImage !== undefined) userUpdated.coverImage = coverImage.url;
 
     return userUpdated
 }

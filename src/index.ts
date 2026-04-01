@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import Yaml from "yamljs";
 import swaggerUiExpress from "swagger-ui-express";
 import dotenv from "dotenv";
@@ -8,12 +7,12 @@ import cors from "cors";
 
 import { userRouter } from "./api/v1/User/router/user.router.js";
 import { teacherRouter } from "./api/v1/Teacher/router/teacher.router.js";
-import { subjectRouter } from "./api/v1/Subjects/router/subject.router.js";
-import { coachingCenterRouter } from "./api/v1/Coaching-center/router/coaching_center.router.js";
-import { coachingStaffRouter } from "./api/v1/Coaching-staff/router/coaching_staff.router.js";
-import { batchRouter } from "./api/v1/Batch/router/batch.router.js";
-import { demoClassRouter } from "./api/v1/Demo/router/demoClass.router.js";
-import { enrollmentRouter } from "./api/v1/Enrollment/router/enrollment.router.js";
+// import { subjectRouter } from "./api/v1/Subjects/router/subject.router.js";
+// import { coachingCenterRouter } from "./api/v1/Coaching-center/router/coaching_center.router.js";
+// import { coachingStaffRouter } from "./api/v1/Coaching-staff/router/coaching_staff.router.js";
+// import { batchRouter } from "./api/v1/Batch/router/batch.router.js";
+// import { demoClassRouter } from "./api/v1/Demo/router/demoClass.router.js";
+// import { enrollmentRouter } from "./api/v1/Enrollment/router/enrollment.router.js";
 import { authRouter } from "./api/v1/Auth/router/auth.router.js";
 
 const app = express();
@@ -45,8 +44,8 @@ app.use(cookieParser());
 
 // routers
 app.use("/api/v1", userRouter);
-// app.use("/api/v1", authRouter);
-// app.use("/api/v1", teacherRouter);
+app.use("/api/v1", authRouter);
+app.use("/api/v1", teacherRouter);
 // app.use("/api/v1", subjectRouter);
 // app.use("/api/v1", coachingCenterRouter);
 // app.use("/api/v1", coachingStaffRouter);

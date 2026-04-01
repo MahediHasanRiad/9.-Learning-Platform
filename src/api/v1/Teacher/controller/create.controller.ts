@@ -5,6 +5,10 @@ import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { CreateTeacher } from "../repository/create-teacher.repository.js";
 
+interface teacher {
+  education: string;
+  experience: string;
+}
 
 const createTeacherController = asyncHandler(async (req, res) => {
   /**
@@ -17,9 +21,9 @@ const createTeacherController = asyncHandler(async (req, res) => {
    * res
    */
 
-  const { education, experience = 0 } = req.body;
+  const { education, experience } = req.body as teacher;
 
-  if(!req.user?._id) throw new apiError(400, 'Invalid Token !!!')
+  if(!req.user?.id) throw new apiError(400, 'Invalid Token !!!')
 
   if ([education].some((item) => item === ""))
     throw new apiError(400, "Education data required !!!");
@@ -34,7 +38,7 @@ const createTeacherController = asyncHandler(async (req, res) => {
 
 
   // create teacher profile
-  const userId = req.user._id;
+  const userId = req.user.id as string;
   const teacher = await CreateTeacher({userId, education, certificate, experience})
 
   // link

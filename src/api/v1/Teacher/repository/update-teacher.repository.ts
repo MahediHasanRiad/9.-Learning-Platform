@@ -1,6 +1,5 @@
-import type { Types } from "mongoose";
 import { apiError } from "../../../../utils/apiError.js";
-import { Teacher } from "../model/Teacher.model.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 interface UpdateTeacher {
   education?: string | undefined;
@@ -18,12 +17,7 @@ interface Update {
 export const UpdateTeacher = async ({id, updatedTeacher}: Update) => {
   try {
     
-    const teacher = await Teacher.findByIdAndUpdate(
-      id,
-      { $set: updatedTeacher },
-      { new: true },
-    );
-
+    const teacher = await prisma.teacher.update({where: {id: id}, data: updatedTeacher as any})
     return teacher
   } 
   catch (error: any) {

@@ -1,31 +1,37 @@
-import mongoose from "mongoose";
-import { apiError } from "../../../../utils/apiError.js"
+import { apiError } from "../../../../utils/apiError.js";
 import { DemoClass } from "../../Demo/model/demoClass.model.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 interface DemoClass {
   userId: string;
-  sortKey: string;
+  sortType: string;
   page: number;
   limit: number;
 }
 
-export const GetAllDemoClass = async ({userId, sortKey, page, limit}: DemoClass) => {
+export const GetAllDemoClass = async ({
+  userId,
+  sortType,
+  page,
+  limit,
+}: DemoClass) => {
   try {
-    const demoClass = await DemoClass.find({
-        $and: [
-          { userId: userId },
-          { batchId: null },
-        ],
-      })
-        .sort(sortKey)
-        .skip((page - 1) * limit)
-        .limit(limit)
-        .lean();
 
-      return demoClass
+    const skipPage = (page - 1) * limit
+
+    const demoClass = await prisma.demoClass.findMany({
+      where: { AND: [{ userId: userId }, { batchId: "" }] },
+      orderBy: {
+        createdAt: sortType as 'desc' | 'asc'
+      },
+      skip: skipPage,
+      take: limit
+    });
+
+    return demoClass;
   } 
   catch (error: any) {
-    console.log(error)
-    throw new apiError(400, error?.message)
+    console.log(error);
+    throw new apiError(400, error?.message);
   }
-}
+};

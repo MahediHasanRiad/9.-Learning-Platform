@@ -1,39 +1,37 @@
-import { apiError } from "../../../../utils/apiError.js"
-import { Teacher } from "../model/Teacher.model.js";
+import { prisma } from "../../../../lib/prisma.js";
+import { apiError } from "../../../../utils/apiError.js";
 
 interface GetAllTeacher {
   search: string;
-  sortKey: string;
+  sortType: "desc" | "asc";
   page: number;
   limit: number;
 }
 
-export const FindTeacherOnSearch = async ({search, sortKey, page, limit}: GetAllTeacher) => {
+export const FindTeacherOnSearch = async ({
+  search,
+  sortType,
+  page,
+  limit,
+}: GetAllTeacher) => {
   try {
-    const filterSearch = await Teacher.aggregate([
-        {
-          $lookup: {
-            from: "users",
-            localField: "userId",
-            foreignField: "_id",
-            as: "userId",
-          },
-        },
-        { $unwind: "$userId" },
-        {
-          $match: {
-            "userId.name": { $regex: search, $options: "i" }, 
-          },
-        },
-      ])
-        .sort(sortKey)
-        .skip((page - 1) * limit)
-        .limit(limit);
 
-      return filterSearch;
+    const skipPage = (page - 1) * 1
+
+    const filterSearch = await prisma.teacher.findMany({
+      where: { user: { name: { contains: search, mode: "insensitive" } } },
+      include: {user: true},
+      orderBy: {
+        createdAt: sortType as "desc" | "asc",
+      },
+      skip: skipPage,
+      take: limit,
+
+    });
+    return filterSearch;
   } 
   catch (error: any) {
-    console.log(error)
-    throw new apiError(400, error?.message)
+    console.log(error);
+    throw new apiError(400, error?.message);
   }
-}
+};
