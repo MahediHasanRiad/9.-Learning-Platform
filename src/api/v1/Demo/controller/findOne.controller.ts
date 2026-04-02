@@ -23,7 +23,7 @@ export const findSingleDemoClassController = asyncHandler(async (req: Request, r
     // user: `/users/${demoClass.userId._id}`
   }
   if(demoClass.batchId){
-    link.batch = `/batches/${demoClass.batchId._id}`
+    link.batch = `/batches/${demoClass.batchId}`
   }
 
   res.status(200).json(new apiResponse(200, {demoClass, link}))

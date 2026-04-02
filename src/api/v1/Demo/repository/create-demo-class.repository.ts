@@ -1,28 +1,36 @@
-import { apiError } from "../../../../utils/apiError.js"
-import { DemoClass } from "../model/demoClass.model.js";
+import { prisma } from "../../../../lib/prisma.js";
+import { apiError } from "../../../../utils/apiError.js";
 
 interface CreateType {
   id: string;
   title: string;
   videoURL: string;
   subjectId: string;
-  batchId: string;
+  batchId?: string;
 }
 
-export const CreateDemoClass = async ({id, title, videoURL, subjectId, batchId}: CreateType) => {
+export const CreateDemoClass = async ({
+  id,
+  title,
+  videoURL,
+  subjectId,
+  batchId = '',
+}: CreateType) => {
   try {
-    const demoClass = await DemoClass.create({
+    const demo = await prisma.demoClass.create({
+      data: {
         title,
         videoURL,
         subjectId,
-        batchId,
+        batchId: batchId ? batchId : null,
         userId: id,
-      });
+      },
+    });
 
-    return demoClass
+    return demo;
   } 
   catch (error: any) {
-    console.log(error)
-    throw new apiError(400, error.message)
+    console.log(error);
+    throw new apiError(400, error.message);
   }
-}
+};

@@ -1,10 +1,9 @@
+import { prisma } from "../../../../lib/prisma.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { Teacher } from "../../Teacher/model/Teacher.model.js";
-import { User } from "../../User/model/user.model.js";
 
 export const existUser = async (id: string) => {
   try {
-    const user = await User.findById(id);
+    const user = await prisma.user.findFirst({where: {id: id}})
     if (!user) throw new apiError(400, "user not found !!!");
   } 
   catch (error: any) {
@@ -15,7 +14,7 @@ export const existUser = async (id: string) => {
 
 export const existTeacher = async (id: string) => {
   try {
-    const user = await Teacher.findById(id);
+    const user = await prisma.teacher.findFirst({where: {id: id}})
     if (!user) throw new apiError(400, "Teacher not found !!!");
   } 
   catch (error: any) {

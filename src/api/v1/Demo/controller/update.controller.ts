@@ -16,7 +16,7 @@ export const updateDemoClassController = asyncHandler(async (req: Request, res: 
    * res
    */
 
-  const { title, videoURL, subjectId, batchId, teacherId, status } = req.body as Partial<DemoClassType>;
+  const { title, videoURL, subjectId, batchId, teacherId, status = "Draft" } = req.body as Partial<DemoClassType>;
   
   const id = req.params.id as string;
   if(!id) throw new apiError(400, 'param id not found !!!')

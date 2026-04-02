@@ -50,7 +50,7 @@ app.use("/api/v1", subjectRouter);
 app.use("/api/v1", coachingCenterRouter);
 app.use("/api/v1", coachingStaffRouter);
 app.use("/api/v1", batchRouter);
-// app.use("/api/v1", demoClassRouter);
+app.use("/api/v1", demoClassRouter);
 // app.use("/api/v1", enrollmentRouter);
 
 app.get("/health", (_req, res) => {

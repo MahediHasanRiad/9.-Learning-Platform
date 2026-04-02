@@ -23,7 +23,7 @@ export const createDemoClassController = asyncHandler(async (req: Request, res: 
 
   const { title, videoURL, subjectId, batchId } = req.body as DemoClassType;
 
-  const id = req.user?._id?.toString();
+  const id = req.user?.id?.toString();
   if(!id) throw new apiError(400, 'invalid Token !!!')
 
   // input varify
