@@ -7,34 +7,33 @@ import { FindCoaching } from "../repository/find-coaching.repository.js";
 import { FilterBatchOnCoaching } from "../repository/filter-batch-by-coaching.repository.js";
 import { apiError } from "../../../../utils/apiError.js";
 import type { QueryType } from "../batch-type.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 export const batchListByCoachingIdController = asyncHandler(async (req, res) => {
   let {
     page = 1,
     limit = 10,
-    sortType = "dec",
-    sortBy = "updatedAt",
+    sortType = "desc",
     search = "",
   } = req.query as Partial<QueryType>;
 
   page = Number(page);
   limit = Number(limit);
 
-  const id = req.user?._id?.toString();
+  const id = req.user?.id?.toString();
   if(!id) throw new apiError(400, 'param id not found !!!')
 
   // find coaching
   const coaching = await FindCoaching(id)
   if(!coaching) throw new apiError(400, 'coaching center not found !!!')
 
-  const sortKey = `${sortType === "dec" ? "-" : ""}${sortBy}`;
 
   // all batch based on coaching
-  const coachingId = coaching?._id?.toString()
-  const batch = await FilterBatchOnCoaching({search, coachingId, sortKey, page, limit})
+  const coachingId = coaching?.id?.toString()
+  const batch = await FilterBatchOnCoaching({search, coachingId, sortType, page, limit})
 
   // pagination
-  const totalItems = await Batch.countDocuments(batch);
+  const totalItems = await prisma.batch.count({where: {coachingId: coachingId}});
   const pagination = Pagination(page, limit, totalItems, "allBatches");
 
   // links

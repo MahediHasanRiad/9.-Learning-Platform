@@ -10,26 +10,25 @@ import type { BatchType } from "../batch-type.js";
 
 export const createBatchController = asyncHandler(async (req, res) => {
   /**
-   * get {name, subjectIds, scheduleId, capacity, price, assignedTeachersIds, recurringRule} = req.body
+   * get {name, subjectIds, scheduleId, capacity, price, assignedTeachers, recurringRule} = req.body
    * if(empty) return error
-   * if(!subjectIds || !scheduleId ) return error
    * create
    * res
    */
 
-  const {
+  let {
     name,
-    subjects,
+    subjects = [],
     start_date,
     end_date,
     capacity,
     price,
-    assignedTeachers,
-    recurringRule,
+    assignedTeachers = [],
+    recurringRule = [],
     bio,
   } = req.body as Required<BatchType> ;
 
-  const id = req.user?._id?.toString();
+  const id = req.user?.id?.toString();
   if(!id) throw new apiError(400, 'param id not found !!!')
 
   // check input data
@@ -44,6 +43,14 @@ export const createBatchController = asyncHandler(async (req, res) => {
     recurringRule,
   });
 
+  // convert in array
+  subjects = Array.isArray(subjects) ? subjects : [subjects].filter(Boolean);
+  assignedTeachers = Array.isArray(assignedTeachers) ? assignedTeachers : [assignedTeachers].filter(Boolean);
+  recurringRule = Array.isArray(recurringRule) ? recurringRule : [recurringRule].filter(Boolean);
+
+  capacity = Number(capacity)
+  price = Number(price)
+
   // cover-image
   const coverImageLocalFilePath = LocalFilePath(req, "coverImage", true);
   const coverImage = coverImageLocalFilePath
@@ -52,7 +59,7 @@ export const createBatchController = asyncHandler(async (req, res) => {
 
   // find coaching by user
   const coaching = await FindCoaching(id);
-  const coachingId = coaching?._id?.toString()
+  const coachingId = coaching?.id?.toString()
 
   // create
   const batch = await CreateBatch({

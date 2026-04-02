@@ -10,9 +10,9 @@ import { teacherRouter } from "./api/v1/Teacher/router/teacher.router.js";
 import { subjectRouter } from "./api/v1/Subjects/router/subject.router.js";
 import { coachingCenterRouter } from "./api/v1/Coaching-center/router/coaching_center.router.js";
 import { coachingStaffRouter } from "./api/v1/Coaching-staff/router/coaching_staff.router.js";
-// import { batchRouter } from "./api/v1/Batch/router/batch.router.js";
-// import { demoClassRouter } from "./api/v1/Demo/router/demoClass.router.js";
-// import { enrollmentRouter } from "./api/v1/Enrollment/router/enrollment.router.js";
+import { batchRouter } from "./api/v1/Batch/router/batch.router.js";
+import { demoClassRouter } from "./api/v1/Demo/router/demoClass.router.js";
+import { enrollmentRouter } from "./api/v1/Enrollment/router/enrollment.router.js";
 import { authRouter } from "./api/v1/Auth/router/auth.router.js";
 
 const app = express();
@@ -49,7 +49,7 @@ app.use("/api/v1", teacherRouter);
 app.use("/api/v1", subjectRouter);
 app.use("/api/v1", coachingCenterRouter);
 app.use("/api/v1", coachingStaffRouter);
-// app.use("/api/v1", batchRouter);
+app.use("/api/v1", batchRouter);
 // app.use("/api/v1", demoClassRouter);
 // app.use("/api/v1", enrollmentRouter);
 

@@ -1,64 +1,36 @@
-import mongoose from "mongoose";
-import { apiError } from "../../../../utils/apiError.js"
-import { Batch } from "../model/batch.model.js";
+import { apiError } from "../../../../utils/apiError.js";
 import type { FilterBySearchType } from "../batch-type.js";
+import { prisma } from "../../../../lib/prisma.js";
 
-export const FilterBatchOnCoaching = async ({search = '', coachingId, sortKey, page = 1, limit = 10}: FilterBySearchType) => {
+export const FilterBatchOnCoaching = async ({
+  search = "",
+  coachingId,
+  sortType,
+  page = 1,
+  limit = 10,
+}: FilterBySearchType) => {
   try {
-     const batch = await Batch.aggregate([
-         {
-           $match: {
-             coachingId: new mongoose.Types.ObjectId(coachingId),
-           },
-         },
-         {
-           $match: {
-             name: { $regex: search, $options: "i" },
-           },
-         },
-         {
-           $lookup: {
-             from: "subjects",
-             as: "subjects",
-             localField: "subjects",
-             foreignField: "_id",
-           },
-         },
-         {
-           $lookup: {
-             from: "teachers",
-             let: { teacherIds: "$assignedTeachers" },
-             pipeline: [
-               { $match: { $expr: { $in: ["$_id", "$$teacherIds"] } } },
-               {
-                 $lookup: {
-                   from: "users",
-                   localField: "userId",
-                   foreignField: "_id",
-                   as: "user",
-                 },
-               },
-               { $unwind: "$user" },
-               {
-                 $project: {
-                   _id: 1,
-                   name: "$user.name",
-                   avatar: "$user.avatar",
-                 },
-               },
-             ],
-             as: "assignedTeachers",
-           },
-         },
-       ])
-         .sort(sortKey)
-         .skip((page - 1) * limit)
-         .limit(limit);
 
-      return batch
+    const skipPage = (page - 1) * limit
+
+    const batch = await prisma.batch.findMany({
+      where: { 
+        coachingId: coachingId,
+        name: {
+          contains: search, mode: "insensitive"
+        }
+      },
+      orderBy: {
+        createdAt: sortType as "desc" | "asc"
+      },
+      skip: skipPage,
+      take: limit
+      
+    });
+    return batch;
   } 
   catch (error: any) {
-    console.log(error)
-    throw new apiError(400, error.message)
+    console.log(error);
+    throw new apiError(400, error.message);
   }
-}
+};

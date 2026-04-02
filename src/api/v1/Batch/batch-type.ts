@@ -27,14 +27,13 @@ export interface UpdateBatchType {
 export interface QueryType {
   page: string;
   limit: string;
-  sortType: "asc" | "dec";
-  sortBy: string;
+  sortType: "asc" | "desc";
   search: string;
 }
 
 export interface FilterBySearchType {
   search?: string;
-  sortKey: string;
+  sortType: "asc" | "desc";
   page?: number;
   limit?: number;
   coachingId: string;
