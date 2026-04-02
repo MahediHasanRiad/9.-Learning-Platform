@@ -1,4 +1,3 @@
-import { Subject } from "../model/subject.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
@@ -6,7 +5,6 @@ import { apiResponse } from "../../../../utils/apiResponse.js";
 import { FilterSubject } from "../repository/filter-subject.repository.js";
 import type { QueryType } from "../subject-type.js";
 import { prisma } from "../../../../lib/prisma.js";
-import { apiError } from "../../../../utils/apiError.js";
 
 export const listOfAllSubjectsByClassController = asyncHandler(
   async (req, res) => {

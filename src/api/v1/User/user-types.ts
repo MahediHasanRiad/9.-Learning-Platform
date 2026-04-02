@@ -6,17 +6,28 @@ export interface jwtDecodedType {
 }
 
 export interface userType {
-  readonly id: string;
+  readonly id?: string;
   name: string;
   email: string;
   mobile: string;
   password: string;
-  avatar?: string | undefined | null;
+  avatar: string;
   coverImage?: string | undefined | null;
   address?: string | undefined | null;
   bio?: string | undefined | null;
   facebook?: string | undefined | null;
   linkedIn?: string | undefined | null;
+}
+
+export interface CreateUserType {
+  name: string;
+  email: string;
+  mobile: string;
+  password: string;
+  avatar: string;
+  coverImage?: string | undefined | null;
+  address?: string | undefined | null;
+  bio?: string | undefined | null;
 }
 
 

@@ -1,5 +1,4 @@
 import { apiError } from "../../../../utils/apiError.js";
-import { DemoClass } from "../../Demo/model/demoClass.model.js";
 import { prisma } from "../../../../lib/prisma.js";
 
 interface DemoClass {

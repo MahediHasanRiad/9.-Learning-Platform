@@ -2,7 +2,6 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { Teacher } from "../model/Teacher.model.js";
 import { FindTeacherOnSearch } from "../repository/find-teacher-on-search.repository.js";
 import type { Request, Response } from "express";
 import type { QueryType } from "../../Subjects/subject-type.js";

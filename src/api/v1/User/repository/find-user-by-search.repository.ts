@@ -1,5 +1,4 @@
 import { prisma } from "../../../../lib/prisma.js";
-import { User } from "../model/user.model.js";
 
 interface FindUserType {
   id: string;

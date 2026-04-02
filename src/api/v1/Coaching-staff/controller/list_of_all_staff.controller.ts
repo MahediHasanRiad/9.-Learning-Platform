@@ -1,4 +1,3 @@
-import { CoachingStaff } from "../model/CoachingStaff.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";

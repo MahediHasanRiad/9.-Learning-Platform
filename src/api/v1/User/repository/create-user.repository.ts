@@ -1,7 +1,7 @@
 import { prisma } from "../../../../lib/prisma.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { HashPassword } from "../../Auth/service/password.js";
-import type { userType } from "../user-types.js";
+import type { CreateUserType } from "../user-types.js";
 
 export const CreateUser = async ({
   name = "",
@@ -12,7 +12,7 @@ export const CreateUser = async ({
   coverImage = "",
   address = "",
   bio = "",
-}: userType) => {
+}: CreateUserType) => {
   try {
 
     const hashPass = await HashPassword(password)
@@ -24,9 +24,9 @@ export const CreateUser = async ({
         mobile,
         password: hashPass,
         avatar,
-        coverImage,
-        address,
-        bio,
+        coverImage: coverImage ? coverImage : null,
+        address: address ? address : null,
+        bio: bio ? bio : null,
       },
     });
 

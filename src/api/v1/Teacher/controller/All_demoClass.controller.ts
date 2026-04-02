@@ -2,7 +2,6 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { Pagination } from "../../../../utils/pagination.js";
 import { Links } from "../../../../utils/links.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
-import { DemoClass } from "../../Demo/model/demoClass.model.js";
 import { GetAllDemoClass } from "../repository/demo-class.repository.js";
 import type { Request, Response } from "express";
 import { apiError } from "../../../../utils/apiError.js";

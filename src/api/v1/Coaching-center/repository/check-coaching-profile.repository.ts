@@ -1,6 +1,5 @@
 import { prisma } from "../../../../lib/prisma.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { CoachingCenter } from "../model/CoachingCenter.model.js";
 
 export const CheckCoachingProfile = async (CcName: string) => {
   try {

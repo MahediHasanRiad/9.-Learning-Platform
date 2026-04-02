@@ -3,7 +3,6 @@ import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
-import { User } from "../model/user.model.js";
 import { ExistUser } from "../repository/exist-user-by-email.repository.js";
 import { CreateUser } from "../repository/create-user.repository.js";
 import type { userType } from "../user-types.js";

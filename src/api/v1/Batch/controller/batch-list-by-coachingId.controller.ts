@@ -1,4 +1,3 @@
-import { Batch } from "../model/batch.model.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { Pagination } from "../../../../utils/pagination.js";

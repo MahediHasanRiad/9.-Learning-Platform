@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import { Enrollment } from "../model/enrollment.model.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { existBatch } from "../repository/exist_Batch.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 export const createEnrollmentController = asyncHandler(async (req: Request, res: Response) => {
   /**
@@ -14,7 +14,7 @@ export const createEnrollmentController = asyncHandler(async (req: Request, res:
    * res
    */
 
-  const userId = req.user?._id;
+  const userId = req.user?.id;
   if(!userId) throw new apiError(400, 'invalid token !!!')
 
   const { batchId } = req.body;
@@ -24,7 +24,10 @@ export const createEnrollmentController = asyncHandler(async (req: Request, res:
   await existBatch(batchId);
 
   // create
-  const enrollment = await Enrollment.create({studentId: userId, batchId});
+  const enrollment = await prisma.enrollment.create({data: {
+    studentId: userId,
+    batchId
+  }})
 
   res.status(201).json(new apiResponse(201, enrollment));
 });
