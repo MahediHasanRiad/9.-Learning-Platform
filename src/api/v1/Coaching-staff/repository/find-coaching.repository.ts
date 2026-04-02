@@ -1,9 +1,9 @@
+import { prisma } from "../../../../lib/prisma.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { CoachingCenter } from "../../Coaching-center/model/CoachingCenter.model.js";
 
 export const FindCoaching = async (userId: string) => {
   try {
-    const coaching = await CoachingCenter.findOne({ userId: userId });
+    const coaching = await prisma.coachingCenter.findFirst({where: {userId: userId}})
     if (!coaching)
       throw new apiError(400, "Does not have any coaching page !!!");
 

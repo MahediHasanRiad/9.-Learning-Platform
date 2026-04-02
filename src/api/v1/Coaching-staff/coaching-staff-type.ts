@@ -1,8 +1,7 @@
 export interface QueryType {
   page: string;
   limit : string;
-  sortType: "asc" | "dec";
-  sortBy: string;
+  sortType: "asc" | "desc";
   search: string;
   role: 'Admin' | 'Manager' | 'Teacher' | 'Other';
 }
@@ -10,9 +9,9 @@ export interface QueryType {
 
 export interface FilterStaffBySearchType {
   coachingId: string;
-  role: 'Admin' | 'Manager' | 'Teacher' | 'Other';
+  role?: 'Admin' | 'Manager' | 'Teacher' | 'Other';
   search: string;
-  sortKey: string;
+  sortType: "asc" | "desc";
   page: number;
   limit: number;
 }

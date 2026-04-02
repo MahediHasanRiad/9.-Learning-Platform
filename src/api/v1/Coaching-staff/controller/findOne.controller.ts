@@ -6,6 +6,7 @@ import { FindStaff } from "../repository/find-staff.repository.js";
 
 export const findSingleCoachingStaffController = asyncHandler(
   async (req: Request, res: Response) => {
+    
     const id = req.params.id as string;
     if (!id) throw new apiError(400, "id required !!!");
 
@@ -14,7 +15,7 @@ export const findSingleCoachingStaffController = asyncHandler(
 
     // add link
     const link = {
-      teacher: `/teachers/${staff?.staffId._id}`,
+      // teacher: `/teachers/${staff?.staffId.id}`,
     };
 
     res.status(200).json(new apiResponse(200, {staff, link}));

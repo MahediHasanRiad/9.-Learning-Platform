@@ -1,63 +1,50 @@
-import mongoose, { Types } from "mongoose";
-import { apiError } from "../../../../utils/apiError.js"
-import { CoachingStaff } from "../model/CoachingStaff.model.js";
+import { apiError } from "../../../../utils/apiError.js";
 import type { FilterStaffBySearchType } from "../coaching-staff-type.js";
+import { prisma } from "../../../../lib/prisma.js";
 
 
-export const FilterStaffBySearch = async ({coachingId, role, search, sortKey = 'dec', page = 1, limit = 10}: Partial<FilterStaffBySearchType>) => {
+export const FilterStaffBySearch = async ({
+  coachingId,
+  role,
+  search,
+  sortType = "desc",
+  page = 1,
+  limit = 10,
+}: Partial<FilterStaffBySearchType>) => {
   try {
 
-    const filterByCoaching = await CoachingStaff.aggregate([
-        {
-          $match: {
-            coachingId: new Types.ObjectId(coachingId),
-            role: { $regex: role || "Teacher", $options: "i" },
-          },
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "staffId",
-            foreignField: "_id",
-            as: "staffDetails",
-          },
-        },
-        { $unwind: "$staffDetails" },
-        {
-          $match: {
-            "staffDetails.name": { $regex: search || "", $options: "i" },
-          },
-        },
-        {
-          $lookup: {
-            from: "coachingcenters",
-            localField: "coachingId",
-            foreignField: "_id",
-            as: "coachingInfo",
-          },
-        },
-        { $unwind: "$coachingInfo" },
-        {
-          $project: {
-            _id: 1,
-            role: 1,
-            userId: "$staffDetails._id",
-            name: "$staffDetails.name",
-            avatar: "$staffDetails.avatar",
-            coachingId: "$coachingInfo._id",
-            CcName: "$coachingInfo.CcName",
-          },
-        },
-      ])
-        .sort(sortKey)
-        .skip((page - 1) * limit)
-        .limit(limit);
+    const skipPage = (page - 1) * limit
 
-    return filterByCoaching
-  } 
-  catch (error: any) {
-    console.log(error)
-    if(error instanceof Error) throw Error
-    new apiError(500, error.message)
+    const filterByCoaching = await prisma.coachingStaff.findMany({
+      where: { 
+        coachingId: coachingId!,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            avatar: true
+          }
+        },
+        coaching: {
+          select: {
+            id: true,
+            CcName: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: sortType as "desc" | "asc"
+      },
+      skip: skipPage,
+      take: limit
+    });
+
+    return filterByCoaching;
+  } catch (error: any) {
+    console.log(error);
+    if (error instanceof Error) throw Error;
+    new apiError(500, error.message);
   }
-}
+};

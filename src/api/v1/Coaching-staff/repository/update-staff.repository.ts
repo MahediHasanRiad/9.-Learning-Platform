@@ -1,9 +1,9 @@
+import { prisma } from "../../../../lib/prisma.js";
 import { apiError } from "../../../../utils/apiError.js";
-import { CoachingStaff } from "../model/CoachingStaff.model.js";
 
 interface UpdateStaffType {
   staffId: string;
-  role: 'Admin' | 'Manager' | 'Teacher' | 'Other'
+  role?: 'Admin' | 'Manager' | 'Teacher' | 'Other'
 }
 
 export const UpdateStaff = async ({ staffId, role }: UpdateStaffType) => {
@@ -11,16 +11,12 @@ export const UpdateStaff = async ({ staffId, role }: UpdateStaffType) => {
     const updated: Partial<UpdateStaffType> = {};
     if (role) updated.role = role;
 
-    const staff = await CoachingStaff.findByIdAndUpdate(
-      staffId,
-      { $set: updated },
-      { new: true },
-    );
+    const staff = await prisma.coachingStaff.update({where: {id: staffId}, data: updated})
 
     return staff
   } 
   catch (error: any) {
     console.log(error)
-    throw new apiError(400, error.message);
+    throw new apiError(400, error?.message);
   }
 };

@@ -24,7 +24,7 @@ export const createStaffController = asyncHandler(async (req: Request, res: Resp
 
   const {role = "Teacher", staffId } = req.body as CoachingStaffType;
 
-  const id = req.user?._id?.toString();
+  const id = req.user?.id?.toString();
   if(!id) throw new apiError(400, 'invalid token !!!')
   
   // check input value
@@ -35,11 +35,11 @@ export const createStaffController = asyncHandler(async (req: Request, res: Resp
   if(!user) throw new apiError(404, 'user not found !!!')
 
   // check coaching already exist or not
-  const userId = user._id.toString();
+  const userId = user.id;
   const coaching = await FindCoaching(userId)
 
   // create
-  const coachingId = coaching._id.toString()
+  const coachingId = coaching.id.toString()
   const coachingStaff = await CreateStaff({staffId, coachingId, role})
 
   res

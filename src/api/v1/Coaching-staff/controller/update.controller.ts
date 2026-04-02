@@ -14,7 +14,8 @@ export const updateCoachingStaffController = asyncHandler(async (req: Request, r
    * res
    */
 
-  const {role} = req.body 
+  const {role} = req.body
+
   const id = req.params.id as string;
   if(!id) throw new apiError(400, 'Param id not found !!!') 
 
@@ -23,7 +24,7 @@ export const updateCoachingStaffController = asyncHandler(async (req: Request, r
   if(!existStaff) throw new apiError(404, 'Staff not found !!!')
 
   // update
-  const staffId = existStaff?._id?.toString()
+  const staffId = existStaff?.id
   const staff = await UpdateStaff({staffId, role})
 
   res.status(200).json(new apiResponse(200, staff))
