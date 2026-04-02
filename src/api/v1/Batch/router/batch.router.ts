@@ -6,6 +6,7 @@ import { batchListByCoachingIdController } from "../controller/batch-list-by-coa
 import { findSingleBatchController } from "../controller/findOne.controller.js";
 import { updateBatchController } from "../controller/updateBatch.controller.js";
 import { deleteBatchController } from "../controller/delete.controller.js";
+import { getAllBatchesController } from "../controller/get-all-batches.controller.js";
 
 
 const batchRouter = Router();
@@ -16,6 +17,7 @@ batchRouter.post(
   upload.fields([{ name: "coverImage", maxCount: 1 }]),
   createBatchController,
 );
+batchRouter.get('/all-batches', authVerify, getAllBatchesController);
 batchRouter.get('/all-batch-in-coaching/:id', authVerify, batchListByCoachingIdController);
 
 batchRouter
