@@ -1,0 +1,1800 @@
+import type * as runtime from "@prisma/client/runtime/client";
+import type * as Prisma from "../internal/prismaNamespace.js";
+/**
+ * Model CoachingCenter
+ *
+ */
+export type CoachingCenterModel = runtime.Types.Result.DefaultSelection<Prisma.$CoachingCenterPayload>;
+export type AggregateCoachingCenter = {
+    _count: CoachingCenterCountAggregateOutputType | null;
+    _min: CoachingCenterMinAggregateOutputType | null;
+    _max: CoachingCenterMaxAggregateOutputType | null;
+};
+export type CoachingCenterMinAggregateOutputType = {
+    id: string | null;
+    CcName: string | null;
+    email: string | null;
+    address: string | null;
+    mobile: string | null;
+    avatar: string | null;
+    coverImage: string | null;
+    website: string | null;
+    officeTime: string | null;
+    bio: string | null;
+    facebook: string | null;
+    linkedIn: string | null;
+    userId: string | null;
+    status: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type CoachingCenterMaxAggregateOutputType = {
+    id: string | null;
+    CcName: string | null;
+    email: string | null;
+    address: string | null;
+    mobile: string | null;
+    avatar: string | null;
+    coverImage: string | null;
+    website: string | null;
+    officeTime: string | null;
+    bio: string | null;
+    facebook: string | null;
+    linkedIn: string | null;
+    userId: string | null;
+    status: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+};
+export type CoachingCenterCountAggregateOutputType = {
+    id: number;
+    CcName: number;
+    email: number;
+    address: number;
+    mobile: number;
+    avatar: number;
+    coverImage: number;
+    website: number;
+    officeTime: number;
+    bio: number;
+    facebook: number;
+    linkedIn: number;
+    userId: number;
+    status: number;
+    createdAt: number;
+    updatedAt: number;
+    _all: number;
+};
+export type CoachingCenterMinAggregateInputType = {
+    id?: true;
+    CcName?: true;
+    email?: true;
+    address?: true;
+    mobile?: true;
+    avatar?: true;
+    coverImage?: true;
+    website?: true;
+    officeTime?: true;
+    bio?: true;
+    facebook?: true;
+    linkedIn?: true;
+    userId?: true;
+    status?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type CoachingCenterMaxAggregateInputType = {
+    id?: true;
+    CcName?: true;
+    email?: true;
+    address?: true;
+    mobile?: true;
+    avatar?: true;
+    coverImage?: true;
+    website?: true;
+    officeTime?: true;
+    bio?: true;
+    facebook?: true;
+    linkedIn?: true;
+    userId?: true;
+    status?: true;
+    createdAt?: true;
+    updatedAt?: true;
+};
+export type CoachingCenterCountAggregateInputType = {
+    id?: true;
+    CcName?: true;
+    email?: true;
+    address?: true;
+    mobile?: true;
+    avatar?: true;
+    coverImage?: true;
+    website?: true;
+    officeTime?: true;
+    bio?: true;
+    facebook?: true;
+    linkedIn?: true;
+    userId?: true;
+    status?: true;
+    createdAt?: true;
+    updatedAt?: true;
+    _all?: true;
+};
+export type CoachingCenterAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which CoachingCenter to aggregate.
+     */
+    where?: Prisma.CoachingCenterWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of CoachingCenters to fetch.
+     */
+    orderBy?: Prisma.CoachingCenterOrderByWithRelationInput | Prisma.CoachingCenterOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: Prisma.CoachingCenterWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` CoachingCenters from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` CoachingCenters.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned CoachingCenters
+    **/
+    _count?: true | CoachingCenterCountAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: CoachingCenterMinAggregateInputType;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: CoachingCenterMaxAggregateInputType;
+};
+export type GetCoachingCenterAggregateType<T extends CoachingCenterAggregateArgs> = {
+    [P in keyof T & keyof AggregateCoachingCenter]: P extends '_count' | 'count' ? T[P] extends true ? number : Prisma.GetScalarType<T[P], AggregateCoachingCenter[P]> : Prisma.GetScalarType<T[P], AggregateCoachingCenter[P]>;
+};
+export type CoachingCenterGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.CoachingCenterWhereInput;
+    orderBy?: Prisma.CoachingCenterOrderByWithAggregationInput | Prisma.CoachingCenterOrderByWithAggregationInput[];
+    by: Prisma.CoachingCenterScalarFieldEnum[] | Prisma.CoachingCenterScalarFieldEnum;
+    having?: Prisma.CoachingCenterScalarWhereWithAggregatesInput;
+    take?: number;
+    skip?: number;
+    _count?: CoachingCenterCountAggregateInputType | true;
+    _min?: CoachingCenterMinAggregateInputType;
+    _max?: CoachingCenterMaxAggregateInputType;
+};
+export type CoachingCenterGroupByOutputType = {
+    id: string;
+    CcName: string;
+    email: string | null;
+    address: string | null;
+    mobile: string | null;
+    avatar: string | null;
+    coverImage: string | null;
+    website: string | null;
+    officeTime: string | null;
+    bio: string | null;
+    facebook: string | null;
+    linkedIn: string | null;
+    userId: string;
+    status: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    _count: CoachingCenterCountAggregateOutputType | null;
+    _min: CoachingCenterMinAggregateOutputType | null;
+    _max: CoachingCenterMaxAggregateOutputType | null;
+};
+export type GetCoachingCenterGroupByPayload<T extends CoachingCenterGroupByArgs> = Prisma.PrismaPromise<Array<Prisma.PickEnumerable<CoachingCenterGroupByOutputType, T['by']> & {
+    [P in ((keyof T) & (keyof CoachingCenterGroupByOutputType))]: P extends '_count' ? T[P] extends boolean ? number : Prisma.GetScalarType<T[P], CoachingCenterGroupByOutputType[P]> : Prisma.GetScalarType<T[P], CoachingCenterGroupByOutputType[P]>;
+}>>;
+export type CoachingCenterWhereInput = {
+    AND?: Prisma.CoachingCenterWhereInput | Prisma.CoachingCenterWhereInput[];
+    OR?: Prisma.CoachingCenterWhereInput[];
+    NOT?: Prisma.CoachingCenterWhereInput | Prisma.CoachingCenterWhereInput[];
+    id?: Prisma.StringFilter<"CoachingCenter"> | string;
+    CcName?: Prisma.StringFilter<"CoachingCenter"> | string;
+    email?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    address?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    mobile?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    avatar?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    coverImage?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    website?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    officeTime?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    bio?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    facebook?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    linkedIn?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    userId?: Prisma.StringFilter<"CoachingCenter"> | string;
+    status?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"CoachingCenter"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"CoachingCenter"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    coachingStaffs?: Prisma.CoachingStaffListRelationFilter;
+    batches?: Prisma.BatchListRelationFilter;
+};
+export type CoachingCenterOrderByWithRelationInput = {
+    id?: Prisma.SortOrder;
+    CcName?: Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    address?: Prisma.SortOrderInput | Prisma.SortOrder;
+    mobile?: Prisma.SortOrderInput | Prisma.SortOrder;
+    avatar?: Prisma.SortOrderInput | Prisma.SortOrder;
+    coverImage?: Prisma.SortOrderInput | Prisma.SortOrder;
+    website?: Prisma.SortOrderInput | Prisma.SortOrder;
+    officeTime?: Prisma.SortOrderInput | Prisma.SortOrder;
+    bio?: Prisma.SortOrderInput | Prisma.SortOrder;
+    facebook?: Prisma.SortOrderInput | Prisma.SortOrder;
+    linkedIn?: Prisma.SortOrderInput | Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    status?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    user?: Prisma.UserOrderByWithRelationInput;
+    coachingStaffs?: Prisma.CoachingStaffOrderByRelationAggregateInput;
+    batches?: Prisma.BatchOrderByRelationAggregateInput;
+};
+export type CoachingCenterWhereUniqueInput = Prisma.AtLeast<{
+    id?: string;
+    userId?: string;
+    AND?: Prisma.CoachingCenterWhereInput | Prisma.CoachingCenterWhereInput[];
+    OR?: Prisma.CoachingCenterWhereInput[];
+    NOT?: Prisma.CoachingCenterWhereInput | Prisma.CoachingCenterWhereInput[];
+    CcName?: Prisma.StringFilter<"CoachingCenter"> | string;
+    email?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    address?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    mobile?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    avatar?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    coverImage?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    website?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    officeTime?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    bio?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    facebook?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    linkedIn?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    status?: Prisma.StringNullableFilter<"CoachingCenter"> | string | null;
+    createdAt?: Prisma.DateTimeFilter<"CoachingCenter"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"CoachingCenter"> | Date | string;
+    user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
+    coachingStaffs?: Prisma.CoachingStaffListRelationFilter;
+    batches?: Prisma.BatchListRelationFilter;
+}, "id" | "userId">;
+export type CoachingCenterOrderByWithAggregationInput = {
+    id?: Prisma.SortOrder;
+    CcName?: Prisma.SortOrder;
+    email?: Prisma.SortOrderInput | Prisma.SortOrder;
+    address?: Prisma.SortOrderInput | Prisma.SortOrder;
+    mobile?: Prisma.SortOrderInput | Prisma.SortOrder;
+    avatar?: Prisma.SortOrderInput | Prisma.SortOrder;
+    coverImage?: Prisma.SortOrderInput | Prisma.SortOrder;
+    website?: Prisma.SortOrderInput | Prisma.SortOrder;
+    officeTime?: Prisma.SortOrderInput | Prisma.SortOrder;
+    bio?: Prisma.SortOrderInput | Prisma.SortOrder;
+    facebook?: Prisma.SortOrderInput | Prisma.SortOrder;
+    linkedIn?: Prisma.SortOrderInput | Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    status?: Prisma.SortOrderInput | Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    _count?: Prisma.CoachingCenterCountOrderByAggregateInput;
+    _max?: Prisma.CoachingCenterMaxOrderByAggregateInput;
+    _min?: Prisma.CoachingCenterMinOrderByAggregateInput;
+};
+export type CoachingCenterScalarWhereWithAggregatesInput = {
+    AND?: Prisma.CoachingCenterScalarWhereWithAggregatesInput | Prisma.CoachingCenterScalarWhereWithAggregatesInput[];
+    OR?: Prisma.CoachingCenterScalarWhereWithAggregatesInput[];
+    NOT?: Prisma.CoachingCenterScalarWhereWithAggregatesInput | Prisma.CoachingCenterScalarWhereWithAggregatesInput[];
+    id?: Prisma.StringWithAggregatesFilter<"CoachingCenter"> | string;
+    CcName?: Prisma.StringWithAggregatesFilter<"CoachingCenter"> | string;
+    email?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    address?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    mobile?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    avatar?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    coverImage?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    website?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    officeTime?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    bio?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    facebook?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    linkedIn?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    userId?: Prisma.StringWithAggregatesFilter<"CoachingCenter"> | string;
+    status?: Prisma.StringNullableWithAggregatesFilter<"CoachingCenter"> | string | null;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"CoachingCenter"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CoachingCenter"> | Date | string;
+};
+export type CoachingCenterCreateInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutCoachingCenterInput;
+    coachingStaffs?: Prisma.CoachingStaffCreateNestedManyWithoutCoachingInput;
+    batches?: Prisma.BatchCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterUncheckedCreateInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    userId: string;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    coachingStaffs?: Prisma.CoachingStaffUncheckedCreateNestedManyWithoutCoachingInput;
+    batches?: Prisma.BatchUncheckedCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutCoachingCenterNestedInput;
+    coachingStaffs?: Prisma.CoachingStaffUpdateManyWithoutCoachingNestedInput;
+    batches?: Prisma.BatchUpdateManyWithoutCoachingNestedInput;
+};
+export type CoachingCenterUncheckedUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    coachingStaffs?: Prisma.CoachingStaffUncheckedUpdateManyWithoutCoachingNestedInput;
+    batches?: Prisma.BatchUncheckedUpdateManyWithoutCoachingNestedInput;
+};
+export type CoachingCenterCreateManyInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    userId: string;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type CoachingCenterUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type CoachingCenterUncheckedUpdateManyInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type CoachingCenterNullableScalarRelationFilter = {
+    is?: Prisma.CoachingCenterWhereInput | null;
+    isNot?: Prisma.CoachingCenterWhereInput | null;
+};
+export type CoachingCenterCountOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    CcName?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    address?: Prisma.SortOrder;
+    mobile?: Prisma.SortOrder;
+    avatar?: Prisma.SortOrder;
+    coverImage?: Prisma.SortOrder;
+    website?: Prisma.SortOrder;
+    officeTime?: Prisma.SortOrder;
+    bio?: Prisma.SortOrder;
+    facebook?: Prisma.SortOrder;
+    linkedIn?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type CoachingCenterMaxOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    CcName?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    address?: Prisma.SortOrder;
+    mobile?: Prisma.SortOrder;
+    avatar?: Prisma.SortOrder;
+    coverImage?: Prisma.SortOrder;
+    website?: Prisma.SortOrder;
+    officeTime?: Prisma.SortOrder;
+    bio?: Prisma.SortOrder;
+    facebook?: Prisma.SortOrder;
+    linkedIn?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type CoachingCenterMinOrderByAggregateInput = {
+    id?: Prisma.SortOrder;
+    CcName?: Prisma.SortOrder;
+    email?: Prisma.SortOrder;
+    address?: Prisma.SortOrder;
+    mobile?: Prisma.SortOrder;
+    avatar?: Prisma.SortOrder;
+    coverImage?: Prisma.SortOrder;
+    website?: Prisma.SortOrder;
+    officeTime?: Prisma.SortOrder;
+    bio?: Prisma.SortOrder;
+    facebook?: Prisma.SortOrder;
+    linkedIn?: Prisma.SortOrder;
+    userId?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+};
+export type CoachingCenterScalarRelationFilter = {
+    is?: Prisma.CoachingCenterWhereInput;
+    isNot?: Prisma.CoachingCenterWhereInput;
+};
+export type CoachingCenterCreateNestedOneWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutUserInput, Prisma.CoachingCenterUncheckedCreateWithoutUserInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutUserInput;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+};
+export type CoachingCenterUncheckedCreateNestedOneWithoutUserInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutUserInput, Prisma.CoachingCenterUncheckedCreateWithoutUserInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutUserInput;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+};
+export type CoachingCenterUpdateOneWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutUserInput, Prisma.CoachingCenterUncheckedCreateWithoutUserInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutUserInput;
+    upsert?: Prisma.CoachingCenterUpsertWithoutUserInput;
+    disconnect?: Prisma.CoachingCenterWhereInput | boolean;
+    delete?: Prisma.CoachingCenterWhereInput | boolean;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.CoachingCenterUpdateToOneWithWhereWithoutUserInput, Prisma.CoachingCenterUpdateWithoutUserInput>, Prisma.CoachingCenterUncheckedUpdateWithoutUserInput>;
+};
+export type CoachingCenterUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutUserInput, Prisma.CoachingCenterUncheckedCreateWithoutUserInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutUserInput;
+    upsert?: Prisma.CoachingCenterUpsertWithoutUserInput;
+    disconnect?: Prisma.CoachingCenterWhereInput | boolean;
+    delete?: Prisma.CoachingCenterWhereInput | boolean;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.CoachingCenterUpdateToOneWithWhereWithoutUserInput, Prisma.CoachingCenterUpdateWithoutUserInput>, Prisma.CoachingCenterUncheckedUpdateWithoutUserInput>;
+};
+export type CoachingCenterCreateNestedOneWithoutCoachingStaffsInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutCoachingStaffsInput, Prisma.CoachingCenterUncheckedCreateWithoutCoachingStaffsInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutCoachingStaffsInput;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+};
+export type CoachingCenterUpdateOneRequiredWithoutCoachingStaffsNestedInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutCoachingStaffsInput, Prisma.CoachingCenterUncheckedCreateWithoutCoachingStaffsInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutCoachingStaffsInput;
+    upsert?: Prisma.CoachingCenterUpsertWithoutCoachingStaffsInput;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.CoachingCenterUpdateToOneWithWhereWithoutCoachingStaffsInput, Prisma.CoachingCenterUpdateWithoutCoachingStaffsInput>, Prisma.CoachingCenterUncheckedUpdateWithoutCoachingStaffsInput>;
+};
+export type CoachingCenterCreateNestedOneWithoutBatchesInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutBatchesInput, Prisma.CoachingCenterUncheckedCreateWithoutBatchesInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutBatchesInput;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+};
+export type CoachingCenterUpdateOneRequiredWithoutBatchesNestedInput = {
+    create?: Prisma.XOR<Prisma.CoachingCenterCreateWithoutBatchesInput, Prisma.CoachingCenterUncheckedCreateWithoutBatchesInput>;
+    connectOrCreate?: Prisma.CoachingCenterCreateOrConnectWithoutBatchesInput;
+    upsert?: Prisma.CoachingCenterUpsertWithoutBatchesInput;
+    connect?: Prisma.CoachingCenterWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.CoachingCenterUpdateToOneWithWhereWithoutBatchesInput, Prisma.CoachingCenterUpdateWithoutBatchesInput>, Prisma.CoachingCenterUncheckedUpdateWithoutBatchesInput>;
+};
+export type CoachingCenterCreateWithoutUserInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    coachingStaffs?: Prisma.CoachingStaffCreateNestedManyWithoutCoachingInput;
+    batches?: Prisma.BatchCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterUncheckedCreateWithoutUserInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    coachingStaffs?: Prisma.CoachingStaffUncheckedCreateNestedManyWithoutCoachingInput;
+    batches?: Prisma.BatchUncheckedCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterCreateOrConnectWithoutUserInput = {
+    where: Prisma.CoachingCenterWhereUniqueInput;
+    create: Prisma.XOR<Prisma.CoachingCenterCreateWithoutUserInput, Prisma.CoachingCenterUncheckedCreateWithoutUserInput>;
+};
+export type CoachingCenterUpsertWithoutUserInput = {
+    update: Prisma.XOR<Prisma.CoachingCenterUpdateWithoutUserInput, Prisma.CoachingCenterUncheckedUpdateWithoutUserInput>;
+    create: Prisma.XOR<Prisma.CoachingCenterCreateWithoutUserInput, Prisma.CoachingCenterUncheckedCreateWithoutUserInput>;
+    where?: Prisma.CoachingCenterWhereInput;
+};
+export type CoachingCenterUpdateToOneWithWhereWithoutUserInput = {
+    where?: Prisma.CoachingCenterWhereInput;
+    data: Prisma.XOR<Prisma.CoachingCenterUpdateWithoutUserInput, Prisma.CoachingCenterUncheckedUpdateWithoutUserInput>;
+};
+export type CoachingCenterUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    coachingStaffs?: Prisma.CoachingStaffUpdateManyWithoutCoachingNestedInput;
+    batches?: Prisma.BatchUpdateManyWithoutCoachingNestedInput;
+};
+export type CoachingCenterUncheckedUpdateWithoutUserInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    coachingStaffs?: Prisma.CoachingStaffUncheckedUpdateManyWithoutCoachingNestedInput;
+    batches?: Prisma.BatchUncheckedUpdateManyWithoutCoachingNestedInput;
+};
+export type CoachingCenterCreateWithoutCoachingStaffsInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutCoachingCenterInput;
+    batches?: Prisma.BatchCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterUncheckedCreateWithoutCoachingStaffsInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    userId: string;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    batches?: Prisma.BatchUncheckedCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterCreateOrConnectWithoutCoachingStaffsInput = {
+    where: Prisma.CoachingCenterWhereUniqueInput;
+    create: Prisma.XOR<Prisma.CoachingCenterCreateWithoutCoachingStaffsInput, Prisma.CoachingCenterUncheckedCreateWithoutCoachingStaffsInput>;
+};
+export type CoachingCenterUpsertWithoutCoachingStaffsInput = {
+    update: Prisma.XOR<Prisma.CoachingCenterUpdateWithoutCoachingStaffsInput, Prisma.CoachingCenterUncheckedUpdateWithoutCoachingStaffsInput>;
+    create: Prisma.XOR<Prisma.CoachingCenterCreateWithoutCoachingStaffsInput, Prisma.CoachingCenterUncheckedCreateWithoutCoachingStaffsInput>;
+    where?: Prisma.CoachingCenterWhereInput;
+};
+export type CoachingCenterUpdateToOneWithWhereWithoutCoachingStaffsInput = {
+    where?: Prisma.CoachingCenterWhereInput;
+    data: Prisma.XOR<Prisma.CoachingCenterUpdateWithoutCoachingStaffsInput, Prisma.CoachingCenterUncheckedUpdateWithoutCoachingStaffsInput>;
+};
+export type CoachingCenterUpdateWithoutCoachingStaffsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutCoachingCenterNestedInput;
+    batches?: Prisma.BatchUpdateManyWithoutCoachingNestedInput;
+};
+export type CoachingCenterUncheckedUpdateWithoutCoachingStaffsInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    batches?: Prisma.BatchUncheckedUpdateManyWithoutCoachingNestedInput;
+};
+export type CoachingCenterCreateWithoutBatchesInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    user: Prisma.UserCreateNestedOneWithoutCoachingCenterInput;
+    coachingStaffs?: Prisma.CoachingStaffCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterUncheckedCreateWithoutBatchesInput = {
+    id?: string;
+    CcName: string;
+    email?: string | null;
+    address?: string | null;
+    mobile?: string | null;
+    avatar?: string | null;
+    coverImage?: string | null;
+    website?: string | null;
+    officeTime?: string | null;
+    bio?: string | null;
+    facebook?: string | null;
+    linkedIn?: string | null;
+    userId: string;
+    status?: string | null;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    coachingStaffs?: Prisma.CoachingStaffUncheckedCreateNestedManyWithoutCoachingInput;
+};
+export type CoachingCenterCreateOrConnectWithoutBatchesInput = {
+    where: Prisma.CoachingCenterWhereUniqueInput;
+    create: Prisma.XOR<Prisma.CoachingCenterCreateWithoutBatchesInput, Prisma.CoachingCenterUncheckedCreateWithoutBatchesInput>;
+};
+export type CoachingCenterUpsertWithoutBatchesInput = {
+    update: Prisma.XOR<Prisma.CoachingCenterUpdateWithoutBatchesInput, Prisma.CoachingCenterUncheckedUpdateWithoutBatchesInput>;
+    create: Prisma.XOR<Prisma.CoachingCenterCreateWithoutBatchesInput, Prisma.CoachingCenterUncheckedCreateWithoutBatchesInput>;
+    where?: Prisma.CoachingCenterWhereInput;
+};
+export type CoachingCenterUpdateToOneWithWhereWithoutBatchesInput = {
+    where?: Prisma.CoachingCenterWhereInput;
+    data: Prisma.XOR<Prisma.CoachingCenterUpdateWithoutBatchesInput, Prisma.CoachingCenterUncheckedUpdateWithoutBatchesInput>;
+};
+export type CoachingCenterUpdateWithoutBatchesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    user?: Prisma.UserUpdateOneRequiredWithoutCoachingCenterNestedInput;
+    coachingStaffs?: Prisma.CoachingStaffUpdateManyWithoutCoachingNestedInput;
+};
+export type CoachingCenterUncheckedUpdateWithoutBatchesInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    CcName?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    mobile?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    officeTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    facebook?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    linkedIn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    userId?: Prisma.StringFieldUpdateOperationsInput | string;
+    status?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    coachingStaffs?: Prisma.CoachingStaffUncheckedUpdateManyWithoutCoachingNestedInput;
+};
+/**
+ * Count Type CoachingCenterCountOutputType
+ */
+export type CoachingCenterCountOutputType = {
+    coachingStaffs: number;
+    batches: number;
+};
+export type CoachingCenterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    coachingStaffs?: boolean | CoachingCenterCountOutputTypeCountCoachingStaffsArgs;
+    batches?: boolean | CoachingCenterCountOutputTypeCountBatchesArgs;
+};
+/**
+ * CoachingCenterCountOutputType without action
+ */
+export type CoachingCenterCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenterCountOutputType
+     */
+    select?: Prisma.CoachingCenterCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * CoachingCenterCountOutputType without action
+ */
+export type CoachingCenterCountOutputTypeCountCoachingStaffsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.CoachingStaffWhereInput;
+};
+/**
+ * CoachingCenterCountOutputType without action
+ */
+export type CoachingCenterCountOutputTypeCountBatchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.BatchWhereInput;
+};
+export type CoachingCenterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    CcName?: boolean;
+    email?: boolean;
+    address?: boolean;
+    mobile?: boolean;
+    avatar?: boolean;
+    coverImage?: boolean;
+    website?: boolean;
+    officeTime?: boolean;
+    bio?: boolean;
+    facebook?: boolean;
+    linkedIn?: boolean;
+    userId?: boolean;
+    status?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    coachingStaffs?: boolean | Prisma.CoachingCenter$coachingStaffsArgs<ExtArgs>;
+    batches?: boolean | Prisma.CoachingCenter$batchesArgs<ExtArgs>;
+    _count?: boolean | Prisma.CoachingCenterCountOutputTypeDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["coachingCenter"]>;
+export type CoachingCenterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    CcName?: boolean;
+    email?: boolean;
+    address?: boolean;
+    mobile?: boolean;
+    avatar?: boolean;
+    coverImage?: boolean;
+    website?: boolean;
+    officeTime?: boolean;
+    bio?: boolean;
+    facebook?: boolean;
+    linkedIn?: boolean;
+    userId?: boolean;
+    status?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["coachingCenter"]>;
+export type CoachingCenterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+    id?: boolean;
+    CcName?: boolean;
+    email?: boolean;
+    address?: boolean;
+    mobile?: boolean;
+    avatar?: boolean;
+    coverImage?: boolean;
+    website?: boolean;
+    officeTime?: boolean;
+    bio?: boolean;
+    facebook?: boolean;
+    linkedIn?: boolean;
+    userId?: boolean;
+    status?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+}, ExtArgs["result"]["coachingCenter"]>;
+export type CoachingCenterSelectScalar = {
+    id?: boolean;
+    CcName?: boolean;
+    email?: boolean;
+    address?: boolean;
+    mobile?: boolean;
+    avatar?: boolean;
+    coverImage?: boolean;
+    website?: boolean;
+    officeTime?: boolean;
+    bio?: boolean;
+    facebook?: boolean;
+    linkedIn?: boolean;
+    userId?: boolean;
+    status?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+};
+export type CoachingCenterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "CcName" | "email" | "address" | "mobile" | "avatar" | "coverImage" | "website" | "officeTime" | "bio" | "facebook" | "linkedIn" | "userId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["coachingCenter"]>;
+export type CoachingCenterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+    coachingStaffs?: boolean | Prisma.CoachingCenter$coachingStaffsArgs<ExtArgs>;
+    batches?: boolean | Prisma.CoachingCenter$batchesArgs<ExtArgs>;
+    _count?: boolean | Prisma.CoachingCenterCountOutputTypeDefaultArgs<ExtArgs>;
+};
+export type CoachingCenterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type CoachingCenterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
+};
+export type $CoachingCenterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    name: "CoachingCenter";
+    objects: {
+        user: Prisma.$UserPayload<ExtArgs>;
+        coachingStaffs: Prisma.$CoachingStaffPayload<ExtArgs>[];
+        batches: Prisma.$BatchPayload<ExtArgs>[];
+    };
+    scalars: runtime.Types.Extensions.GetPayloadResult<{
+        id: string;
+        CcName: string;
+        email: string | null;
+        address: string | null;
+        mobile: string | null;
+        avatar: string | null;
+        coverImage: string | null;
+        website: string | null;
+        officeTime: string | null;
+        bio: string | null;
+        facebook: string | null;
+        linkedIn: string | null;
+        userId: string;
+        status: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+    }, ExtArgs["result"]["coachingCenter"]>;
+    composites: {};
+};
+export type CoachingCenterGetPayload<S extends boolean | null | undefined | CoachingCenterDefaultArgs> = runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload, S>;
+export type CoachingCenterCountArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = Omit<CoachingCenterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+    select?: CoachingCenterCountAggregateInputType | true;
+};
+export interface CoachingCenterDelegate<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: {
+        types: Prisma.TypeMap<ExtArgs>['model']['CoachingCenter'];
+        meta: {
+            name: 'CoachingCenter';
+        };
+    };
+    /**
+     * Find zero or one CoachingCenter that matches the filter.
+     * @param {CoachingCenterFindUniqueArgs} args - Arguments to find a CoachingCenter
+     * @example
+     * // Get one CoachingCenter
+     * const coachingCenter = await prisma.coachingCenter.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CoachingCenterFindUniqueArgs>(args: Prisma.SelectSubset<T, CoachingCenterFindUniqueArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find one CoachingCenter that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CoachingCenterFindUniqueOrThrowArgs} args - Arguments to find a CoachingCenter
+     * @example
+     * // Get one CoachingCenter
+     * const coachingCenter = await prisma.coachingCenter.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CoachingCenterFindUniqueOrThrowArgs>(args: Prisma.SelectSubset<T, CoachingCenterFindUniqueOrThrowArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first CoachingCenter that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CoachingCenterFindFirstArgs} args - Arguments to find a CoachingCenter
+     * @example
+     * // Get one CoachingCenter
+     * const coachingCenter = await prisma.coachingCenter.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CoachingCenterFindFirstArgs>(args?: Prisma.SelectSubset<T, CoachingCenterFindFirstArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find the first CoachingCenter that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CoachingCenterFindFirstOrThrowArgs} args - Arguments to find a CoachingCenter
+     * @example
+     * // Get one CoachingCenter
+     * const coachingCenter = await prisma.coachingCenter.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CoachingCenterFindFirstOrThrowArgs>(args?: Prisma.SelectSubset<T, CoachingCenterFindFirstOrThrowArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Find zero or more CoachingCenters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CoachingCenterFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CoachingCenters
+     * const coachingCenters = await prisma.coachingCenter.findMany()
+     *
+     * // Get first 10 CoachingCenters
+     * const coachingCenters = await prisma.coachingCenter.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const coachingCenterWithIdOnly = await prisma.coachingCenter.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends CoachingCenterFindManyArgs>(args?: Prisma.SelectSubset<T, CoachingCenterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>;
+    /**
+     * Create a CoachingCenter.
+     * @param {CoachingCenterCreateArgs} args - Arguments to create a CoachingCenter.
+     * @example
+     * // Create one CoachingCenter
+     * const CoachingCenter = await prisma.coachingCenter.create({
+     *   data: {
+     *     // ... data to create a CoachingCenter
+     *   }
+     * })
+     *
+     */
+    create<T extends CoachingCenterCreateArgs>(args: Prisma.SelectSubset<T, CoachingCenterCreateArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Create many CoachingCenters.
+     * @param {CoachingCenterCreateManyArgs} args - Arguments to create many CoachingCenters.
+     * @example
+     * // Create many CoachingCenters
+     * const coachingCenter = await prisma.coachingCenter.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends CoachingCenterCreateManyArgs>(args?: Prisma.SelectSubset<T, CoachingCenterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Create many CoachingCenters and returns the data saved in the database.
+     * @param {CoachingCenterCreateManyAndReturnArgs} args - Arguments to create many CoachingCenters.
+     * @example
+     * // Create many CoachingCenters
+     * const coachingCenter = await prisma.coachingCenter.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many CoachingCenters and only return the `id`
+     * const coachingCenterWithIdOnly = await prisma.coachingCenter.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends CoachingCenterCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, CoachingCenterCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Delete a CoachingCenter.
+     * @param {CoachingCenterDeleteArgs} args - Arguments to delete one CoachingCenter.
+     * @example
+     * // Delete one CoachingCenter
+     * const CoachingCenter = await prisma.coachingCenter.delete({
+     *   where: {
+     *     // ... filter to delete one CoachingCenter
+     *   }
+     * })
+     *
+     */
+    delete<T extends CoachingCenterDeleteArgs>(args: Prisma.SelectSubset<T, CoachingCenterDeleteArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Update one CoachingCenter.
+     * @param {CoachingCenterUpdateArgs} args - Arguments to update one CoachingCenter.
+     * @example
+     * // Update one CoachingCenter
+     * const coachingCenter = await prisma.coachingCenter.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends CoachingCenterUpdateArgs>(args: Prisma.SelectSubset<T, CoachingCenterUpdateArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Delete zero or more CoachingCenters.
+     * @param {CoachingCenterDeleteManyArgs} args - Arguments to filter CoachingCenters to delete.
+     * @example
+     * // Delete a few CoachingCenters
+     * const { count } = await prisma.coachingCenter.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends CoachingCenterDeleteManyArgs>(args?: Prisma.SelectSubset<T, CoachingCenterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more CoachingCenters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CoachingCenterUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CoachingCenters
+     * const coachingCenter = await prisma.coachingCenter.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends CoachingCenterUpdateManyArgs>(args: Prisma.SelectSubset<T, CoachingCenterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>;
+    /**
+     * Update zero or more CoachingCenters and returns the data updated in the database.
+     * @param {CoachingCenterUpdateManyAndReturnArgs} args - Arguments to update many CoachingCenters.
+     * @example
+     * // Update many CoachingCenters
+     * const coachingCenter = await prisma.coachingCenter.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Update zero or more CoachingCenters and only return the `id`
+     * const coachingCenterWithIdOnly = await prisma.coachingCenter.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    updateManyAndReturn<T extends CoachingCenterUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, CoachingCenterUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>;
+    /**
+     * Create or update one CoachingCenter.
+     * @param {CoachingCenterUpsertArgs} args - Arguments to update or create a CoachingCenter.
+     * @example
+     * // Update or create a CoachingCenter
+     * const coachingCenter = await prisma.coachingCenter.upsert({
+     *   create: {
+     *     // ... data to create a CoachingCenter
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CoachingCenter we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CoachingCenterUpsertArgs>(args: Prisma.SelectSubset<T, CoachingCenterUpsertArgs<ExtArgs>>): Prisma.Prisma__CoachingCenterClient<runtime.Types.Result.GetResult<Prisma.$CoachingCenterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>;
+    /**
+     * Count the number of CoachingCenters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CoachingCenterCountArgs} args - Arguments to filter CoachingCenters to count.
+     * @example
+     * // Count the number of CoachingCenters
+     * const count = await prisma.coachingCenter.count({
+     *   where: {
+     *     // ... the filter for the CoachingCenters we want to count
+     *   }
+     * })
+    **/
+    count<T extends CoachingCenterCountArgs>(args?: Prisma.Subset<T, CoachingCenterCountArgs>): Prisma.PrismaPromise<T extends runtime.Types.Utils.Record<'select', any> ? T['select'] extends true ? number : Prisma.GetScalarType<T['select'], CoachingCenterCountAggregateOutputType> : number>;
+    /**
+     * Allows you to perform aggregations operations on a CoachingCenter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CoachingCenterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CoachingCenterAggregateArgs>(args: Prisma.Subset<T, CoachingCenterAggregateArgs>): Prisma.PrismaPromise<GetCoachingCenterAggregateType<T>>;
+    /**
+     * Group by CoachingCenter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CoachingCenterGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<T extends CoachingCenterGroupByArgs, HasSelectOrTake extends Prisma.Or<Prisma.Extends<'skip', Prisma.Keys<T>>, Prisma.Extends<'take', Prisma.Keys<T>>>, OrderByArg extends Prisma.True extends HasSelectOrTake ? {
+        orderBy: CoachingCenterGroupByArgs['orderBy'];
+    } : {
+        orderBy?: CoachingCenterGroupByArgs['orderBy'];
+    }, OrderFields extends Prisma.ExcludeUnderscoreKeys<Prisma.Keys<Prisma.MaybeTupleToUnion<T['orderBy']>>>, ByFields extends Prisma.MaybeTupleToUnion<T['by']>, ByValid extends Prisma.Has<ByFields, OrderFields>, HavingFields extends Prisma.GetHavingFields<T['having']>, HavingValid extends Prisma.Has<ByFields, HavingFields>, ByEmpty extends T['by'] extends never[] ? Prisma.True : Prisma.False, InputErrors extends ByEmpty extends Prisma.True ? `Error: "by" must not be empty.` : HavingValid extends Prisma.False ? {
+        [P in HavingFields]: P extends ByFields ? never : P extends string ? `Error: Field "${P}" used in "having" needs to be provided in "by".` : [
+            Error,
+            'Field ',
+            P,
+            ` in "having" needs to be provided in "by"`
+        ];
+    }[HavingFields] : 'take' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "take", you also need to provide "orderBy"' : 'skip' extends Prisma.Keys<T> ? 'orderBy' extends Prisma.Keys<T> ? ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields] : 'Error: If you provide "skip", you also need to provide "orderBy"' : ByValid extends Prisma.True ? {} : {
+        [P in OrderFields]: P extends ByFields ? never : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+    }[OrderFields]>(args: Prisma.SubsetIntersection<T, CoachingCenterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCoachingCenterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>;
+    /**
+     * Fields of the CoachingCenter model
+     */
+    readonly fields: CoachingCenterFieldRefs;
+}
+/**
+ * The delegate class that acts as a "Promise-like" for CoachingCenter.
+ * Why is this prefixed with `Prisma__`?
+ * Because we want to prevent naming conflicts as mentioned in
+ * https://github.com/prisma/prisma-client-js/issues/707
+ */
+export interface Prisma__CoachingCenterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise";
+    user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    coachingStaffs<T extends Prisma.CoachingCenter$coachingStaffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CoachingCenter$coachingStaffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CoachingStaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    batches<T extends Prisma.CoachingCenter$batchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CoachingCenter$batchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): runtime.Types.Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): runtime.Types.Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): runtime.Types.Utils.JsPromise<T>;
+}
+/**
+ * Fields of the CoachingCenter model
+ */
+export interface CoachingCenterFieldRefs {
+    readonly id: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly CcName: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly email: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly address: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly mobile: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly avatar: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly coverImage: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly website: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly officeTime: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly bio: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly facebook: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly linkedIn: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly userId: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly status: Prisma.FieldRef<"CoachingCenter", 'String'>;
+    readonly createdAt: Prisma.FieldRef<"CoachingCenter", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"CoachingCenter", 'DateTime'>;
+}
+/**
+ * CoachingCenter findUnique
+ */
+export type CoachingCenterFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * Filter, which CoachingCenter to fetch.
+     */
+    where: Prisma.CoachingCenterWhereUniqueInput;
+};
+/**
+ * CoachingCenter findUniqueOrThrow
+ */
+export type CoachingCenterFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * Filter, which CoachingCenter to fetch.
+     */
+    where: Prisma.CoachingCenterWhereUniqueInput;
+};
+/**
+ * CoachingCenter findFirst
+ */
+export type CoachingCenterFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * Filter, which CoachingCenter to fetch.
+     */
+    where?: Prisma.CoachingCenterWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of CoachingCenters to fetch.
+     */
+    orderBy?: Prisma.CoachingCenterOrderByWithRelationInput | Prisma.CoachingCenterOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for CoachingCenters.
+     */
+    cursor?: Prisma.CoachingCenterWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` CoachingCenters from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` CoachingCenters.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of CoachingCenters.
+     */
+    distinct?: Prisma.CoachingCenterScalarFieldEnum | Prisma.CoachingCenterScalarFieldEnum[];
+};
+/**
+ * CoachingCenter findFirstOrThrow
+ */
+export type CoachingCenterFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * Filter, which CoachingCenter to fetch.
+     */
+    where?: Prisma.CoachingCenterWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of CoachingCenters to fetch.
+     */
+    orderBy?: Prisma.CoachingCenterOrderByWithRelationInput | Prisma.CoachingCenterOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for CoachingCenters.
+     */
+    cursor?: Prisma.CoachingCenterWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` CoachingCenters from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` CoachingCenters.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of CoachingCenters.
+     */
+    distinct?: Prisma.CoachingCenterScalarFieldEnum | Prisma.CoachingCenterScalarFieldEnum[];
+};
+/**
+ * CoachingCenter findMany
+ */
+export type CoachingCenterFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * Filter, which CoachingCenters to fetch.
+     */
+    where?: Prisma.CoachingCenterWhereInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of CoachingCenters to fetch.
+     */
+    orderBy?: Prisma.CoachingCenterOrderByWithRelationInput | Prisma.CoachingCenterOrderByWithRelationInput[];
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing CoachingCenters.
+     */
+    cursor?: Prisma.CoachingCenterWhereUniqueInput;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` CoachingCenters from the position of the cursor.
+     */
+    take?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` CoachingCenters.
+     */
+    skip?: number;
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of CoachingCenters.
+     */
+    distinct?: Prisma.CoachingCenterScalarFieldEnum | Prisma.CoachingCenterScalarFieldEnum[];
+};
+/**
+ * CoachingCenter create
+ */
+export type CoachingCenterCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * The data needed to create a CoachingCenter.
+     */
+    data: Prisma.XOR<Prisma.CoachingCenterCreateInput, Prisma.CoachingCenterUncheckedCreateInput>;
+};
+/**
+ * CoachingCenter createMany
+ */
+export type CoachingCenterCreateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CoachingCenters.
+     */
+    data: Prisma.CoachingCenterCreateManyInput | Prisma.CoachingCenterCreateManyInput[];
+    skipDuplicates?: boolean;
+};
+/**
+ * CoachingCenter createManyAndReturn
+ */
+export type CoachingCenterCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelectCreateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * The data used to create many CoachingCenters.
+     */
+    data: Prisma.CoachingCenterCreateManyInput | Prisma.CoachingCenterCreateManyInput[];
+    skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterIncludeCreateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * CoachingCenter update
+ */
+export type CoachingCenterUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * The data needed to update a CoachingCenter.
+     */
+    data: Prisma.XOR<Prisma.CoachingCenterUpdateInput, Prisma.CoachingCenterUncheckedUpdateInput>;
+    /**
+     * Choose, which CoachingCenter to update.
+     */
+    where: Prisma.CoachingCenterWhereUniqueInput;
+};
+/**
+ * CoachingCenter updateMany
+ */
+export type CoachingCenterUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CoachingCenters.
+     */
+    data: Prisma.XOR<Prisma.CoachingCenterUpdateManyMutationInput, Prisma.CoachingCenterUncheckedUpdateManyInput>;
+    /**
+     * Filter which CoachingCenters to update
+     */
+    where?: Prisma.CoachingCenterWhereInput;
+    /**
+     * Limit how many CoachingCenters to update.
+     */
+    limit?: number;
+};
+/**
+ * CoachingCenter updateManyAndReturn
+ */
+export type CoachingCenterUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelectUpdateManyAndReturn<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * The data used to update CoachingCenters.
+     */
+    data: Prisma.XOR<Prisma.CoachingCenterUpdateManyMutationInput, Prisma.CoachingCenterUncheckedUpdateManyInput>;
+    /**
+     * Filter which CoachingCenters to update
+     */
+    where?: Prisma.CoachingCenterWhereInput;
+    /**
+     * Limit how many CoachingCenters to update.
+     */
+    limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterIncludeUpdateManyAndReturn<ExtArgs> | null;
+};
+/**
+ * CoachingCenter upsert
+ */
+export type CoachingCenterUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * The filter to search for the CoachingCenter to update in case it exists.
+     */
+    where: Prisma.CoachingCenterWhereUniqueInput;
+    /**
+     * In case the CoachingCenter found by the `where` argument doesn't exist, create a new CoachingCenter with this data.
+     */
+    create: Prisma.XOR<Prisma.CoachingCenterCreateInput, Prisma.CoachingCenterUncheckedCreateInput>;
+    /**
+     * In case the CoachingCenter was found with the provided `where` argument, update it with this data.
+     */
+    update: Prisma.XOR<Prisma.CoachingCenterUpdateInput, Prisma.CoachingCenterUncheckedUpdateInput>;
+};
+/**
+ * CoachingCenter delete
+ */
+export type CoachingCenterDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+    /**
+     * Filter which CoachingCenter to delete.
+     */
+    where: Prisma.CoachingCenterWhereUniqueInput;
+};
+/**
+ * CoachingCenter deleteMany
+ */
+export type CoachingCenterDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Filter which CoachingCenters to delete
+     */
+    where?: Prisma.CoachingCenterWhereInput;
+    /**
+     * Limit how many CoachingCenters to delete.
+     */
+    limit?: number;
+};
+/**
+ * CoachingCenter.coachingStaffs
+ */
+export type CoachingCenter$coachingStaffsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingStaff
+     */
+    select?: Prisma.CoachingStaffSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingStaff
+     */
+    omit?: Prisma.CoachingStaffOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingStaffInclude<ExtArgs> | null;
+    where?: Prisma.CoachingStaffWhereInput;
+    orderBy?: Prisma.CoachingStaffOrderByWithRelationInput | Prisma.CoachingStaffOrderByWithRelationInput[];
+    cursor?: Prisma.CoachingStaffWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.CoachingStaffScalarFieldEnum | Prisma.CoachingStaffScalarFieldEnum[];
+};
+/**
+ * CoachingCenter.batches
+ */
+export type CoachingCenter$batchesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Batch
+     */
+    select?: Prisma.BatchSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Batch
+     */
+    omit?: Prisma.BatchOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.BatchInclude<ExtArgs> | null;
+    where?: Prisma.BatchWhereInput;
+    orderBy?: Prisma.BatchOrderByWithRelationInput | Prisma.BatchOrderByWithRelationInput[];
+    cursor?: Prisma.BatchWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.BatchScalarFieldEnum | Prisma.BatchScalarFieldEnum[];
+};
+/**
+ * CoachingCenter without action
+ */
+export type CoachingCenterDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CoachingCenter
+     */
+    select?: Prisma.CoachingCenterSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CoachingCenter
+     */
+    omit?: Prisma.CoachingCenterOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CoachingCenterInclude<ExtArgs> | null;
+};
+//# sourceMappingURL=CoachingCenter.d.ts.map
