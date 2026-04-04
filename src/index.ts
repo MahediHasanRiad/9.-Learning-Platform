@@ -17,7 +17,7 @@ import { authRouter } from "./api/v1/Auth/router/auth.router.js";
 
 const app = express();
 const swaggerDocs = Yaml.load("./swagger.yaml");
-dotenv.config({ path: "./src/config/.env" });
+dotenv.config({ path: "./.env" });
 
 // middleware
 const allowedOrigins = [

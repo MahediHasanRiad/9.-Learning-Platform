@@ -8,6 +8,7 @@ import { ComparePassword } from "../service/password.js";
 export const verifyUser = async (email: string, password: string) => {
   try {
     const findUser = await prisma.user.findUnique({where: {email: email}})
+
     if (!findUser) throw new apiError(404, "User not found !!!");
   
     const isValidPassword = await ComparePassword(findUser.password, password)

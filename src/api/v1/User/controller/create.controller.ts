@@ -1,10 +1,10 @@
+import { CreateUser } from '../repository/create-user.repository.js';
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { cloudinaryFileUpload } from "../../../../utils/cloudinary.js";
 import { LocalFilePath } from "../../../../utils/image_local_File_Path.js";
 import { ExistUser } from "../repository/exist-user-by-email.repository.js";
-import { CreateUser } from "../repository/create-user.repository.js";
 import type { userType } from "../user-types.js";
 import type { Request, Response } from "express";
 import { prisma } from "../../../../lib/prisma.js";
