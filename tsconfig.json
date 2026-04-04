@@ -2,33 +2,31 @@
   "compilerOptions": {
     // File Layout
     "outDir": "./dist",
-    "rootDir": ".",
+    "rootDir": "./src",
 
     // Environment Settings
     "module": "NodeNext",
-    "moduleResolution": "NodeNext", 
-    "allowImportingTsExtensions": false, 
-    "target": "esnext",
-    "types": [],
+    "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "types": ["node"],
 
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
 
-    // Stricter Typechecking Options
+    // Stricter Typechecking
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
-    // Recommended Options
+    // Recommended
     "strict": true,
-    "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],  
+  "include": ["./src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
