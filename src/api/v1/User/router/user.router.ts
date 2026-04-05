@@ -16,7 +16,7 @@ import { deleteUserController } from "../controller/delete.controller.js";
 
 const userRouter = Router();
 
-userRouter.delete("/me", authVerify, meController);
+userRouter.get("/me", authVerify, meController);
 userRouter.post("/login", logInController);
 userRouter.get("/logout", logOutController);
 userRouter.post(
