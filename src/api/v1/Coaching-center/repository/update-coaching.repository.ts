@@ -1,17 +1,18 @@
 import { prisma } from "../../../../lib/prisma.js";
+import type { Prisma } from "../../../../prisma/client.js";
 import { apiError } from "../../../../utils/apiError.js";
-import type { CoachingType } from "../coaching-type.js";
+import type { updateType } from "../coaching-type.js";
 
 interface update {
   id?: string;
-  updatedData: Partial<CoachingType>;
+  updatedData: updateType;
 }
 
 export const UpdateData = async ({ id, updatedData }: update) => {
   try {
     const coaching = await prisma.coachingCenter.update({
       where: { id: id!},
-      data: updatedData,
+      data: updatedData as Prisma.CoachingCenterUpdateInput
     });
     return coaching;
   } 

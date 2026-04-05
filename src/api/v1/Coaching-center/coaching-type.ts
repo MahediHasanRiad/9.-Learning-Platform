@@ -18,3 +18,17 @@ export interface CoachingType {
   avatar: string;
   coverImage: string;
 }
+
+export interface updateType {
+  CcName?: string | undefined;
+  email?: string | undefined;
+  mobile?: string | undefined;
+  address?: string | undefined;
+  website?: string | undefined;
+  facebook?: string | undefined;
+  linkedIn?: string | undefined;
+  bio?: string | undefined;
+  officeTime?: string | undefined;
+  avatar?: string | undefined;
+  coverImage?: string | undefined;
+}
