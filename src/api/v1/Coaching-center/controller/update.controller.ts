@@ -4,8 +4,9 @@ import { asyncHandler } from "../../../../utils/asyncHandler.js";
 import { CheckValueForUpdate } from "../validation/update-coaching.validation.js";
 import { UpdateData } from "../repository/update-coaching.repository.js";
 import type { CoachingType } from "../coaching-type.js";
+import type { Request, Response } from "express";
 
-export const updateCoachingCenterController = asyncHandler(async (req, res) => {
+export const updateCoachingCenterController = asyncHandler(async (req: Request, res: Response) => {
   /**
    * get id = req.user.id
    * get {name, address, website, subjects, teacherID} = req.body
