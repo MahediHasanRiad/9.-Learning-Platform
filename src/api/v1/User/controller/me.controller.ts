@@ -9,12 +9,12 @@ export const meController = asyncHandler(async (req: Request, res: Response) => 
   const id = req.user?.id as string;
 
   const user = await FindUser(id)
-  const teacher = await FindTeacher(id)
+  // const teacher = await FindTeacher(id)
 
   res.status(200).json(
     new apiResponse(200, {
       user,
-      teacher
+      // teacher
     })
   );
 });
