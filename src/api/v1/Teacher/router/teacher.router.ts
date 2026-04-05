@@ -7,10 +7,12 @@ import { createTeacherController } from "../controller/create.controller.js";
 import { findSingleTeacherController } from "../controller/findOne.controller.js";
 import { updateTeacherController } from "../controller/update.controller.js";
 import { deleteTeacherController } from "../controller/delete.controller.js";
+import { SelfTeacherController } from "../controller/self-teacher.controller.js";
 
 
 const teacherRouter = Router();
 
+teacherRouter.get("/self-teacher", authVerify, SelfTeacherController);
 teacherRouter.get("/teachers", allTeachersController);
 teacherRouter.get("/teacher/demoClasses", authVerify, allDemoClassController);
 teacherRouter.post(
