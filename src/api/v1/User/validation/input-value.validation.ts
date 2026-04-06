@@ -1,15 +1,4 @@
-import type { userType } from "../user-types.js";
-
-export type user = {
-  name?: string | undefined;
-  address?: string | null | undefined;
-  email?: string | undefined;
-  mobile?: string | undefined;
-  avatar?: any;
-  coverImage?: any;
-  facebook?: string | null | undefined;
-  linkedIn?: string | null | undefined;
-};
+import type { user, userType } from "../user-types.js";
 
 export const InputValue = ({
   name,
@@ -21,7 +10,7 @@ export const InputValue = ({
   facebook,
   linkedIn,
 }: Partial<user>) => {
-  const updatedData: Partial<userType> = {};
+  const updatedData: Partial<user> = {};
 
   if (name !== undefined) updatedData.name = name;
   if (address !== undefined) updatedData.address = address;

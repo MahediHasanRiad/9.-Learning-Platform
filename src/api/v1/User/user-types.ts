@@ -41,3 +41,14 @@ export interface BatchType {
   batchId: string;
   status: string;
 }
+
+export type user = {
+  name?: string | undefined;
+  address?: string | null | undefined;
+  email?: string | undefined;
+  mobile?: string | undefined;
+  avatar?: string | undefined;
+  coverImage?: string | undefined;
+  facebook?: string | null | undefined;
+  linkedIn?: string | null | undefined;
+};

@@ -9,9 +9,6 @@ import type { Request, Response } from "express";
 import { apiError } from "../../../../utils/apiError.js";
 import type { userType } from "../user-types.js";
 
-interface paramsType {
-  id: string
-}
 
 const updateUserController = asyncHandler(async (req: Request, res: Response) => {
   const { name, address, email, mobile, facebook, linkedIn } = req.body as Partial<userType>;

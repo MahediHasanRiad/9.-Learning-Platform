@@ -1,9 +1,9 @@
 import { prisma } from "../../../../lib/prisma.js";
-import type { userType } from "../user-types.js";
+import type { user } from "../user-types.js";
 
 interface UpdateUserType {
   id: string,
-  updated: Partial<userType>
+  updated: Partial<user>
 }
 
 export const UpdateUser = async ({ id, updated }: UpdateUserType) => {

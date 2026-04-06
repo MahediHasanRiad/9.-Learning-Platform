@@ -29,7 +29,7 @@ export const batchListByCoachingIdController = asyncHandler(async (req, res) => 
 
   // all batch based on coaching
   const coachingId = coaching?.id?.toString()
-  const batch = await FilterBatchOnCoaching({search, coachingId, sortType, page, limit})
+  const batches = await FilterBatchOnCoaching({search, coachingId, sortType, page, limit})
 
   // pagination
   const totalItems = await prisma.batch.count({where: {coachingId: coachingId}});
@@ -38,5 +38,5 @@ export const batchListByCoachingIdController = asyncHandler(async (req, res) => 
   // links
   const links = Links(req, pagination, page, "batches");
 
-  res.status(200).json(new apiResponse(200, { batch, pagination, links }));
+  res.status(200).json(new apiResponse(200, { batches, pagination, links }));
 });
