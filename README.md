@@ -1,199 +1,167 @@
-# Tutor & Coaching Management Platform
+# 📚 TutorConnect — Tutor & Coaching Management Platform
 
-A scalable platform that connects students, guardians, tutors, and coaching centers.
-The system allows guardians to evaluate tutors through demo classes, ratings, and reviews before enrolling their children.
-
----
-
-# Problem Statement
-
-Finding a trustworthy tutor and also course is difficult.
-Guardians usually rely on word-of-mouth recommendations which are often unreliable.
-
-This platform solves the problem by providing:
-
-• Verified tutors
-• Demo classes
-• Transparent rating system
-• Coaching center listings
-• contact with them directly
-• watch review from real students
+> A scalable platform that connects students, guardians, tutors, and coaching centers — making quality education accessible and trustworthy.
 
 ---
 
-# Key Features
+## 🧩 Problem Statement
 
-### Student / Guardian
+Finding a reliable tutor is harder than it should be. Guardians typically rely on word-of-mouth recommendations, which are inconsistent and unverifiable.
 
-* Browse tutors
-* filtered based on Switable time / Fee / Location
-* Watch demo classes
-* Compare tutor ratings
-* Enroll in coaching batches
-* check batch rating
+**TutorConnect** solves this by providing:
 
-### Tutor
-
-* Create tutor profile
-* Upload demo classes
-* Manage teaching batches
-* Track enrolled students
-* Stablish as a Teacher Digital Protfolio
-
-### Coaching Center
-
-* Manage teachers
-* Create subjects
-* Create batches
-* Manage students
-* Stablish as a Digital Protfolio
+- ✅ Verified tutor profiles
+- 🎥 Demo classes before enrollment
+- ⭐ Transparent rating & review system
+- 🏫 Coaching center listings with batch management
+- 💬 Direct contact between guardians and tutors
 
 ---
 
-# Tech Stack
+## ✨ Key Features
 
-Frontend
+### 👨‍👩‍👧 Student / Guardian
+- Browse and filter tutors by time, fee, and location
+- Watch demo classes before committing
+- Compare tutor ratings and read verified reviews
+- Enroll in coaching center batches
+- View batch ratings and student feedback
 
-* React
-* Redux Toolkit
-* React Router
+### 👨‍🏫 Tutor
+- Create and manage a professional tutor profile
+- Upload demo classes to attract students
+- Manage teaching batches and enrolled students
+- Build a verified digital teaching portfolio
 
-Backend
-
-* TypeStript
-* Node.js
-* Express.js
-
-Database
-
-* MongoDB
-* Mongoose
-
-Media Storage
-
-* Cloudinary
-
-Authentication
-
-* JWT + Cookies + auth0
+### 🏛️ Coaching Center
+- Manage teachers and assign subjects
+- Create and oversee student batches
+- Track student enrollment and progress
+- Establish an online digital presence
 
 ---
 
-# System Architecture
+## 🛠️ Tech Stack
 
+| Layer | Technology |
+|---|---|
+| **Frontend** | React, Redux Toolkit, React Router |
+| **Backend** | TypeScript, Node.js, Express.js |
+| **Database** | MongoDB, Mongoose, PostgreSQL |
+| **Media Storage** | Cloudinary |
+| **Authentication** | JWT + Cookies + Auth0 |
+
+---
+
+## 🏗️ System Architecture
+
+```
 Client (React)
-
-↓
-
-API Layer (Express)
-
-↓
-
+      ↓
+API Layer (Express.js)
+      ↓
 Business Logic (Services)
-
-↓
-
-Database (MongoDB)
+      ↓
+Database (PostgreSQL)
+```
 
 ---
 
-API Example
+## 📡 API Reference
 
-Register User
+### Auth
 
+#### Register User
+
+```http
 POST /api/auth/register
-Request Body
+```
+
+**Request Body:**
+
+```json
 {
   "name": "Riad",
-  "email": "riad@gmail.com",
-  "password": "123456"
+  "email": "riad@example.com",
+  "password": "securepassword"
 }
-Response
+```
+
+**Response:**
+
+```json
 {
   "success": true,
   "user": {
     "_id": "user_id",
     "name": "Riad",
-    "email": "riad@gmail.com"
+    "email": "riad@example.com"
   }
 }
+```
+
+---
+
+## 🗄️ Database Design
+
+### User Model
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | String | Full name of the user |
+| `email` | String | Unique email address |
+| `mobile` | String | Contact phone number |
+| `avatar` | String | Profile image URL (Cloudinary) |
+| `role` | String | `user` / `teacher` / `coachingOwner` |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js v18+
+- PostgreSQL instance (local or Atlas)
+- Cloudinary account
+
+### Installation
+
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/username/tutorconnect.git
+cd tutorconnect
+```
+
+**2. Set up the backend**
+
+```bash
+cd backend
+npm install
+cp .env.example .env  
+npm run dev
+```
+
+**3. Set up the frontend**
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🔮 Roadmap
+
+- [ ] Notification
+- [ ] Logging
+- [ ] Integrated payment gateway
 
 
 ---
 
-Database Design
-User Model
-Field	Type	Description
-name	String	User full name
-email	String	User email
-mobile	String	User phone number
-avatar	String	Profile image
-role	String	User role (User / Teacher / CoachingOwner)
+## 👨‍💻 Author
 
----
-
-## Installation
-
-Clone repository
-
-```bash
-  git clone https://github.com/username/project.git
-```
-Run Locally
-
-Clone the project
-
-```bash
-  git clone https://link-to-project
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
-Install dependencies
-
-```bash
-  npm install
-```
-
-Start the server
-
-```bash
-  npm run start
-```
-
-Backend
-
-```bash
-  cd backend
-  npm install
-  npm run dev
-```
-
-Frontend
-
-```bash
-  cd frontend
-  npm install
-  npm run dev
-```
-    
----
-
-## Future Improvements
-
-- Online live classes
-- Payment gateway
-- AI tutor recommendation
-- Mobile application
-
-
----
-
-# Author
-
-Riad
-Full Stack Developer
+**Mahedi Hasan Riad**  
+Full Stack Developer — TypeScript · Node.js · React · PostgreSQL  
