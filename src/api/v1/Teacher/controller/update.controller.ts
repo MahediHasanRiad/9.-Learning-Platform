@@ -1,3 +1,4 @@
+import type { Request, Response } from "express";
 import { apiError } from "../../../../utils/apiError.js";
 import { apiResponse } from "../../../../utils/apiResponse.js";
 import { asyncHandler } from "../../../../utils/asyncHandler.js";
@@ -9,7 +10,7 @@ import { UpdateTeacherFields } from "../validation/update-teacher.validation.js"
 import { UpdateUserFields } from "../validation/update-user.validation.js";
 
 
-const updateTeacherController = asyncHandler(async (req, res) => {
+const updateTeacherController = asyncHandler(async (req: Request, res: Response) => {
   const {
     name,
     mobile,

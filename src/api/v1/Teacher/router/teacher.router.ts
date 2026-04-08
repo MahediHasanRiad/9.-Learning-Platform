@@ -9,7 +9,6 @@ import { updateTeacherController } from "../controller/update.controller.js";
 import { deleteTeacherController } from "../controller/delete.controller.js";
 import { SelfTeacherController } from "../controller/self-teacher.controller.js";
 
-
 const teacherRouter = Router();
 
 teacherRouter.get("/self-teacher", authVerify, SelfTeacherController);
@@ -18,15 +17,19 @@ teacherRouter.get("/teacher/demoClasses", authVerify, allDemoClassController);
 teacherRouter.post(
   "/teacher",
   authVerify,
-  upload.fields([{ name: 'certificate', maxCount: 1 }]),
-  createTeacherController
+  upload.fields([{ name: "certificate", maxCount: 1 }]),
+  createTeacherController,
 );
 teacherRouter
   .route("/teachers/:id")
   .get(authVerify, findSingleTeacherController)
   .patch(
     authVerify,
-    upload.fields([{ name: "certificate", maxCount: 10 }]),
+    upload.fields([
+      { name: "certificate", maxCount: 10 },
+      { name: "avatar", maxCount: 1 },
+      { name: "coverImage", maxCount: 1 },
+    ]),
     updateTeacherController,
   )
   .delete(authVerify, deleteTeacherController);
